@@ -2182,39 +2182,89 @@ function getNode(id) {
 }
 
 // ───── Image cache + lazy loading ─────
+// Each entry: { promise, data, resolved } — data/resolved set synchronously when promise settles.
 const imageCache = new Map();
-async function fetchImage(wiki) {
-  if (imageCache.has(wiki)) return imageCache.get(wiki);
-  const promise = (async () => {
+function fetchImage(wiki) {
+  if (imageCache.has(wiki)) return imageCache.get(wiki).promise;
+  const entry = { promise: null, data: null, resolved: false };
+  entry.promise = (async () => {
     try {
       const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(wiki.replace(/ /g, '_'))}`);
-      if (!r.ok) return null;
+      if (!r.ok) { entry.resolved = true; return null; }
       const data = await r.json();
-      return {
+      const result = {
         thumb: data.thumbnail?.source || null,
         original: data.originalimage?.source || data.thumbnail?.source || null,
         title: data.title,
         url: data.content_urls?.desktop?.page || null
       };
-    } catch (e) { return null; }
+      entry.data = result; entry.resolved = true;
+      return result;
+    } catch (e) { entry.resolved = true; return null; }
   })();
-  imageCache.set(wiki, promise);
-  return promise;
+  imageCache.set(wiki, entry);
+  return entry.promise;
 }
 
-async function loadNodeImage(imgEl, wiki) {
-  const data = await fetchImage(wiki);
+function getImageSync(wiki) {
+  const e = imageCache.get(wiki);
+  return e?.resolved ? e.data : undefined;
+}
+
+function applyImage(imgEl, data) {
   if (data && data.thumb) {
     imgEl.src = data.thumb;
-    imgEl.onload = () => imgEl.classList.add("loaded");
-    imgEl.onerror = () => imgEl.classList.add("missing");
+    if (imgEl.complete && imgEl.naturalWidth > 0) imgEl.classList.add("loaded");
+    else {
+      imgEl.onload = () => imgEl.classList.add("loaded");
+      imgEl.onerror = () => imgEl.classList.add("missing");
+    }
   } else {
     imgEl.classList.add("missing");
   }
 }
 
+function loadNodeImage(imgEl, wiki) {
+  const cached = getImageSync(wiki);
+  if (cached !== undefined) { applyImage(imgEl, cached); return; }
+  fetchImage(wiki).then(d => applyImage(imgEl, d));
+}
+
 // ───── State ─────
-let currentPath = ["eukarya", "animalia", "vertebrata", "chordata", "mammalia", "carnivora", "felidae", "panthera", "p_leo"];
+const DEFAULT_PATH = ["eukarya", "animalia", "vertebrata", "chordata", "mammalia", "carnivora", "felidae", "panthera", "p_leo"];
+let currentPath = DEFAULT_PATH.slice();
+
+// ───── URL hash routing ─────
+function parseHash() {
+  const h = decodeURIComponent(location.hash.replace(/^#\/?/, ""));
+  if (!h) return null;
+  const ids = h.split("/").filter(Boolean);
+  // Validate each id chains from root through the taxonomy.
+  const validated = [];
+  for (const id of ids) {
+    const node = getNode(id);
+    if (!node) break;
+    validated.push(id);
+  }
+  return validated.length ? validated : null;
+}
+
+function writeHash(replace) {
+  const newHash = "#/" + currentPath.join("/");
+  if (location.hash === newHash) return;
+  if (replace) history.replaceState(null, "", newHash);
+  else history.pushState(null, "", newHash);
+}
+
+let suppressHashChange = false;
+window.addEventListener("popstate", () => {
+  if (suppressHashChange) return;
+  const fromHash = parseHash() || DEFAULT_PATH.slice();
+  if (fromHash.join("/") !== currentPath.join("/")) {
+    currentPath = fromHash;
+    render();
+  }
+});
 
 // ───── Render ─────
 function render() { renderBreadcrumb(); renderTree(); }
@@ -2233,7 +2283,13 @@ function renderBreadcrumb() {
     const c = document.createElement("div");
     c.className = "crumb";
     c.innerHTML = `<span class="crumb-rank">${node.rankFa}</span><span class="crumb-name">${node.fa}</span>`;
-    c.onclick = () => { currentPath = currentPath.slice(0, i + 1); render(); };
+    c.onclick = () => {
+      const newPath = currentPath.slice(0, i + 1);
+      if (newPath.join("/") === currentPath.join("/")) return;
+      currentPath = newPath;
+      writeHash(false);
+      render();
+    };
     crumb.appendChild(c);
   });
 }
@@ -2350,12 +2406,22 @@ function buildSpeciesCard(node) {
 }
 
 function onNodeClick(id, levelIndex) {
-  currentPath = currentPath.slice(0, levelIndex);
-  currentPath.push(id);
+  const newPath = currentPath.slice(0, levelIndex);
+  newPath.push(id);
+  if (newPath.join("/") === currentPath.join("/")) return; // no-op click
+  currentPath = newPath;
+  writeHash(false); // pushState — back button reverses navigation
   render();
 }
 
-render();
+function init() {
+  const fromHash = parseHash();
+  if (fromHash) currentPath = fromHash;
+  else writeHash(true); // seed URL with default path so it's always shareable
+  render();
+}
+
+init();
 </script>
 </body>
 </html>
