@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>درخت رده‌بندی جانوران</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --muted: #6e6e73;
+    --line: #d2d2d7;
+    --card: #ffffff;
+    --indigo: #5856d6; --indigo-soft: #ebeaff;
+    --mint: #00a89e;   --mint-soft: #d8f5f3;
+    --pink: #e8437f;   --pink-soft: #fde0ec;
+    --amber: #d97706;  --amber-soft: #fff1dd;
+    --green: #2ba84a;  --green-soft: #dff5e3;
+    --purple: #af52de; --purple-soft: #f3e4fb;
+    --rose: #ff375f;   --rose-soft: #ffe0e6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 16px 80px;
+    font-family: "Vazirmatn", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6;
+    direction: rtl; -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 16px; }
+  h1 { font-size: 30px; font-weight: 800; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .subtitle { font-size: 13px; color: var(--muted); margin: 0; }
+  .hint-wrap { text-align: center; }
+  .hint {
+    font-size: 12px; color: var(--muted);
+    margin: 8px 0 24px;
+    padding: 6px 14px; background: var(--card);
+    border-radius: 999px; display: inline-block;
+  }
+
+  .breadcrumb {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 4px; margin-bottom: 24px;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 10px 16px; font-size: 13px;
+  }
+  .crumb {
+    cursor: pointer; padding: 4px 10px; border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .crumb:hover { background: var(--bg); }
+  .crumb-rank { font-size: 10px; color: var(--muted); display: block; line-height: 1; margin-bottom: 2px; }
+  .crumb-name { font-weight: 600; }
+  .crumb-sep { color: var(--line); padding: 0 4px; align-self: center; }
+
+  .tree { display: flex; flex-direction: column; align-items: center; }
+  .level {
+    width: 100%; display: flex; flex-direction: column;
+    align-items: center; position: relative;
+    animation: fadeIn 0.25s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .level-label {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    background: var(--bg); padding: 0 8px; direction: ltr;
+  }
+  .level-label .fa {
+    font-family: "Vazirmatn", sans-serif;
+    display: block; font-size: 12px; color: var(--ink);
+    font-weight: 600; text-transform: none; letter-spacing: 0; direction: rtl;
+  }
+  .siblings {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 8px; margin: 12px 0; max-width: 1200px; padding: 0 80px;
+  }
+  .node {
+    background: var(--card); border: 1.5px solid var(--line);
+    border-radius: 12px; padding: 8px 12px 10px;
+    font-size: 13px; cursor: pointer;
+    transition: all 0.18s ease;
+    display: inline-flex; flex-direction: column;
+    align-items: center; text-align: center;
+    min-width: 96px; max-width: 140px; line-height: 1.3;
+  }
+  .node:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  }
+  .node-img {
+    width: 48px; height: 48px; border-radius: 50%;
+    object-fit: cover; margin-bottom: 6px;
+    background: var(--bg);
+    border: 2px solid rgba(0,0,0,0.06);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+  }
+  .node-img.loaded { opacity: 1; }
+  .node-img.missing {
+    background: var(--bg) center/40% no-repeat
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23c7c7cc"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/></svg>');
+    opacity: 1;
+  }
+  .node .fa-name { font-weight: 700; font-size: 13px; }
+  .node .latin {
+    font-size: 10px; color: var(--muted);
+    font-style: italic; margin-top: 1px;
+    direction: ltr; font-family: -apple-system, sans-serif;
+  }
+  .node.main {
+    border-width: 2.5px; padding: 10px 16px 14px;
+    transform: scale(1.06); z-index: 2;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.14);
+  }
+  .node.main .fa-name { font-size: 15px; }
+  .node.main .node-img { width: 60px; height: 60px; }
+
+  .node[data-color="indigo"]  { color: var(--indigo);  background: var(--indigo-soft);  border-color: var(--indigo); }
+  .node[data-color="mint"]    { color: var(--mint);    background: var(--mint-soft);    border-color: var(--mint); }
+  .node[data-color="pink"]    { color: var(--pink);    background: var(--pink-soft);    border-color: var(--pink); }
+  .node[data-color="amber"]   { color: var(--amber);   background: var(--amber-soft);   border-color: var(--amber); }
+  .node[data-color="green"]   { color: var(--green);   background: var(--green-soft);   border-color: var(--green); }
+  .node[data-color="purple"]  { color: var(--purple);  background: var(--purple-soft);  border-color: var(--purple); }
+  .node[data-color] .latin { color: currentColor; opacity: 0.7; }
+
+  .connector { width: 2px; height: 22px; background: var(--line); }
+
+  .species-final {
+    margin-top: 28px; display: flex; align-items: center;
+    gap: 28px; padding: 24px 32px;
+    background: linear-gradient(135deg, var(--green-soft), var(--mint-soft));
+    border-radius: 24px;
+    box-shadow: 0 14px 36px rgba(43, 168, 74, 0.16);
+    animation: fadeIn 0.3s ease; max-width: 800px;
+  }
+  .species-final .hero {
+    width: 180px; height: 180px; border-radius: 20px;
+    object-fit: cover; background: var(--card);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    flex-shrink: 0;
+  }
+  .species-final .info { text-align: right; flex: 1; }
+  .species-final h2 {
+    margin: 0 0 4px; font-size: 28px; font-weight: 800; color: var(--green);
+  }
+  .species-final .latin-full {
+    font-size: 17px; font-style: italic; color: var(--mint);
+    direction: ltr; text-align: left; margin-bottom: 10px;
+    font-family: -apple-system, sans-serif;
+  }
+  .species-final p { margin: 0 0 8px; font-size: 14px; color: var(--ink); }
+  .species-final .wiki-link {
+    display: inline-block; margin-top: 8px;
+    font-size: 12px; color: var(--mint); text-decoration: none;
+    border: 1px solid var(--mint); padding: 4px 10px;
+    border-radius: 8px; direction: ltr;
+  }
+  .species-final .wiki-link:hover { background: var(--mint); color: white; }
+
+  .footer { text-align: center; margin-top: 48px; font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 720px) {
+    h1 { font-size: 22px; }
+    .level-label { display: none; }
+    .siblings { padding: 0 4px; gap: 6px; }
+    .node { min-width: 80px; padding: 6px 8px 8px; }
+    .node-img { width: 40px; height: 40px; }
+    .node .fa-name { font-size: 12px; }
+    .species-final { flex-direction: column; text-align: center; padding: 20px; }
+    .species-final .info { text-align: center; }
+    .species-final .hero { width: 140px; height: 140px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>درخت رده‌بندی جانوران</h1>
+    <p class="subtitle">از دامنه تا گونه — تعاملی، با تصاویر واقعی از ویکی‌پدیا</p>
+    <div class="hint-wrap"><span class="hint">روی هر کادر کلیک کنید تا مسیر تغییر کند ⇣</span></div>
+  </header>
+
+  <div id="breadcrumb" class="breadcrumb"></div>
+  <div id="tree" class="tree"></div>
+
+  <div class="footer">
+    تصاویر از ویکی‌پدیا/ویکی‌مدیا کامنز · نام‌گذاری دوتایی توسط کارل لینه (۱۷۳۵)
+  </div>
+</div>
+
+<script>
+const RANK_COLORS = {
+  "Domain": "indigo", "Kingdom": "indigo", "Group": "purple",
+  "Phylum": "mint", "Class": "pink", "Order": "amber",
+  "Family": "rose", "Genus": "green", "Species": "green"
+};
+
+// ───── Helpers to keep data compact ─────
+const S = (id, fa, latin, wiki, info) => ({ id, rank: "Species", rankFa: "گونه", fa, latin, wiki: wiki || latin, info: info || "" });
+const G = (id, fa, latin, children, wiki) => ({ id, rank: "Genus", rankFa: "سرده", fa, latin, wiki: wiki || latin, children });
+const F = (id, fa, latin, children, wiki) => ({ id, rank: "Family", rankFa: "تیره", fa, latin, wiki: wiki || latin, children });
+const O = (id, fa, latin, children, wiki) => ({ id, rank: "Order", rankFa: "راسته", fa, latin, wiki: wiki || latin, children });
+const C = (id, fa, latin, children, wiki) => ({ id, rank: "Class", rankFa: "رده", fa, latin, wiki: wiki || latin, children });
+const P = (id, fa, latin, children, wiki) => ({ id, rank: "Phylum", rankFa: "شاخه", fa, latin, wiki: wiki || latin, children });
+
+// ───── Taxonomy data ─────
+const TAXONOMY = {
+  id: "root", children: [
+    { id: "bacteria", rank: "Domain", rankFa: "دامنه", fa: "باکتری‌ها", latin: "Bacteria", wiki: "Bacteria" },
+    { id: "archaea",  rank: "Domain", rankFa: "دامنه", fa: "آرکی‌ها",   latin: "Archaea",  wiki: "Archaea" },
+    { id: "eukarya",  rank: "Domain", rankFa: "دامنه", fa: "هوهسته‌ای‌ها", latin: "Eukarya", wiki: "Eukaryote", children: [
+      { id: "plantae",  rank: "Kingdom", rankFa: "فرمانرو", fa: "گیاهان",   latin: "Plantae",  wiki: "Plant", children: [
+        P("bryophyta", "خزه‌گیاهان", "Bryophyta", [
+          C("bryopsida", "خزه‌های واقعی", "Bryopsida", [
+            O("bryales", "خزه‌سانان", "Bryales", [
+              F("bryaceae", "خزه‌های نقره‌ای", "Bryaceae", [
+                G("bryum", "خزهٔ نقره‌ای", "Bryum", [
+                  S("br_argenteum", "خزهٔ نقره‌ای", "Bryum argenteum", "Bryum argenteum", "در سراسر جهان · حتی در شکاف سنگفرش شهرها")
+                ])
+              ])
+            ])
+          ])
+        ]),
+        P("pteridophyta", "سرخس‌گیاهان", "Pteridophyta", [
+          C("polypodiopsida", "سرخس‌های واقعی", "Polypodiopsida", [
+            O("polypodiales", "سرخس‌سانان", "Polypodiales", [
+              F("dryopteridaceae", "سرخس‌های نر", "Dryopteridaceae", [
+                G("dryopteris", "سرخس نر", "Dryopteris", [
+                  S("dr_filix_mas", "سرخس نر معمولی", "Dryopteris filix-mas", "Dryopteris filix-mas", "نیمکره شمالی · مناطق سایه‌دار جنگل")
+                ])
+              ]),
+              F("pteridaceae", "پر سیاوش‌سانان", "Pteridaceae", [
+                G("adiantum", "پر سیاوش", "Adiantum", [
+                  S("ad_capillus", "پر سیاوش معمولی", "Adiantum capillus-veneris", "Adiantum capillus-veneris", "گرم‌سیر در سراسر جهان · در سنت ایرانی دارویی")
+                ])
+              ])
+            ])
+          ])
+        ]),
+        P("pinophyta", "مخروط‌داران", "Pinophyta", [
+          C("pinopsida", "کاج‌سانان (رده)", "Pinopsida", [
+            O("pinales", "کاج‌سانان", "Pinales", [
+              F("pinaceae", "کاج‌سانان (تیره)", "Pinaceae", [
+                G("pinus", "کاج", "Pinus", [
+                  S("pn_sylvestris", "کاج اسکاتلندی", "Pinus sylvestris", "Scots pine", "اروپا و آسیا"),
+                  S("pn_nigra", "کاج سیاه", "Pinus nigra", "Pinus nigra", "اروپا و مدیترانه"),
+                  S("pn_pinea", "کاج چتری", "Pinus pinea", "Stone pine", "مدیترانه · تخمهٔ کاج خوراکی")
+                ]),
+                G("cedrus", "سدر", "Cedrus", [
+                  S("cd_libani", "سدر لبنان", "Cedrus libani", "Cedrus libani", "خاورمیانه · نماد لبنان"),
+                  S("cd_deodara", "سدر هیمالیا", "Cedrus deodara", "Cedrus deodara", "هیمالیا · بومی هند، پاکستان، افغانستان")
+                ]),
+                G("picea", "صنوبر", "Picea", [
+                  S("pc_abies", "صنوبر اروپایی", "Picea abies", "Norway spruce", "اروپا · درخت کریسمس کلاسیک")
+                ])
+              ]),
+              F("cupressaceae", "سروسانان", "Cupressaceae", [
+                G("cupressus", "سرو", "Cupressus", [
+                  S("cu_sempervirens", "سرو ناز", "Cupressus sempervirens", "Cupressus sempervirens", "مدیترانه و ایران · نماد طول عمر")
+                ]),
+                G("sequoiadendron", "سرخ‌دار غول‌پیکر", "Sequoiadendron", [
+                  S("sq_giganteum", "سرخ‌دار غول‌پیکر", "Sequoiadendron giganteum", "Giant sequoia", "کالیفرنیا · بزرگ‌ترین درختان جهان")
+                ])
+              ])
+            ])
+          ])
+        ]),
+        P("magnoliophyta", "گل‌داران", "Magnoliophyta", [
+          C("magnoliopsida", "دولپه‌ای‌ها", "Magnoliopsida", [
+            O("rosales", "گل‌سرخ‌سانان", "Rosales", [
+              F("rosaceae", "گل‌سرخیان", "Rosaceae", [
+                G("rosa", "گل سرخ", "Rosa", [
+                  S("ro_damascena", "گل محمدی", "Rosa damascena", "Rosa × damascena", "ایران · منبع گلاب و اسانس"),
+                  S("ro_gallica", "گل سرخ فرانسوی", "Rosa gallica", "Rosa gallica", "اروپای جنوبی"),
+                  S("ro_canina", "نسترن وحشی", "Rosa canina", "Rosa canina", "اروپا و خاورمیانه · میوهٔ نسترن")
+                ]),
+                G("malus", "سیب", "Malus", [
+                  S("ma_domestica", "سیب خوراکی", "Malus domestica", "Apple", "اهلی‌شده · در سراسر جهان")
+                ]),
+                G("prunus", "آلوسانان", "Prunus", [
+                  S("pr_persica",   "هلو",     "Prunus persica",   "Peach",            "اصل چین (نام از ایران) · میوهٔ پرکاربرد"),
+                  S("pr_cerasus",   "آلبالو",  "Prunus cerasus",   "Prunus cerasus",   "آسیا · میوهٔ ترش"),
+                  S("pr_armeniaca", "زردآلو",  "Prunus armeniaca", "Prunus armeniaca", "آسیای میانه و چین"),
+                  S("pr_dulcis",    "بادام",   "Prunus dulcis",    "Almond",           "خاورمیانه و مدیترانه")
+                ]),
+                G("fragaria", "توت‌فرنگی", "Fragaria", [
+                  S("fr_ananassa", "توت‌فرنگی باغی", "Fragaria × ananassa", "Strawberry", "اهلی‌شده در قرن ۱۸ از هیبرید گونه‌های آمریکایی")
+                ])
+              ]),
+              F("moraceae", "توت‌سانان", "Moraceae", [
+                G("ficus", "انجیر", "Ficus", [
+                  S("fi_carica", "انجیر معمولی", "Ficus carica", "Ficus carica", "خاورمیانه · میوهٔ باستانی")
+                ]),
+                G("morus", "توت", "Morus (plant)", [
+                  S("mo_alba", "توت سفید", "Morus alba", "Morus alba", "چین · غذای کرم ابریشم")
+                ])
+              ])
+            ]),
+            O("fabales", "بقولات‌سانان", "Fabales", [
+              F("fabaceae", "بقولات", "Fabaceae", [
+                G("pisum", "نخود فرنگی", "Pisum", [
+                  S("ps_sativum", "نخود فرنگی", "Pisum sativum", "Pea", "اهلی‌شده · مدل ژنتیک مندل")
+                ]),
+                G("cicer", "نخود", "Cicer", [
+                  S("ci_arietinum", "نخود معمولی", "Cicer arietinum", "Chickpea", "خاورمیانه · پایه آش و حمص")
+                ]),
+                G("glycine", "سویا", "Glycine (plant)", [
+                  S("gl_max", "سویا", "Glycine max", "Soybean", "آسیای شرقی · منبع پروتئین")
+                ]),
+                G("phaseolus", "لوبیا", "Phaseolus", [
+                  S("ph_vulgaris", "لوبیای معمولی", "Phaseolus vulgaris", "Phaseolus vulgaris", "آمریکای مرکزی · اهلی‌شده")
+                ])
+              ])
+            ]),
+            O("solanales", "تاج‌ریزی‌سانان", "Solanales", [
+              F("solanaceae", "تاج‌ریزیان", "Solanaceae", [
+                G("solanum", "تاج‌ریزی", "Solanum", [
+                  S("sl_lycopersicum", "گوجه‌فرنگی", "Solanum lycopersicum", "Tomato",  "آمریکای جنوبی · جهانی پس از قرن ۱۶"),
+                  S("sl_tuberosum",    "سیب‌زمینی", "Solanum tuberosum",    "Potato",  "آند · غذای پایه در بسیاری کشورها"),
+                  S("sl_melongena",    "بادمجان",   "Solanum melongena",    "Eggplant","هند · غذای رایج ایرانی")
+                ]),
+                G("capsicum", "فلفل", "Capsicum", [
+                  S("cp_annuum", "فلفل دلمه‌ای", "Capsicum annuum", "Capsicum annuum", "آمریکای مرکزی · انواع شیرین و تند")
+                ])
+              ])
+            ]),
+            O("brassicales", "شب‌بوسانان", "Brassicales", [
+              F("brassicaceae", "شب‌بوییان", "Brassicaceae", [
+                G("brassica", "کلم", "Brassica", [
+                  S("br_oleracea", "کلم", "Brassica oleracea", "Brassica oleracea", "اروپا · شامل کلم بروکلی، گل‌کلم، کلم برگ")
+                ])
+              ])
+            ]),
+            O("asterales", "مرکب‌سانان", "Asterales", [
+              F("asteraceae", "مرکبیان (کاسنی‌سانان)", "Asteraceae", [
+                G("helianthus", "آفتابگردان", "Helianthus", [
+                  S("hl_annuus", "آفتابگردان", "Helianthus annuus", "Sunflower", "آمریکای شمالی · دانه و روغن")
+                ]),
+                G("taraxacum", "قاصدک", "Taraxacum", [
+                  S("tx_officinale", "قاصدک معمولی", "Taraxacum officinale", "Dandelion", "همه‌جا · گل وحشی رایج")
+                ])
+              ])
+            ]),
+            O("apiales", "چترسانان", "Apiales", [
+              F("apiaceae", "چتریان", "Apiaceae", [
+                G("daucus", "هویج", "Daucus", [
+                  S("da_carota", "هویج", "Daucus carota", "Carrot", "اصل ایران و افغانستان · ریشهٔ نارنجی")
+                ]),
+                G("petroselinum", "جعفری", "Petroselinum", [
+                  S("pt_crispum", "جعفری معمولی", "Petroselinum crispum", "Parsley", "مدیترانه · سبزی پرکاربرد")
+                ]),
+                G("coriandrum", "گشنیز", "Coriandrum", [
+                  S("co_sativum", "گشنیز", "Coriandrum sativum", "Coriander", "خاورمیانه · سبزی و ادویه")
+                ])
+              ])
+            ]),
+            O("lamiales", "نعناع‌سانان", "Lamiales", [
+              F("lamiaceae", "نعناعیان", "Lamiaceae", [
+                G("mentha", "نعنا", "Mentha", [
+                  S("mn_spicata",   "نعنا سبز",    "Mentha spicata",     "Spearmint",  "مدیترانه · معطر"),
+                  S("mn_piperita",  "نعنا فلفلی",  "Mentha × piperita",  "Peppermint", "هیبرید · چای و عطر")
+                ]),
+                G("ocimum", "ریحان", "Ocimum", [
+                  S("oc_basilicum", "ریحان معمولی", "Ocimum basilicum", "Basil", "هند و ایران · غذا و دارویی")
+                ]),
+                G("lavandula", "اسطوخودوس", "Lavandula", [
+                  S("lv_angustifolia", "اسطوخودوس انگلیسی", "Lavandula angustifolia", "Lavandula angustifolia", "مدیترانه · عطر و آرام‌بخش")
+                ])
+              ])
+            ])
+          ]),
+          C("liliopsida", "تک‌لپه‌ای‌ها", "Liliopsida", [
+            O("poales", "گندم‌سانان", "Poales", [
+              F("poaceae", "گندمیان", "Poaceae", [
+                G("triticum", "گندم", "Triticum", [
+                  S("tr_aestivum", "گندم نان", "Triticum aestivum", "Wheat", "اصل خاورمیانه · غذای جهانی")
+                ]),
+                G("oryza", "برنج", "Oryza", [
+                  S("or_sativa", "برنج آسیایی", "Oryza sativa", "Rice", "آسیای شرقی · غذای پایهٔ نیمی از جهان")
+                ]),
+                G("zea", "ذرت", "Zea (plant)", [
+                  S("ze_mays", "ذرت", "Zea mays", "Maize", "مکزیک باستان · جهانی شد")
+                ]),
+                G("hordeum", "جو", "Hordeum", [
+                  S("ho_vulgare", "جو معمولی", "Hordeum vulgare", "Barley", "خاورمیانه · غلهٔ باستانی")
+                ])
+              ])
+            ]),
+            O("asparagales", "مارچوبه‌سانان", "Asparagales", [
+              F("amaryllidaceae", "نرگسیان", "Amaryllidaceae", [
+                G("allium", "سیر و پیاز", "Allium", [
+                  S("al_sativum", "سیر", "Allium sativum", "Garlic", "آسیای مرکزی · پزشکی و آشپزی"),
+                  S("al_cepa",    "پیاز", "Allium cepa",   "Onion",  "اصل آسیا · جهانی")
+                ])
+              ]),
+              F("orchidaceae", "ارکیدها", "Orchidaceae", [
+                G("vanilla", "وانیل", "Vanilla (genus)", [
+                  S("va_planifolia", "وانیل خوراکی", "Vanilla planifolia", "Vanilla planifolia", "مکزیک · ادویه گرانبها")
+                ])
+              ])
+            ]),
+            O("zingiberales", "زنجبیل‌سانان", "Zingiberales", [
+              F("musaceae", "موزیان", "Musaceae", [
+                G("musa", "موز", "Musa (genus)", [
+                  S("mu_acuminata", "موز خوراکی", "Musa acuminata", "Musa acuminata", "آسیای جنوب‌شرقی · میوهٔ جهانی")
+                ])
+              ]),
+              F("zingiberaceae", "زنجبیلیان", "Zingiberaceae", [
+                G("zingiber", "زنجبیل", "Zingiber", [
+                  S("zg_officinale", "زنجبیل", "Zingiber officinale", "Ginger", "آسیای جنوب‌شرقی · ادویه و دارو")
+                ])
+              ])
+            ])
+          ])
+        ])
+      ] },
+      { id: "fungi",    rank: "Kingdom", rankFa: "فرمانرو", fa: "قارچ‌ها",   latin: "Fungi",    wiki: "Fungus", children: [
+        P("basidiomycota", "قارچ‌های پایه‌دار", "Basidiomycota", [
+          C("agaricomycetes", "آگاریک‌سانان (رده)", "Agaricomycetes", [
+            O("agaricales", "آگاریک‌سانان", "Agaricales", [
+              F("agaricaceae", "آگاریک‌سانان (تیره)", "Agaricaceae", [
+                G("agaricus", "قارچ دکمه‌ای", "Agaricus", [
+                  S("ag_bisporus",   "قارچ دکمه‌ای",  "Agaricus bisporus",   "Agaricus bisporus",   "خوراکی · پرورشی در سراسر جهان"),
+                  S("ag_campestris", "قارچ مرغزار",   "Agaricus campestris", "Agaricus campestris", "علفزارها · خوراکی")
+                ])
+              ]),
+              F("amanitaceae", "آمانیتاها", "Amanitaceae", [
+                G("amanita", "آمانیتا", "Amanita", [
+                  S("am_muscaria",   "قارچ مگس‌کش",   "Amanita muscaria",   "Amanita muscaria",   "نیمکره شمالی · سمی و توهم‌زا · کلاسیک قرمز با نقطه‌های سفید"),
+                  S("am_phalloides", "کلاهک مرگ",      "Amanita phalloides", "Amanita phalloides", "اروپا · سمی‌ترین قارچ شناخته‌شده"),
+                  S("am_caesarea",   "قارچ سزار",      "Amanita caesarea",   "Amanita caesarea",   "اروپای جنوبی · خوراکی، محبوب رومیان")
+                ])
+              ]),
+              F("pleurotaceae", "صدف‌قارچ‌ها", "Pleurotaceae", [
+                G("pleurotus", "صدف‌قارچ", "Pleurotus", [
+                  S("pl_ostreatus", "صدف‌قارچ خوراکی", "Pleurotus ostreatus", "Pleurotus ostreatus", "خوراکی · پرورش آسان")
+                ])
+              ])
+            ]),
+            O("boletales", "بولت‌سانان", "Boletales", [
+              F("boletaceae", "بولت‌سانان (تیره)", "Boletaceae", [
+                G("boletus", "قارچ بولت", "Boletus", [
+                  S("bo_edulis", "پورچینی (قارچ پادشاه)", "Boletus edulis", "Boletus edulis", "اروپا و آمریکای شمالی · خوراکی گرانبها")
+                ])
+              ])
+            ]),
+            O("polyporales", "پلی‌پورسانان", "Polyporales", [
+              F("ganodermataceae", "گانودرماها", "Ganodermataceae", [
+                G("ganoderma", "گانودرما", "Ganoderma", [
+                  S("ga_lucidum", "قارچ ریشی", "Ganoderma lucidum", "Lingzhi mushroom", "آسیا · داروی سنتی")
+                ])
+              ])
+            ]),
+            O("cantharellales", "زرد‌قارچ‌سانان", "Cantharellales", [
+              F("cantharellaceae", "زرد‌قارچ‌ها", "Cantharellaceae", [
+                G("cantharellus", "زرد‌قارچ", "Cantharellus", [
+                  S("ca_cibarius", "زرد‌قارچ طلایی", "Cantharellus cibarius", "Cantharellus cibarius", "نیمکره شمالی · خوراکی گرانبها")
+                ])
+              ])
+            ])
+          ])
+        ]),
+        P("ascomycota", "قارچ‌های کیسه‌دار", "Ascomycota", [
+          C("saccharomycetes", "مخمرها", "Saccharomycetes", [
+            O("saccharomycetales", "مخمرسانان", "Saccharomycetales", [
+              F("saccharomycetaceae", "مخمرها (تیره)", "Saccharomycetaceae", [
+                G("saccharomyces", "ساکارومایسس", "Saccharomyces", [
+                  S("sc_cerevisiae", "مخمر نان و آبجو", "Saccharomyces cerevisiae", "Saccharomyces cerevisiae", "پایه نان، آبجو، شراب · مدل سلولی")
+                ])
+              ])
+            ])
+          ]),
+          C("pezizomycetes", "پزیزاسانان", "Pezizomycetes", [
+            O("pezizales", "پزیزاسانان (راسته)", "Pezizales", [
+              F("tuberaceae", "ترافل‌ها", "Tuberaceae", [
+                G("tuber", "ترافل", "Tuber (fungus)", [
+                  S("tu_magnatum",    "ترافل سفید",  "Tuber magnatum",    "Tuber magnatum",    "ایتالیا · گران‌ترین قارچ جهان"),
+                  S("tu_melanosporum","ترافل سیاه",  "Tuber melanosporum","Tuber melanosporum","فرانسه و اسپانیا")
+                ])
+              ]),
+              F("morchellaceae", "خروج‌قارچ‌ها", "Morchellaceae", [
+                G("morchella", "خروج‌قارچ", "Morchella", [
+                  S("mr_esculenta", "خروج‌قارچ معمولی", "Morchella esculenta", "Morchella esculenta", "نیمکره شمالی · خوراکی، فصل بهار")
+                ])
+              ])
+            ])
+          ]),
+          C("eurotiomycetes", "یوروتیومایست‌ها", "Eurotiomycetes", [
+            O("eurotiales", "یوروتیال‌ها", "Eurotiales", [
+              F("trichocomaceae", "تریکوکوماسه‌ها", "Trichocomaceae", [
+                G("penicillium", "پنی‌سیلیوم", "Penicillium", [
+                  S("pe_chrysogenum", "تولیدکنندهٔ پنی‌سیلین", "Penicillium chrysogenum", "Penicillium chrysogenum", "تولید آنتی‌بیوتیک پنی‌سیلین"),
+                  S("pe_camemberti",  "کپک کاممبرت",          "Penicillium camemberti", "Penicillium camemberti", "تولید پنیر کاممبرت و بری")
+                ]),
+                G("aspergillus", "آسپرژیلوس", "Aspergillus", [
+                  S("as_niger",  "آسپرژیلوس سیاه", "Aspergillus niger",  "Aspergillus niger",  "تولید اسید سیتریک"),
+                  S("as_oryzae", "کوجی",          "Aspergillus oryzae", "Aspergillus oryzae", "تولید سس سویا، میسو، ساکی")
+                ])
+              ])
+            ])
+          ])
+        ]),
+        P("mucoromycota", "موکورسانان", "Mucoromycota", [
+          C("mucoromycetes", "موکورسانان (رده)", "Mucoromycetes", [
+            O("mucorales", "موکورال‌ها", "Mucorales", [
+              F("mucoraceae", "موکورها", "Mucoraceae", [
+                G("rhizopus", "ریزوپوس", "Rhizopus", [
+                  S("rh_stolonifer", "کپک نان سیاه", "Rhizopus stolonifer", "Rhizopus stolonifer", "کپک رایج روی نان قدیمی")
+                ])
+              ])
+            ])
+          ])
+        ])
+      ] },
+      { id: "protista", rank: "Kingdom", rankFa: "فرمانرو", fa: "آغازیان",   latin: "Protista", wiki: "Protist" },
+      { id: "animalia", rank: "Kingdom", rankFa: "فرمانرو", fa: "جانوران",   latin: "Animalia", wiki: "Animal", children: [
+
+        // ════ VERTEBRATES ════
+        { id: "vertebrata", rank: "Group", rankFa: "گروه", fa: "مهره‌داران", latin: "Vertebrata", wiki: "Vertebrate", children: [
+          P("chordata", "طنابداران", "Chordata", [
+
+            // ── MAMMALIA ──
+            C("mammalia", "پستانداران", "Mammalia", [
+              O("carnivora", "گوشتخواران", "Carnivora", [
+                F("felidae", "گربه‌سانان", "Felidae", [
+                  G("panthera", "پلنگ‌سان", "Panthera", [
+                    S("p_leo",    "شیر",        "Panthera leo",    "Panthera leo",    "آفریقای زیرصحرا و جنگل گیر در هند · IUCN: آسیب‌پذیر"),
+                    S("p_tigris", "ببر",        "Panthera tigris", "Panthera tigris", "آسیا · IUCN: در خطر انقراض"),
+                    S("p_onca",   "جگوار",      "Panthera onca",   "Panthera onca",   "آمریکای جنوبی · IUCN: نزدیک به تهدید"),
+                    S("p_pardus", "پلنگ",       "Panthera pardus", "Panthera pardus", "آفریقا و آسیا · IUCN: آسیب‌پذیر"),
+                    S("p_uncia",  "پلنگ برفی",  "Panthera uncia",  "Snow leopard",    "کوهستان‌های آسیای مرکزی · IUCN: آسیب‌پذیر")
+                  ]),
+                  G("felis", "گربه‌های کوچک", "Felis", [
+                    S("f_catus",      "گربهٔ خانگی", "Felis catus",      "Cat",            "اهلی‌شده، در سراسر جهان"),
+                    S("f_silvestris", "گربهٔ وحشی",  "Felis silvestris", "European wildcat","اروپا و آسیا")
+                  ]),
+                  G("acinonyx", "یوزپلنگ", "Acinonyx", [
+                    S("a_jubatus", "یوزپلنگ", "Acinonyx jubatus", "Cheetah", "سریع‌ترین جانور خشکی · آفریقا و ایران")
+                  ]),
+                  G("lynx_g", "سیاه‌گوش", "Lynx", [
+                    S("l_lynx",   "سیاه‌گوش اوراسیایی", "Lynx lynx",   "Eurasian lynx", "اروپا و آسیا"),
+                    S("l_rufus",  "سیاه‌گوش سرخ",      "Lynx rufus",  "Bobcat",        "آمریکای شمالی")
+                  ])
+                ]),
+                F("canidae", "سگ‌سانان", "Canidae", [
+                  G("canis", "سگ و گرگ", "Canis", [
+                    S("c_lupus",      "گرگ خاکستری", "Canis lupus",            "Wolf", "نیمکره شمالی"),
+                    S("c_familiaris", "سگ خانگی",   "Canis lupus familiaris", "Dog",  "اهلی‌شده، در همه‌جا")
+                  ]),
+                  G("vulpes", "روباه", "Vulpes", [
+                    S("v_vulpes", "روباه قرمز", "Vulpes vulpes", "Red fox", "گستردهٔ نیمکره شمالی"),
+                    S("v_zerda",  "فنک",       "Vulpes zerda",  "Fennec fox", "صحرای آفریقا")
+                  ])
+                ]),
+                F("ursidae", "خرس‌سانان", "Ursidae", [
+                  G("ursus", "خرس", "Ursus", [
+                    S("u_arctos",    "خرس قهوه‌ای", "Ursus arctos",    "Brown bear",  "اروپا، آسیا، آمریکای شمالی"),
+                    S("u_maritimus", "خرس قطبی",   "Ursus maritimus", "Polar bear",  "قطب شمال · IUCN: آسیب‌پذیر"),
+                    S("u_americanus","خرس سیاه آمریکایی","Ursus americanus","American black bear","آمریکای شمالی")
+                  ]),
+                  G("ailuropoda", "خرس پاندا", "Ailuropoda", [
+                    S("a_melanoleuca", "پاندای غول‌پیکر", "Ailuropoda melanoleuca", "Giant panda", "کوهستان‌های چین · IUCN: آسیب‌پذیر")
+                  ])
+                ]),
+                F("mustelidae", "راسوسانان", "Mustelidae", [
+                  G("enhydra", "سمور دریایی", "Enhydra", [
+                    S("e_lutris", "سمور دریایی", "Enhydra lutris", "Sea otter", "ساحل اقیانوس آرام شمالی")
+                  ]),
+                  G("lutra", "سمور آبی", "Lutra", [
+                    S("l_lutra_sp", "سمور اروپایی", "Lutra lutra", "Eurasian otter", "اروپا و آسیا")
+                  ])
+                ]),
+                F("phocidae", "فک‌سانان", "Phocidae", [
+                  G("phoca", "فک", "Phoca", [
+                    S("ph_vitulina", "فک بندری", "Phoca vitulina", "Harbor seal", "آب‌های ساحلی سرد")
+                  ]),
+                  G("mirounga", "فک فیلی", "Mirounga", [
+                    S("mi_leonina", "فک فیلی جنوبی", "Mirounga leonina", "Southern elephant seal", "اقیانوس جنوبی · بزرگ‌ترین خرس آبی")
+                  ])
+                ]),
+                F("otariidae", "شیرماهی‌های گوش‌دار", "Otariidae", [
+                  G("zalophus", "شیرماهی کالیفرنیایی", "Zalophus", [
+                    S("z_californianus", "شیرماهی کالیفرنیایی", "Zalophus californianus", "California sea lion", "ساحل غربی آمریکای شمالی")
+                  ])
+                ]),
+                F("odobenidae", "گرازماهی‌ها", "Odobenidae", [
+                  G("odobenus", "گرازماهی", "Odobenus", [
+                    S("od_rosmarus", "گرازماهی", "Odobenus rosmarus", "Walrus", "قطب شمال · عاج‌های بلند")
+                  ])
+                ]),
+                F("hyaenidae", "کفتارها", "Hyaenidae", [
+                  G("crocuta", "کفتار خالدار", "Crocuta", [
+                    S("cr_crocuta", "کفتار خالدار", "Crocuta crocuta", "Spotted hyena", "آفریقای زیرصحرا · جامعهٔ مادرسالار")
+                  ]),
+                  G("hyaena_g", "کفتار", "Hyaena", [
+                    S("hy_hyaena", "کفتار راه‌راه", "Hyaena hyaena", "Striped hyena", "خاورمیانه، شمال آفریقا، هند · ایران")
+                  ])
+                ]),
+                F("procyonidae", "راکون‌سانان", "Procyonidae", [
+                  G("procyon", "راکون", "Procyon (genus)", [
+                    S("pc_lotor", "راکون شمالی", "Procyon lotor", "Raccoon", "آمریکای شمالی · سازگار با شهر")
+                  ])
+                ]),
+                F("mephitidae", "راسوهای بدبو", "Mephitidae", [
+                  G("mephitis", "راسوی بدبو", "Mephitis", [
+                    S("mp_mephitis", "راسوی بدبوی راه‌راه", "Mephitis mephitis", "Striped skunk", "آمریکای شمالی · غدد دفاعی")
+                  ])
+                ]),
+                F("viverridae", "زباد‌سانان", "Viverridae", [
+                  G("paradoxurus", "گربهٔ نخل", "Paradoxurus", [
+                    S("pa_hermaphroditus", "گربهٔ نخل آسیایی", "Paradoxurus hermaphroditus", "Asian palm civet", "آسیای جنوبی · قهوهٔ کوپی لواک")
+                  ])
+                ]),
+                F("herpestidae", "نمس‌سانان", "Herpestidae", [
+                  G("suricata", "میرکات", "Suricata", [
+                    S("su_suricatta", "میرکات", "Suricata suricatta", "Meerkat", "صحرای کالاهاری · گروه‌زی")
+                  ]),
+                  G("herpestes", "نمس", "Herpestes", [
+                    S("hr_ichneumon", "نمس مصری", "Herpestes ichneumon", "Egyptian mongoose", "آفریقا، شبه‌جزیرهٔ ایبری، خاورمیانه")
+                  ])
+                ])
+              ]),
+
+              O("primates", "نخستیان", "Primates", [
+                F("hominidae", "آدم‌سانان", "Hominidae", [
+                  G("homo", "انسان", "Homo", [
+                    S("h_sapiens", "انسان خردمند", "Homo sapiens", "Human", "تمام جهان · حدود ۸ میلیارد فرد")
+                  ]),
+                  G("pan", "شامپانزه", "Pan", [
+                    S("p_troglodytes", "شامپانزه معمولی", "Pan troglodytes", "Chimpanzee", "آفریقای مرکزی · IUCN: در معرض خطر"),
+                    S("p_paniscus",    "بونوبو",         "Pan paniscus",    "Bonobo",     "حوضهٔ کنگو")
+                  ]),
+                  G("gorilla_g", "گوریل", "Gorilla", [
+                    S("g_gorilla",  "گوریل غربی",  "Gorilla gorilla",  "Western gorilla",  "آفریقا · IUCN: شدیداً در معرض خطر"),
+                    S("g_beringei", "گوریل شرقی",  "Gorilla beringei", "Eastern gorilla",  "آفریقای شرقی")
+                  ]),
+                  G("pongo", "اورانگوتان", "Pongo", [
+                    S("po_pygmaeus",  "اورانگوتان بورنئویی", "Pongo pygmaeus", "Bornean orangutan", "بورنئو · IUCN: شدیداً در معرض خطر"),
+                    S("po_abelii",    "اورانگوتان سوماترایی","Pongo abelii",   "Sumatran orangutan","سوماترا")
+                  ])
+                ]),
+                F("cercopithecidae", "میمون‌های قدیم", "Cercopithecidae", [
+                  G("macaca", "ماکاک", "Macaca", [
+                    S("m_mulatta", "ماکاک رزوس", "Macaca mulatta", "Rhesus macaque", "آسیا"),
+                    S("m_fuscata", "ماکاک ژاپنی", "Macaca fuscata", "Japanese macaque", "ژاپن · حمام داغ‌چشمه")
+                  ]),
+                  G("papio", "بابون", "Papio", [
+                    S("pa_anubis", "بابون زیتونی", "Papio anubis", "Olive baboon", "آفریقا"),
+                    S("pa_hamadryas", "بابون مقدس", "Papio hamadryas", "Hamadryas baboon", "شاخ آفریقا و عربستان · مقدس در مصر باستان")
+                  ]),
+                  G("mandrillus", "ماندریل", "Mandrillus", [
+                    S("ma_sphinx", "ماندریل", "Mandrillus sphinx", "Mandrill", "آفریقای مرکزی غربی · صورت رنگارنگ")
+                  ])
+                ]),
+                F("hylobatidae", "گیبون‌ها", "Hylobatidae", [
+                  G("hylobates", "گیبون", "Hylobates", [
+                    S("hy_lar", "گیبون دست‌سفید", "Hylobates lar", "Lar gibbon", "آسیای جنوب‌شرقی · گیبون آوازخوان")
+                  ])
+                ]),
+                F("lemuridae", "لمورها", "Lemuridae", [
+                  G("lemur", "لمور دم‌حلقه‌ای", "Lemur (genus)", [
+                    S("le_catta", "لمور دم‌حلقه‌ای", "Lemur catta", "Ring-tailed lemur", "ماداگاسکار · IUCN: در معرض خطر")
+                  ]),
+                  G("indri", "ایندری", "Indri", [
+                    S("in_indri", "ایندری", "Indri indri", "Indri", "ماداگاسکار · بزرگ‌ترین لمور")
+                  ])
+                ]),
+                F("cebidae", "کاپوچین‌ها", "Cebidae", [
+                  G("cebus", "میمون کاپوچین", "Cebus", [
+                    S("cb_capucinus", "کاپوچین صورت‌سفید", "Cebus capucinus", "Panamanian white-faced capuchin", "آمریکای مرکزی")
+                  ])
+                ]),
+                F("atelidae", "میمون‌های عنکبوتی", "Atelidae", [
+                  G("ateles", "میمون عنکبوتی", "Ateles", [
+                    S("at_geoffroyi", "میمون عنکبوتی جئوفروا", "Ateles geoffroyi", "Geoffroy's spider monkey", "آمریکای مرکزی")
+                  ]),
+                  G("alouatta", "میمون غُران", "Alouatta", [
+                    S("al_palliata", "میمون غُران شنل‌دار", "Alouatta palliata", "Mantled howler", "آمریکای مرکزی · بلندترین آوای پستانداران")
+                  ])
+                ]),
+                F("tarsiidae", "تارسیه‌ها", "Tarsiidae", [
+                  G("tarsius", "تارسیه", "Tarsius", [
+                    S("tr_tarsier", "تارسیهٔ سپانتاینگن", "Tarsius tarsier", "Tarsius tarsier", "اندونزی · چشمان غول‌پیکر نسبت به جمجمه")
+                  ])
+                ])
+              ]),
+
+              O("cetacea", "نهنگ‌سانان", "Cetacea", [
+                F("delphinidae", "دلفین‌سانان", "Delphinidae", [
+                  G("tursiops", "دلفین بینی‌بطری", "Tursiops", [
+                    S("t_truncatus", "دلفین بینی‌بطری", "Tursiops truncatus", "Common bottlenose dolphin", "اقیانوس‌های گرمسیری و معتدل")
+                  ]),
+                  G("orcinus", "نهنگ قاتل", "Orcinus", [
+                    S("o_orca", "اورکا", "Orcinus orca", "Orca", "همهٔ اقیانوس‌ها · شکارچی بالایی")
+                  ])
+                ]),
+                F("balaenopteridae", "نهنگ‌های شیاردار", "Balaenopteridae", [
+                  G("balaenoptera", "نهنگ آبی", "Balaenoptera", [
+                    S("b_musculus", "نهنگ آبی",  "Balaenoptera musculus", "Blue whale", "بزرگ‌ترین جانور تاریخ زمین"),
+                    S("b_physalus", "نهنگ ‌فین", "Balaenoptera physalus", "Fin whale",  "همهٔ اقیانوس‌ها")
+                  ]),
+                  G("megaptera", "نهنگ گوژپشت", "Megaptera", [
+                    S("m_novaeangliae", "نهنگ گوژپشت", "Megaptera novaeangliae", "Humpback whale", "همهٔ اقیانوس‌ها · مهاجرت طولانی")
+                  ])
+                ]),
+                F("physeteridae", "نهنگ‌های عنبر", "Physeteridae", [
+                  G("physeter", "نهنگ عنبر", "Physeter", [
+                    S("ps_macrocephalus", "نهنگ عنبر", "Physeter macrocephalus", "Sperm whale", "همهٔ اقیانوس‌ها · بزرگ‌ترین مغز جانوری")
+                  ])
+                ]),
+                F("monodontidae", "نهنگ‌های قطبی", "Monodontidae", [
+                  G("monodon", "نهنگ تک‌شاخ", "Monodon", [
+                    S("mn_monoceros", "نارال (نهنگ تک‌شاخ)", "Monodon monoceros", "Narwhal", "قطب شمال · عاج مارپیچی بلند")
+                  ]),
+                  G("delphinapterus", "بلوگا", "Delphinapterus", [
+                    S("dp_leucas", "بلوگا (نهنگ سفید)", "Delphinapterus leucas", "Beluga whale", "قطب شمال")
+                  ])
+                ]),
+                F("phocoenidae", "گرازماهیان دریایی", "Phocoenidae", [
+                  G("phocoena", "گرازماهی", "Phocoena", [
+                    S("pn_phocoena", "گرازماهی بندری", "Phocoena phocoena", "Harbour porpoise", "نیمکره شمالی")
+                  ])
+                ]),
+                F("ziphiidae", "نهنگ‌های منقاردار", "Ziphiidae", [
+                  G("ziphius", "نهنگ منقاردار کوویه", "Ziphius", [
+                    S("zi_cavirostris", "نهنگ منقاردار کوویه", "Ziphius cavirostris", "Cuvier's beaked whale", "اقیانوس‌های عمیق · رکورد عمیق‌ترین شیرجهٔ پستاندار")
+                  ])
+                ])
+              ]),
+
+              O("proboscidea", "خرطوم‌داران", "Proboscidea", [
+                F("elephantidae", "فیل‌سانان", "Elephantidae", [
+                  G("loxodonta", "فیل آفریقایی", "Loxodonta", [
+                    S("l_africana", "فیل ساوانا", "Loxodonta africana", "African bush elephant", "آفریقا · IUCN: در معرض خطر")
+                  ]),
+                  G("elephas", "فیل آسیایی", "Elephas", [
+                    S("e_maximus", "فیل آسیایی", "Elephas maximus", "Asian elephant", "هند و آسیای جنوب‌شرقی")
+                  ])
+                ])
+              ]),
+
+              O("rodentia", "جوندگان", "Rodentia", [
+                F("sciuridae", "سنجاب‌سانان", "Sciuridae", [
+                  G("sciurus", "سنجاب", "Sciurus", [
+                    S("s_carolinensis", "سنجاب خاکستری شرقی", "Sciurus carolinensis", "Eastern gray squirrel", "آمریکای شمالی"),
+                    S("s_vulgaris",     "سنجاب قرمز",         "Sciurus vulgaris",     "Red squirrel",          "اروپا و آسیا")
+                  ])
+                ]),
+                F("castoridae", "سگ‌آبی‌سانان", "Castoridae", [
+                  G("castor", "سگ آبی", "Castor", [
+                    S("c_canadensis", "سگ آبی آمریکای شمالی", "Castor canadensis", "North American beaver", "آمریکای شمالی")
+                  ])
+                ]),
+                F("caviidae", "کابی‌سانان", "Caviidae", [
+                  G("hydrochoerus", "کاپیبارا", "Hydrochoerus", [
+                    S("h_hydrochaeris", "کاپیبارا", "Hydrochoerus hydrochaeris", "Capybara", "آمریکای جنوبی · بزرگ‌ترین جوندهٔ جهان")
+                  ])
+                ]),
+                F("muridae", "موش‌سانان", "Muridae", [
+                  G("mus", "موش خانگی", "Mus", [
+                    S("m_musculus", "موش خانگی", "Mus musculus", "House mouse", "همه‌جا · مدل آزمایشگاهی")
+                  ]),
+                  G("rattus", "موش صحرایی", "Rattus", [
+                    S("r_norvegicus", "موش صحرایی قهوه‌ای", "Rattus norvegicus", "Brown rat", "همه‌جا"),
+                    S("r_rattus",     "موش سیاه",         "Rattus rattus",     "Black rat", "همه‌جا")
+                  ])
+                ])
+              ]),
+
+              O("chiroptera", "خفاش‌ها", "Chiroptera", [
+                F("pteropodidae", "روباه‌های پرنده", "Pteropodidae", [
+                  G("pteropus", "خفاش میوه‌خوار", "Pteropus", [
+                    S("p_giganteus", "خفاش هندی غول‌پیکر", "Pteropus giganteus", "Indian flying fox", "هند و پاکستان")
+                  ])
+                ]),
+                F("vespertilionidae", "خفاش‌های شب‌چر", "Vespertilionidae", [
+                  G("myotis", "میوتیس", "Myotis", [
+                    S("m_lucifugus", "خفاش قهوه‌ای کوچک", "Myotis lucifugus", "Little brown bat", "آمریکای شمالی")
+                  ])
+                ])
+              ]),
+
+              O("artiodactyla", "زوج‌سمان", "Artiodactyla", [
+                F("cervidae", "گوزن‌سانان", "Cervidae", [
+                  G("cervus", "گوزن قرمز", "Cervus", [
+                    S("c_elaphus", "گوزن قرمز", "Cervus elaphus", "Red deer", "اروپا، آسیا، آفریقای شمالی")
+                  ]),
+                  G("alces", "گوزن شمالی", "Alces", [
+                    S("a_alces", "گوزن شمالی", "Alces alces", "Moose", "نیمکره شمالی")
+                  ])
+                ]),
+                F("giraffidae", "زرافه‌سانان", "Giraffidae", [
+                  G("giraffa", "زرافه", "Giraffa", [
+                    S("g_camelopardalis", "زرافه", "Giraffa camelopardalis", "Giraffe", "آفریقا · بلندترین جانور خشکی")
+                  ])
+                ]),
+                F("bovidae", "گاوسانان", "Bovidae", [
+                  G("bos", "گاو", "Bos", [
+                    S("b_taurus", "گاو خانگی", "Bos taurus", "Cattle", "اهلی‌شده، در همه‌جا")
+                  ]),
+                  G("ovis", "گوسفند", "Ovis", [
+                    S("o_aries", "گوسفند خانگی", "Ovis aries", "Sheep", "اهلی‌شده، در همه‌جا")
+                  ]),
+                  G("capra", "بز", "Capra", [
+                    S("c_hircus", "بز خانگی",  "Capra hircus",   "Goat",         "اهلی‌شده"),
+                    S("c_aegagrus_sp", "بز وحشی", "Capra aegagrus", "Wild goat",  "خاورمیانه و ایران")
+                  ])
+                ]),
+                F("hippopotamidae", "اسب‌آبی‌سانان", "Hippopotamidae", [
+                  G("hippopotamus", "اسب آبی", "Hippopotamus", [
+                    S("h_amphibius", "اسب آبی معمولی", "Hippopotamus amphibius", "Hippopotamus", "آفریقای زیرصحرا")
+                  ])
+                ]),
+                F("suidae", "خوک‌سانان", "Suidae", [
+                  G("sus", "خوک", "Sus (genus)", [
+                    S("su_scrofa",       "گراز",          "Sus scrofa",           "Wild boar",         "اوراسیا و شمال آفریقا · جد خوک خانگی"),
+                    S("su_domesticus",   "خوک خانگی",     "Sus scrofa domesticus","Pig",               "اهلی‌شده، در سراسر جهان")
+                  ]),
+                  G("phacochoerus", "وارت‌هاگ", "Phacochoerus", [
+                    S("ph_africanus", "وارت‌هاگ معمولی", "Phacochoerus africanus", "Common warthog", "آفریقا")
+                  ])
+                ]),
+                F("camelidae", "شترسانان", "Camelidae", [
+                  G("camelus", "شتر", "Camelus", [
+                    S("cm_dromedarius", "شتر یک‌کوهانه",  "Camelus dromedarius", "Dromedary",       "خاورمیانه و شمال آفریقا"),
+                    S("cm_bactrianus",  "شتر دوکوهانه",   "Camelus bactrianus",  "Bactrian camel",  "آسیای مرکزی")
+                  ]),
+                  G("lama", "لاما و آلپاکا", "Lama (genus)", [
+                    S("lm_glama",  "لاما",   "Lama glama",  "Llama",   "آمریکای جنوبی · اهلی‌شده"),
+                    S("lm_pacos",  "آلپاکا", "Vicugna pacos","Alpaca", "آند · بافت پشم")
+                  ]),
+                  G("vicugna", "ویکونا", "Vicugna", [
+                    S("vi_vicugna", "ویکونا", "Vicugna vicugna", "Vicuña", "آند · جد آلپاکا")
+                  ])
+                ]),
+                F("antilocapridae", "پرنگ‌بزها", "Antilocapridae", [
+                  G("antilocapra", "پرنگ‌بز آمریکایی", "Antilocapra", [
+                    S("an_americana", "پرنگ‌بز", "Antilocapra americana", "Pronghorn", "آمریکای شمالی · سریع‌ترین جانور آمریکا")
+                  ])
+                ])
+              ]),
+
+              O("perissodactyla", "فردسمان", "Perissodactyla", [
+                F("equidae", "اسب‌سانان", "Equidae", [
+                  G("equus", "اسب", "Equus", [
+                    S("eq_ferus",   "اسب خانگی",        "Equus ferus caballus", "Horse",       "اهلی‌شده، در همه‌جا"),
+                    S("eq_quagga",  "گورخر دشت",       "Equus quagga",          "Plains zebra","آفریقای شرقی و جنوبی"),
+                    S("eq_africanus","الاغ خانگی",     "Equus asinus",          "Donkey",      "اهلی‌شده")
+                  ])
+                ]),
+                F("rhinocerotidae", "کرگدن‌سانان", "Rhinocerotidae", [
+                  G("rhinoceros", "کرگدن هندی", "Rhinoceros", [
+                    S("r_unicornis", "کرگدن هندی", "Rhinoceros unicornis", "Indian rhinoceros", "هند و نپال · IUCN: آسیب‌پذیر")
+                  ])
+                ])
+              ]),
+
+              O("lagomorpha", "خرگوش‌سانان", "Lagomorpha", [
+                F("leporidae", "خرگوش‌ها", "Leporidae", [
+                  G("oryctolagus", "خرگوش اروپایی", "Oryctolagus", [
+                    S("o_cuniculus", "خرگوش اروپایی", "Oryctolagus cuniculus", "European rabbit", "اروپا · جد خرگوش‌های اهلی")
+                  ]),
+                  G("lepus", "خرگوش صحرایی", "Lepus", [
+                    S("l_europaeus", "خرگوش صحرایی اروپایی", "Lepus europaeus", "European hare", "اروپا و غرب آسیا")
+                  ])
+                ])
+              ]),
+
+              O("diprotodontia", "دوسرشت‌دندانان", "Diprotodontia", [
+                F("macropodidae", "کانگوروسانان", "Macropodidae", [
+                  G("macropus", "کانگورو", "Macropus", [
+                    S("m_giganteus", "کانگورو خاکستری شرقی", "Macropus giganteus", "Eastern grey kangaroo", "استرالیای شرقی")
+                  ])
+                ]),
+                F("phascolarctidae", "کوآلاسانان", "Phascolarctidae", [
+                  G("phascolarctos", "کوآلا", "Phascolarctos", [
+                    S("p_cinereus", "کوآلا", "Phascolarctos cinereus", "Koala", "استرالیا · IUCN: آسیب‌پذیر")
+                  ])
+                ])
+              ]),
+
+              O("monotremata", "تک‌سوراخان", "Monotremata", [
+                F("ornithorhynchidae", "اردک‌منقاران", "Ornithorhynchidae", [
+                  G("ornithorhynchus", "پلاتی‌پوس", "Ornithorhynchus", [
+                    S("o_anatinus", "پلاتی‌پوس", "Ornithorhynchus anatinus", "Platypus", "استرالیا · پستاندار تخم‌گذار")
+                  ])
+                ]),
+                F("tachyglossidae", "اکیدناسانان", "Tachyglossidae", [
+                  G("tachyglossus", "اکیدنا", "Tachyglossus", [
+                    S("t_aculeatus", "اکیدنای کوتاه‌منقار", "Tachyglossus aculeatus", "Short-beaked echidna", "استرالیا و گینهٔ نو")
+                  ])
+                ])
+              ]),
+
+              O("xenarthra", "ناسمان", "Xenarthra", [
+                F("myrmecophagidae", "مورچه‌خوارها", "Myrmecophagidae", [
+                  G("myrmecophaga", "مورچه‌خوار غول‌پیکر", "Myrmecophaga", [
+                    S("my_tridactyla", "مورچه‌خوار غول‌پیکر", "Myrmecophaga tridactyla", "Giant anteater", "آمریکای مرکزی و جنوبی · زبان بسیار بلند")
+                  ])
+                ]),
+                F("bradypodidae", "تنبل‌های سه‌انگشتی", "Bradypodidae", [
+                  G("bradypus", "تنبل سه‌انگشتی", "Bradypus", [
+                    S("bd_tridactylus", "تنبل سه‌انگشتی گلوقهوه‌ای", "Bradypus tridactylus", "Pale-throated sloth", "آمریکای جنوبی · کندترین پستاندار")
+                  ])
+                ]),
+                F("megalonychidae", "تنبل‌های دو‌انگشتی", "Choloepodidae", [
+                  G("choloepus", "تنبل دو‌انگشتی", "Choloepus", [
+                    S("cl_hoffmanni", "تنبل دو‌انگشتی هافمن", "Choloepus hoffmanni", "Hoffmann's two-toed sloth", "آمریکای مرکزی و جنوبی")
+                  ])
+                ]),
+                F("dasypodidae", "آرمادیلوها", "Dasypodidae", [
+                  G("dasypus", "آرمادیلو", "Dasypus", [
+                    S("dp_novemcinctus", "آرمادیلو نه‌نواری", "Dasypus novemcinctus", "Nine-banded armadillo", "آمریکا · پوست استخوانی زرهی")
+                  ])
+                ])
+              ]),
+
+              O("sirenia", "پری‌دریایی‌سانان", "Sirenia", [
+                F("trichechidae", "مانتی‌ها", "Trichechidae", [
+                  G("trichechus", "مانتی", "Trichechus", [
+                    S("tc_manatus",  "مانتی غرب هند",  "Trichechus manatus",  "West Indian manatee",  "کارائیب و سواحل آمریکا"),
+                    S("tc_inunguis", "مانتی آمازون",   "Trichechus inunguis", "Amazonian manatee",    "حوضهٔ آمازون")
+                  ])
+                ]),
+                F("dugongidae", "دوگونگ‌ها", "Dugongidae", [
+                  G("dugong", "دوگونگ", "Dugong (genus)", [
+                    S("du_dugon", "دوگونگ", "Dugong dugon", "Dugong", "هندوآرام · دریایی، گیاه‌خوار")
+                  ])
+                ])
+              ]),
+
+              O("pholidota", "پانگولین‌سانان", "Pholidota", [
+                F("manidae", "پانگولین‌ها", "Manidae", [
+                  G("manis", "پانگولین", "Manis", [
+                    S("mn_javanica",  "پانگولین سوماترایی", "Manis javanica",  "Sunda pangolin",  "آسیای جنوب‌شرقی · IUCN: شدیداً در خطر"),
+                    S("mn_tricuspis", "پانگولین درختی",     "Phataginus tricuspis", "White-bellied pangolin", "آفریقای مرکزی و غربی")
+                  ])
+                ])
+              ]),
+
+              O("eulipotyphla", "حشره‌خواران", "Eulipotyphla", [
+                F("erinaceidae", "جوجه‌تیغی‌ها", "Erinaceidae", [
+                  G("erinaceus", "جوجه‌تیغی", "Erinaceus", [
+                    S("er_europaeus", "جوجه‌تیغی اروپایی", "Erinaceus europaeus", "European hedgehog", "اروپا"),
+                    S("er_concolor",  "جوجه‌تیغی سفیدسینه شرقی", "Erinaceus concolor", "Southern white-breasted hedgehog", "خاورمیانه · ایران")
+                  ])
+                ]),
+                F("talpidae", "موش‌کورها", "Talpidae", [
+                  G("talpa", "موش کور", "Talpa (genus)", [
+                    S("tl_europaea", "موش کور اروپایی", "Talpa europaea", "European mole", "اروپا")
+                  ])
+                ]),
+                F("soricidae", "حشره‌خواران واقعی", "Soricidae", [
+                  G("sorex", "حشره‌خوار", "Sorex", [
+                    S("so_araneus", "حشره‌خوار معمولی اروپا", "Sorex araneus", "Common shrew", "اروپا و شمال آسیا · سوخت‌وساز بسیار سریع")
+                  ])
+                ])
+              ]),
+
+              O("dasyuromorphia", "کیسه‌داران گوشتخوار", "Dasyuromorphia", [
+                F("dasyuridae", "تاسمانی‌دیولان", "Dasyuridae", [
+                  G("sarcophilus", "شیطان تاسمانی", "Sarcophilus", [
+                    S("sc_harrisii", "شیطان تاسمانی", "Sarcophilus harrisii", "Tasmanian devil", "تاسمانی · IUCN: در معرض خطر")
+                  ]),
+                  G("dasyurus", "کوول", "Dasyurus", [
+                    S("ds_viverrinus", "کوول شرقی", "Dasyurus viverrinus", "Eastern quoll", "تاسمانی")
+                  ])
+                ])
+              ]),
+
+              O("didelphimorphia", "اپوسوم‌های آمریکایی", "Didelphimorphia", [
+                F("didelphidae", "اپوسوم‌ها", "Didelphidae", [
+                  G("didelphis", "اپوسوم", "Didelphis", [
+                    S("di_virginiana", "اپوسوم ویرجینیا", "Didelphis virginiana", "Virginia opossum", "آمریکای شمالی · تنها کیسه‌دار آمریکای شمالی")
+                  ])
+                ])
+              ]),
+
+              O("hyracoidea", "نشخوارک‌سانان (هیراکس)", "Hyracoidea", [
+                F("procaviidae", "هیراکس‌ها", "Procaviidae", [
+                  G("procavia", "هیراکس صخره‌ای", "Procavia", [
+                    S("pv_capensis", "هیراکس صخره‌ای", "Procavia capensis", "Rock hyrax", "آفریقا و خاورمیانه · خویشاوند نزدیک فیل")
+                  ])
+                ])
+              ]),
+
+              O("tubulidentata", "زمین‌خرک‌سانان", "Tubulidentata", [
+                F("orycteropodidae", "زمین‌خرک‌ها", "Orycteropodidae", [
+                  G("orycteropus", "زمین‌خرک", "Orycteropus", [
+                    S("or_afer", "زمین‌خرک (آردوارک)", "Orycteropus afer", "Aardvark", "آفریقای زیرصحرا · مورچه‌خوار شب‌زی")
+                  ])
+                ])
+              ]),
+
+              O("erinaceomorpha", "افعالیت‌های شب‌گرد", "Macroscelidea", [
+                F("macroscelididae", "موش‌خرطومی‌ها", "Macroscelididae", [
+                  G("elephantulus", "موش‌خرطومی", "Elephantulus", [
+                    S("el_rufescens", "موش‌خرطومی شاخ آفریقا", "Elephantulus rufescens", "Rufous elephant shrew", "شرق آفریقا")
+                  ])
+                ])
+              ])
+            ]),
+
+            // ── AVES ──
+            C("aves", "پرندگان", "Aves", [
+              O("struthioniformes", "شترمرغ‌سانان", "Struthioniformes", [
+                F("struthionidae", "شترمرغ‌ها", "Struthionidae", [
+                  G("struthio", "شترمرغ", "Struthio", [
+                    S("st_camelus", "شترمرغ معمولی", "Struthio camelus", "Common ostrich", "آفریقا · بزرگ‌ترین پرندهٔ زنده")
+                  ])
+                ])
+              ]),
+              O("casuariiformes", "ایمو و کاسوآری‌سانان", "Casuariiformes", [
+                F("casuariidae", "کاسوآری‌ها", "Casuariidae", [
+                  G("dromaius", "ایمو", "Dromaius", [
+                    S("dr_novaehollandiae", "ایمو", "Dromaius novaehollandiae", "Emu", "استرالیا · دومین پرندهٔ بلند جهان")
+                  ]),
+                  G("casuarius", "کاسوآری", "Casuarius", [
+                    S("cs_casuarius", "کاسوآری جنوبی", "Casuarius casuarius", "Southern cassowary", "گینهٔ نو و استرالیا · خطرناک‌ترین پرنده")
+                  ])
+                ])
+              ]),
+              O("accipitriformes", "شاهین‌سانان", "Accipitriformes", [
+                F("accipitridae", "عقاب‌سانان", "Accipitridae", [
+                  G("haliaeetus", "عقاب دریایی", "Haliaeetus", [
+                    S("h_leucocephalus", "عقاب سرسفید", "Haliaeetus leucocephalus", "Bald eagle", "آمریکای شمالی · نماد آمریکا")
+                  ]),
+                  G("aquila", "عقاب", "Aquila", [
+                    S("a_chrysaetos", "عقاب طلایی", "Aquila chrysaetos", "Golden eagle", "نیمکره شمالی")
+                  ]),
+                  G("buteo", "بوزیله", "Buteo", [
+                    S("bu_buteo", "بوزیلهٔ معمولی", "Buteo buteo", "Common buzzard", "اروپا و آسیا"),
+                    S("bu_jamaicensis", "بوزیلهٔ دم‌سرخ", "Buteo jamaicensis", "Red-tailed hawk", "آمریکای شمالی")
+                  ]),
+                  G("accipiter", "قرقی", "Accipiter", [
+                    S("ac_gentilis", "قرقی بزرگ", "Accipiter gentilis", "Northern goshawk", "نیمکره شمالی")
+                  ]),
+                  G("gyps", "کرکس", "Gyps", [
+                    S("gy_fulvus", "کرکس گرفون", "Gyps fulvus", "Griffon vulture", "اروپا، آفریقا، آسیا")
+                  ])
+                ]),
+                F("pandionidae", "عقاب ماهی‌خوار", "Pandionidae", [
+                  G("pandion", "عقاب ماهی‌خوار", "Pandion (bird)", [
+                    S("pa_haliaetus", "عقاب ماهی‌خوار", "Pandion haliaetus", "Osprey", "تقریباً در سراسر جهان · صیاد ماهی")
+                  ])
+                ])
+              ]),
+              O("falconiformes", "بازسانان", "Falconiformes", [
+                F("falconidae", "شاهین‌ها", "Falconidae", [
+                  G("falco", "شاهین", "Falco (genus)", [
+                    S("fa_peregrinus", "شاهین معمولی", "Falco peregrinus", "Peregrine falcon", "همه‌جا · سریع‌ترین جانور جهان در شیرجه"),
+                    S("fa_tinnunculus", "دلیجه", "Falco tinnunculus", "Common kestrel", "اوراسیا و آفریقا"),
+                    S("fa_rusticolus", "شاهین جیر", "Falco rusticolus", "Gyrfalcon", "قطب شمال · بزرگ‌ترین شاهین")
+                  ])
+                ])
+              ]),
+              O("strigiformes", "جغد‌سانان", "Strigiformes", [
+                F("strigidae", "جغدها", "Strigidae", [
+                  G("bubo", "شاه‌بوف", "Bubo", [
+                    S("b_bubo", "شاه‌بوف اوراسیایی", "Bubo bubo", "Eurasian eagle-owl", "اروپا و آسیا"),
+                    S("b_scandiacus", "بوف برفی", "Bubo scandiacus", "Snowy owl", "قطب شمال")
+                  ]),
+                  G("strix", "جغد جنگلی", "Strix (genus)", [
+                    S("str_aluco", "جغد جنگلی", "Strix aluco", "Tawny owl", "اوراسیا")
+                  ]),
+                  G("athene", "بومک", "Athene (genus)", [
+                    S("at_noctua", "بومک معمولی", "Athene noctua", "Little owl", "اوراسیا · نماد آتنا")
+                  ])
+                ]),
+                F("tytonidae", "جغدهای انباری", "Tytonidae", [
+                  G("tyto", "جغد انباری", "Tyto", [
+                    S("t_alba", "جغد انباری", "Tyto alba", "Barn owl", "تقریباً همه‌جا · صورت قلبی")
+                  ])
+                ])
+              ]),
+              O("psittaciformes", "طوطی‌سانان", "Psittaciformes", [
+                F("psittacidae", "طوطی‌ها", "Psittacidae", [
+                  G("ara", "ماکائو", "Ara (genus)", [
+                    S("a_macao", "ماکائوی قرمز", "Ara macao", "Scarlet macaw", "آمریکای جنوبی و مرکزی"),
+                    S("a_ararauna", "ماکائوی آبی-زرد", "Ara ararauna", "Blue-and-yellow macaw", "آمریکای جنوبی")
+                  ]),
+                  G("amazona", "طوطی آمازون", "Amazona", [
+                    S("am_aestiva", "طوطی آمازون آبی‌سر", "Amazona aestiva", "Turquoise-fronted amazon", "آمریکای جنوبی")
+                  ])
+                ]),
+                F("psittaculidae", "طوطی‌های قدیم", "Psittaculidae", [
+                  G("melopsittacus", "مرغ عشق", "Melopsittacus", [
+                    S("me_undulatus", "مرغ عشق معمولی", "Melopsittacus undulatus", "Budgerigar", "استرالیا · رایج به‌عنوان حیوان خانگی")
+                  ]),
+                  G("psittacula", "طوطی طوقی", "Psittacula", [
+                    S("ps_krameri", "طوطی طوقی هندی", "Psittacula krameri", "Rose-ringed parakeet", "هند و آفریقا")
+                  ])
+                ]),
+                F("cacatuidae", "کاکادوها", "Cacatuidae", [
+                  G("cacatua", "کاکادو", "Cacatua", [
+                    S("c_galerita", "کاکادوی تاج‌گوگردی", "Cacatua galerita", "Sulphur-crested cockatoo", "استرالیا و گینهٔ نو")
+                  ])
+                ])
+              ]),
+              O("anseriformes", "غازسانان", "Anseriformes", [
+                F("anatidae", "اردک‌سانان", "Anatidae", [
+                  G("anas", "اردک", "Anas", [
+                    S("a_platyrhynchos", "اردک سرسبز", "Anas platyrhynchos", "Mallard", "نیمکره شمالی · جد اردک‌های اهلی")
+                  ]),
+                  G("cygnus", "قو", "Cygnus", [
+                    S("c_olor", "قوی گنگ", "Cygnus olor", "Mute swan", "اوراسیا"),
+                    S("c_atratus", "قوی سیاه", "Cygnus atratus", "Black swan", "استرالیا")
+                  ]),
+                  G("anser", "غاز", "Anser (bird)", [
+                    S("an_anser", "غاز خاکستری", "Anser anser", "Greylag goose", "اوراسیا · جد بیشتر غازهای اهلی")
+                  ]),
+                  G("branta", "غاز کانادایی", "Branta", [
+                    S("br_canadensis", "غاز کانادایی", "Branta canadensis", "Canada goose", "آمریکای شمالی")
+                  ]),
+                  G("aix", "اردک ماندارین", "Aix (genus)", [
+                    S("ai_galericulata", "اردک ماندارین", "Aix galericulata", "Mandarin duck", "آسیای شرقی · رنگارنگ")
+                  ])
+                ])
+              ]),
+              O("galliformes", "ماکیان‌سانان", "Galliformes", [
+                F("phasianidae", "قرقاول‌سانان", "Phasianidae", [
+                  G("gallus", "خروس‌سانان", "Gallus", [
+                    S("g_gallus", "خروس جنگلی سرخ", "Gallus gallus", "Red junglefowl", "آسیای جنوب‌شرقی · جد مرغ خانگی")
+                  ]),
+                  G("pavo", "طاووس", "Pavo", [
+                    S("p_cristatus", "طاووس هندی", "Pavo cristatus", "Indian peafowl", "شبه‌قارهٔ هند")
+                  ]),
+                  G("phasianus", "قرقاول", "Phasianus", [
+                    S("ph_colchicus", "قرقاول معمولی", "Phasianus colchicus", "Common pheasant", "اوراسیا · معرفی‌شده در دنیا")
+                  ]),
+                  G("meleagris", "بوقلمون", "Meleagris", [
+                    S("ml_gallopavo", "بوقلمون وحشی", "Meleagris gallopavo", "Wild turkey", "آمریکای شمالی · جد بوقلمون اهلی")
+                  ]),
+                  G("coturnix", "بلدرچین", "Coturnix", [
+                    S("co_coturnix", "بلدرچین معمولی", "Coturnix coturnix", "Common quail", "اوراسیا و آفریقا")
+                  ])
+                ])
+              ]),
+              O("sphenisciformes", "پنگوئن‌سانان", "Sphenisciformes", [
+                F("spheniscidae", "پنگوئن‌ها", "Spheniscidae", [
+                  G("aptenodytes", "پنگوئن امپراتور", "Aptenodytes", [
+                    S("ap_forsteri", "پنگوئن امپراتور", "Aptenodytes forsteri", "Emperor penguin", "قطب جنوب"),
+                    S("ap_patagonicus", "پنگوئن شاه", "Aptenodytes patagonicus", "King penguin", "جزایر زیرقطبی جنوبی")
+                  ]),
+                  G("spheniscus", "پنگوئن آفریقایی", "Spheniscus", [
+                    S("sp_demersus", "پنگوئن آفریقایی", "Spheniscus demersus", "African penguin", "ساحل جنوب آفریقا"),
+                    S("sp_humboldti", "پنگوئن هومبولت", "Spheniscus humboldti", "Humboldt penguin", "ساحل غربی آمریکای جنوبی")
+                  ]),
+                  G("pygoscelis", "پنگوئن آدلی", "Pygoscelis", [
+                    S("py_adeliae", "پنگوئن آدلی", "Pygoscelis adeliae", "Adélie penguin", "قطب جنوب")
+                  ])
+                ])
+              ]),
+              O("procellariiformes", "پرستوسانان دریایی", "Procellariiformes", [
+                F("diomedeidae", "آلباتروس‌ها", "Diomedeidae", [
+                  G("diomedea", "آلباتروس سرگردان", "Diomedea", [
+                    S("di_exulans", "آلباتروس سرگردان", "Diomedea exulans", "Wandering albatross", "اقیانوس جنوبی · بزرگ‌ترین پهنای بال پرندگان")
+                  ])
+                ])
+              ]),
+              O("pelecaniformes", "پلیکان‌سانان", "Pelecaniformes", [
+                F("pelecanidae", "پلیکان‌ها", "Pelecanidae", [
+                  G("pelecanus", "پلیکان", "Pelecanus", [
+                    S("pl_onocrotalus", "پلیکان سفید بزرگ", "Pelecanus onocrotalus", "Great white pelican", "اروپا، آسیا، آفریقا"),
+                    S("pl_occidentalis", "پلیکان قهوه‌ای", "Pelecanus occidentalis", "Brown pelican", "ساحل‌های آمریکا")
+                  ])
+                ]),
+                F("ardeidae", "حواصیل‌ها", "Ardeidae", [
+                  G("ardea", "حواصیل", "Ardea (genus)", [
+                    S("ar_cinerea", "حواصیل خاکستری", "Ardea cinerea", "Grey heron", "اوراسیا و آفریقا"),
+                    S("ar_alba", "اگرت بزرگ", "Ardea alba", "Great egret", "تقریباً همه‌جا")
+                  ]),
+                  G("bubulcus", "گاوچرانک", "Bubulcus", [
+                    S("bb_ibis", "گاوچرانک", "Bubulcus ibis", "Cattle egret", "همراه گله‌های دام")
+                  ])
+                ])
+              ]),
+              O("ciconiiformes", "لک‌لک‌سانان", "Ciconiiformes", [
+                F("ciconiidae", "لک‌لک‌ها", "Ciconiidae", [
+                  G("ciconia", "لک‌لک", "Ciconia", [
+                    S("ci_ciconia", "لک‌لک سفید", "Ciconia ciconia", "White stork", "اروپا، آسیا، آفریقا · نماد فولکلوریک")
+                  ])
+                ])
+              ]),
+              O("phoenicopteriformes", "فلامینگوسانان", "Phoenicopteriformes", [
+                F("phoenicopteridae", "فلامینگوها", "Phoenicopteridae", [
+                  G("phoenicopterus", "فلامینگو", "Phoenicopterus", [
+                    S("pho_roseus", "فلامینگوی بزرگ", "Phoenicopterus roseus", "Greater flamingo", "آفریقا، آسیا، اروپای جنوبی"),
+                    S("pho_chilensis", "فلامینگوی شیلیایی", "Phoenicopterus chilensis", "Chilean flamingo", "آمریکای جنوبی")
+                  ])
+                ])
+              ]),
+              O("suliformes", "گاوماهی‌خوارسانان", "Suliformes", [
+                F("phalacrocoracidae", "باکلان‌ها", "Phalacrocoracidae", [
+                  G("phalacrocorax", "باکلان", "Phalacrocorax", [
+                    S("phc_carbo", "باکلان بزرگ", "Phalacrocorax carbo", "Great cormorant", "تقریباً همه‌جا")
+                  ])
+                ])
+              ]),
+              O("charadriiformes", "تلیله‌سانان", "Charadriiformes", [
+                F("laridae", "کاکایی‌ها", "Laridae", [
+                  G("larus", "کاکایی", "Larus", [
+                    S("lr_argentatus", "کاکایی نقره‌ای", "Larus argentatus", "European herring gull", "اوراسیا"),
+                    S("lr_michahellis", "کاکایی پای‌زرد", "Larus michahellis", "Yellow-legged gull", "مدیترانه")
+                  ])
+                ]),
+                F("alcidae", "کاکایی‌ماهیان", "Alcidae", [
+                  G("fratercula", "پافین", "Fratercula", [
+                    S("fr_arctica", "پافین آتلانتیک", "Fratercula arctica", "Atlantic puffin", "آتلانتیک شمالی")
+                  ])
+                ])
+              ]),
+              O("columbiformes", "کبوترسانان", "Columbiformes", [
+                F("columbidae", "کبوتران", "Columbidae", [
+                  G("columba", "کبوتر", "Columba (genus)", [
+                    S("cl_livia", "کبوتر سنگی (چاهی)", "Columba livia", "Rock dove", "جد کبوترهای شهری"),
+                    S("cl_palumbus", "کبوتر چوبی", "Columba palumbus", "Common wood pigeon", "اروپا و غرب آسیا")
+                  ]),
+                  G("streptopelia", "قمری", "Streptopelia", [
+                    S("sp_decaocto", "قمری یقه‌سیاه", "Streptopelia decaocto", "Eurasian collared dove", "اوراسیا، گستردهٔ سریع")
+                  ])
+                ])
+              ]),
+              O("cuculiformes", "کوکوسانان", "Cuculiformes", [
+                F("cuculidae", "کوکوها", "Cuculidae", [
+                  G("cuculus", "کوکو", "Cuculus", [
+                    S("cu_canorus", "کوکوی معمولی", "Cuculus canorus", "Common cuckoo", "اوراسیا · انگل آشیانه")
+                  ])
+                ])
+              ]),
+              O("apodiformes", "تیزپروازان", "Apodiformes", [
+                F("apodidae", "تیزپروازان (تیره)", "Apodidae", [
+                  G("apus", "تیزپرواز", "Apus (bird)", [
+                    S("ap_apus", "تیزپرواز معمولی", "Apus apus", "Common swift", "اوراسیا · بیشتر عمر را در هوا")
+                  ])
+                ]),
+                F("trochilidae", "مرغ‌مگسی‌ها", "Trochilidae", [
+                  G("archilochus", "مرغ‌مگسی گلوسرخ", "Archilochus", [
+                    S("ax_colubris", "مرغ‌مگسی گلوسرخ", "Archilochus colubris", "Ruby-throated hummingbird", "آمریکای شمالی شرقی")
+                  ]),
+                  G("mellisuga", "کوچک‌ترین مرغ‌مگسی", "Mellisuga", [
+                    S("ms_helenae", "زنبور-مرغ‌مگسی کوبا", "Mellisuga helenae", "Bee hummingbird", "کوبا · کوچک‌ترین پرندهٔ جهان")
+                  ])
+                ])
+              ]),
+              O("coraciiformes", "سبزقباسانان", "Coraciiformes", [
+                F("alcedinidae", "ماهی‌خورک‌ها", "Alcedinidae", [
+                  G("alcedo", "ماهی‌خورک", "Alcedo (genus)", [
+                    S("al_atthis", "ماهی‌خورک معمولی", "Alcedo atthis", "Common kingfisher", "اوراسیا و آفریقای شمالی")
+                  ])
+                ]),
+                F("meropidae", "زنبورخورها", "Meropidae", [
+                  G("merops", "زنبورخور", "Merops (genus)", [
+                    S("mp_apiaster", "زنبورخور اروپایی", "Merops apiaster", "European bee-eater", "اروپا، آفریقا، غرب آسیا · رنگارنگ")
+                  ])
+                ])
+              ]),
+              O("piciformes", "دارکوب‌سانان", "Piciformes", [
+                F("picidae", "دارکوب‌ها", "Picidae", [
+                  G("dendrocopos", "دارکوب", "Dendrocopos", [
+                    S("dc_major", "دارکوب بزرگ ابلق", "Dendrocopos major", "Great spotted woodpecker", "اوراسیا")
+                  ]),
+                  G("picus", "دارکوب سبز", "Picus (genus)", [
+                    S("pi_viridis", "دارکوب سبز اروپایی", "Picus viridis", "European green woodpecker", "اروپا و غرب آسیا")
+                  ])
+                ]),
+                F("ramphastidae", "توکان‌ها", "Ramphastidae", [
+                  G("ramphastos", "توکان", "Ramphastos", [
+                    S("rp_toco", "توکان توکو", "Ramphastos toco", "Toco toucan", "آمریکای جنوبی · بزرگ‌ترین توکان")
+                  ])
+                ])
+              ]),
+              O("passeriformes", "گنجشک‌سانان", "Passeriformes", [
+                F("passeridae", "گنجشک‌ها", "Passeridae", [
+                  G("passer", "گنجشک", "Passer", [
+                    S("p_domesticus", "گنجشک خانگی", "Passer domesticus", "House sparrow", "تقریباً همه‌جا"),
+                    S("p_montanus", "گنجشک درختی", "Passer montanus", "Eurasian tree sparrow", "اوراسیا")
+                  ])
+                ]),
+                F("corvidae", "کلاغ‌سانان", "Corvidae", [
+                  G("corvus", "کلاغ", "Corvus", [
+                    S("c_corax", "کلاغ سیاه شمالی", "Corvus corax", "Common raven", "نیمکره شمالی · بسیار هوشمند"),
+                    S("c_corone", "کلاغ سیاه", "Corvus corone", "Carrion crow", "اروپا و آسیا"),
+                    S("c_monedula", "زاغی کوچک", "Corvus monedula", "Western jackdaw", "اروپا، شمال آفریقا، غرب آسیا")
+                  ]),
+                  G("pica", "زاغی", "Pica (genus)", [
+                    S("pc_pica", "زاغی معمولی", "Pica pica", "Eurasian magpie", "اوراسیا · باهوش")
+                  ]),
+                  G("garrulus", "جی", "Garrulus", [
+                    S("ga_glandarius", "جی اوراسیایی", "Garrulus glandarius", "Eurasian jay", "اروپا، آسیا، شمال آفریقا")
+                  ])
+                ]),
+                F("turdidae", "توکاسانان", "Turdidae", [
+                  G("turdus", "توکا", "Turdus", [
+                    S("tu_merula", "توکای سیاه", "Turdus merula", "Common blackbird", "اوراسیا"),
+                    S("tu_migratorius", "توکای آمریکایی", "Turdus migratorius", "American robin", "آمریکای شمالی"),
+                    S("tu_philomelos", "توکای آوازخوان", "Turdus philomelos", "Song thrush", "اوراسیا")
+                  ])
+                ]),
+                F("muscicapidae", "مگس‌گیرها", "Muscicapidae", [
+                  G("luscinia", "بلبل", "Luscinia", [
+                    S("lu_megarhynchos", "بلبل خرما", "Luscinia megarhynchos", "Common nightingale", "اوراسیا · آواز معروف")
+                  ]),
+                  G("erithacus", "سینه‌سرخ", "Erithacus", [
+                    S("er_rubecula", "سینه‌سرخ اروپایی", "Erithacus rubecula", "European robin", "اروپا")
+                  ])
+                ]),
+                F("paridae", "چرخ‌ریزک‌ها", "Paridae", [
+                  G("parus", "چرخ‌ریزک", "Parus", [
+                    S("pr_major", "چرخ‌ریزک بزرگ", "Parus major", "Great tit", "اوراسیا و شمال آفریقا")
+                  ]),
+                  G("cyanistes", "چرخ‌ریزک آبی", "Cyanistes", [
+                    S("cy_caeruleus", "چرخ‌ریزک آبی", "Cyanistes caeruleus", "Eurasian blue tit", "اروپا و غرب آسیا")
+                  ])
+                ]),
+                F("fringillidae", "سهره‌ها", "Fringillidae", [
+                  G("carduelis", "سهرهٔ سرخگل", "Carduelis", [
+                    S("cd_carduelis", "سهرهٔ سرخگل", "Carduelis carduelis", "European goldfinch", "اوراسیا · رنگارنگ")
+                  ]),
+                  G("serinus", "سهرک", "Serinus", [
+                    S("se_canaria", "قناری", "Serinus canaria", "Atlantic canary", "جزایر قناری · پایه قناری اهلی")
+                  ]),
+                  G("fringilla", "سهرهٔ معمولی", "Fringilla", [
+                    S("fc_coelebs", "سهرهٔ معمولی", "Fringilla coelebs", "Common chaffinch", "اوراسیا و شمال آفریقا")
+                  ])
+                ]),
+                F("sturnidae", "سارها", "Sturnidae", [
+                  G("sturnus", "سار", "Sturnus", [
+                    S("sn_vulgaris", "سار اروپایی", "Sturnus vulgaris", "Common starling", "اوراسیا · دسته‌های مورمور")
+                  ])
+                ]),
+                F("alaudidae", "چکاوک‌ها", "Alaudidae", [
+                  G("alauda", "چکاوک", "Alauda", [
+                    S("au_arvensis", "چکاوک معمولی", "Alauda arvensis", "Eurasian skylark", "اوراسیا · آواز در پرواز")
+                  ])
+                ]),
+                F("hirundinidae", "پرستوسانان", "Hirundinidae", [
+                  G("hirundo", "پرستو", "Hirundo", [
+                    S("h_rustica", "پرستوی انباری", "Hirundo rustica", "Barn swallow", "مهاجر در سراسر جهان")
+                  ])
+                ])
+              ])
+            ]),
+
+            // ── REPTILIA ──
+            C("reptilia", "خزندگان", "Reptilia", [
+              O("testudines", "لاک‌پشت‌ها", "Testudines", [
+                F("cheloniidae", "لاک‌پشت‌های دریایی", "Cheloniidae", [
+                  G("chelonia", "لاک‌پشت سبز", "Chelonia (genus)", [
+                    S("c_mydas", "لاک‌پشت سبز دریایی", "Chelonia mydas", "Green sea turtle", "اقیانوس‌های گرمسیری")
+                  ]),
+                  G("caretta", "لاک‌پشت کارتا", "Caretta", [
+                    S("ca_caretta", "لاک‌پشت سرسرخ", "Caretta caretta", "Loggerhead sea turtle", "اقیانوس‌های گرمسیری و معتدل")
+                  ])
+                ]),
+                F("dermochelyidae", "لاک‌پشت‌های پشت‌چرمی", "Dermochelyidae", [
+                  G("dermochelys", "لاک‌پشت پشت‌چرمی", "Dermochelys", [
+                    S("de_coriacea", "لاک‌پشت پشت‌چرمی", "Dermochelys coriacea", "Leatherback sea turtle", "بزرگ‌ترین لاک‌پشت جهان · اقیانوس‌ها")
+                  ])
+                ]),
+                F("testudinidae", "لاک‌پشت‌های خشکی", "Testudinidae", [
+                  G("chelonoidis", "لاک‌پشت گالاپاگوس", "Chelonoidis", [
+                    S("c_nigra", "لاک‌پشت غول‌پیکر گالاپاگوس", "Chelonoidis niger", "Galápagos tortoise", "جزایر گالاپاگوس")
+                  ]),
+                  G("testudo", "لاک‌پشت خشکی", "Testudo (genus)", [
+                    S("te_hermanni", "لاک‌پشت هرمان", "Testudo hermanni", "Hermann's tortoise", "اروپای جنوبی"),
+                    S("te_graeca",   "لاک‌پشت یونانی", "Testudo graeca",   "Testudo graeca",     "خاورمیانه و شمال آفریقا")
+                  ]),
+                  G("aldabrachelys", "لاک‌پشت آلدابرا", "Aldabrachelys", [
+                    S("al_gigantea", "لاک‌پشت غول‌پیکر آلدابرا", "Aldabrachelys gigantea", "Aldabra giant tortoise", "جزایر آلدابرا (سیشل) · یکی از کهنسال‌ترین جانوران")
+                  ])
+                ]),
+                F("emydidae", "لاک‌پشت‌های آب شیرین", "Emydidae", [
+                  G("trachemys", "لاک‌پشت گوش‌قرمز", "Trachemys", [
+                    S("tr_scripta", "لاک‌پشت گوش‌قرمز", "Trachemys scripta", "Pond slider", "آمریکای شمالی · رایج به‌عنوان حیوان خانگی")
+                  ])
+                ])
+              ]),
+              O("crocodilia", "تمساح‌سانان", "Crocodilia", [
+                F("crocodylidae", "تمساح‌ها", "Crocodylidae", [
+                  G("crocodylus", "تمساح", "Crocodylus", [
+                    S("c_niloticus",  "تمساح نیل",     "Crocodylus niloticus",  "Nile crocodile",     "آفریقا"),
+                    S("c_porosus",    "تمساح آب‌شور", "Crocodylus porosus",    "Saltwater crocodile","بزرگ‌ترین خزنده · آسیای جنوب‌شرقی، استرالیا"),
+                    S("c_acutus",     "تمساح آمریکایی","Crocodylus acutus",     "American crocodile", "آمریکای مرکزی و کارائیب")
+                  ])
+                ]),
+                F("alligatoridae", "آلیگاتورها", "Alligatoridae", [
+                  G("alligator", "آلیگاتور", "Alligator", [
+                    S("a_mississippiensis", "آلیگاتور آمریکایی", "Alligator mississippiensis", "American alligator", "جنوب‌شرق آمریکا"),
+                    S("a_sinensis",         "آلیگاتور چینی",    "Alligator sinensis",         "Chinese alligator",  "چین · IUCN: شدیداً در خطر")
+                  ]),
+                  G("caiman", "کایمن", "Caiman (genus)", [
+                    S("cm_crocodilus", "کایمن عینکی", "Caiman crocodilus", "Spectacled caiman", "آمریکای مرکزی و جنوبی")
+                  ])
+                ]),
+                F("gavialidae", "گاویال‌ها", "Gavialidae", [
+                  G("gavialis", "گاویال", "Gavialis", [
+                    S("ga_gangeticus", "گاویال هندی", "Gavialis gangeticus", "Gharial", "هند و نپال · پوزهٔ بسیار باریک")
+                  ])
+                ])
+              ]),
+              O("sphenodontia", "تواتاراسانان", "Rhynchocephalia", [
+                F("sphenodontidae", "تواتاراها", "Sphenodontidae", [
+                  G("sphenodon", "تواتارا", "Sphenodon", [
+                    S("sp_punctatus", "تواتارا", "Sphenodon punctatus", "Tuatara", "نیوزیلند · تنها بازماندهٔ راستهٔ باستانی")
+                  ])
+                ])
+              ]),
+              O("squamata", "پولک‌داران", "Squamata", [
+                F("pythonidae", "پیتون‌ها", "Pythonidae", [
+                  G("python", "پیتون", "Python (genus)", [
+                    S("p_bivittatus", "پیتون برمه‌ای", "Python bivittatus", "Burmese python", "جنوب‌شرق آسیا"),
+                    S("p_regius",     "پیتون توپی",    "Python regius",     "Ball python",     "آفریقای غربی · رایج در نگه‌داری")
+                  ]),
+                  G("malayopython", "پیتون شبکه‌ای", "Malayopython", [
+                    S("ma_reticulatus", "پیتون شبکه‌ای", "Malayopython reticulatus", "Reticulated python", "آسیای جنوب‌شرقی · طولانی‌ترین مار")
+                  ])
+                ]),
+                F("boidae", "بواها", "Boidae", [
+                  G("boa", "بوا", "Boa (genus)", [
+                    S("bo_constrictor", "بوای کنستریکتور", "Boa constrictor", "Boa constrictor", "آمریکای مرکزی و جنوبی")
+                  ]),
+                  G("eunectes", "آناکوندا", "Eunectes", [
+                    S("eu_murinus", "آناکوندای سبز", "Eunectes murinus", "Green anaconda", "آمریکای جنوبی · سنگین‌ترین مار")
+                  ])
+                ]),
+                F("colubridae", "مارهای معمولی", "Colubridae", [
+                  G("natrix", "مار آبی", "Natrix", [
+                    S("na_natrix", "مار آبی اروپایی", "Natrix natrix", "Grass snake", "اوراسیا")
+                  ]),
+                  G("pantherophis", "مار ذرت", "Pantherophis", [
+                    S("pa_guttatus", "مار ذرت", "Pantherophis guttatus", "Corn snake", "آمریکای شمالی · رایج به‌عنوان حیوان خانگی")
+                  ])
+                ]),
+                F("elapidae", "مارهای سمی پیشین‌نیش", "Elapidae", [
+                  G("naja", "کبرا", "Naja", [
+                    S("nj_naja",      "کبرای هندی",      "Naja naja",       "Indian cobra",        "شبه‌قارهٔ هند · سم نوروتوکسیک"),
+                    S("nj_kaouthia",  "کبرای تک‌حلقه‌ای", "Naja kaouthia",   "Monocled cobra",      "آسیای جنوب‌شرقی")
+                  ]),
+                  G("ophiophagus", "کبرای پادشاه", "Ophiophagus", [
+                    S("oh_hannah", "کبرای پادشاه", "Ophiophagus hannah", "King cobra", "آسیا · بلندترین مار سمی جهان")
+                  ]),
+                  G("dendroaspis", "مامبا", "Dendroaspis", [
+                    S("dn_polylepis", "مامبای سیاه", "Dendroaspis polylepis", "Black mamba", "آفریقای زیرصحرا · مار خشکی سریع و سمی")
+                  ])
+                ]),
+                F("viperidae", "افعی‌ها", "Viperidae", [
+                  G("vipera", "افعی", "Vipera", [
+                    S("v_berus",       "افعی معمولی",     "Vipera berus",       "Common European adder", "اوراسیا"),
+                    S("v_ammodytes",   "افعی شاخدار",     "Vipera ammodytes",   "Vipera ammodytes",      "بالکان و خاورمیانه")
+                  ]),
+                  G("crotalus", "مار زنگی", "Crotalus", [
+                    S("cr_atrox",   "مار زنگی دم‌الماس",  "Crotalus atrox",   "Crotalus atrox",   "صحرای آمریکای شمالی"),
+                    S("cr_horridus","مار زنگی چوبی",      "Crotalus horridus","Timber rattlesnake","شرق آمریکای شمالی")
+                  ]),
+                  G("bitis", "افعی گابن", "Bitis", [
+                    S("bi_gabonica", "افعی گابن", "Bitis gabonica", "Gaboon viper", "آفریقای زیرصحرا · بلندترین نیش‌ها")
+                  ])
+                ]),
+                F("iguanidae", "ایگواناها", "Iguanidae", [
+                  G("iguana", "ایگوانا", "Iguana", [
+                    S("i_iguana", "ایگوانای سبز", "Iguana iguana", "Green iguana", "آمریکای مرکزی و جنوبی")
+                  ]),
+                  G("amblyrhynchus", "ایگوانای دریایی", "Amblyrhynchus", [
+                    S("am_cristatus", "ایگوانای دریایی گالاپاگوس", "Amblyrhynchus cristatus", "Marine iguana", "گالاپاگوس · تنها ایگوانای شناگر")
+                  ])
+                ]),
+                F("agamidae", "آگامی‌ها", "Agamidae", [
+                  G("pogona", "اژدهای ریشدار", "Pogona", [
+                    S("po_vitticeps", "اژدهای ریشدار مرکزی", "Pogona vitticeps", "Pogona vitticeps", "استرالیای مرکزی · رایج به‌عنوان حیوان خانگی")
+                  ])
+                ]),
+                F("chamaeleonidae", "آفتاب‌پرست‌ها", "Chamaeleonidae", [
+                  G("chamaeleo", "آفتاب‌پرست", "Chamaeleo", [
+                    S("ch_chamaeleon", "آفتاب‌پرست معمولی", "Chamaeleo chamaeleon", "Common chameleon", "حوضهٔ مدیترانه")
+                  ]),
+                  G("furcifer", "آفتاب‌پرست ماداگاسکار", "Furcifer", [
+                    S("fu_pardalis", "آفتاب‌پرست پلنگی", "Furcifer pardalis", "Panther chameleon", "ماداگاسکار · بسیار رنگارنگ")
+                  ])
+                ]),
+                F("gekkonidae", "مارمولک‌های جهنده (گکوها)", "Gekkonidae", [
+                  G("gekko", "گکو", "Gekko (genus)", [
+                    S("ge_gecko", "گکوی توکه", "Gekko gecko", "Tokay gecko", "آسیای جنوب‌شرقی")
+                  ]),
+                  G("hemidactylus", "گکوی خانگی", "Hemidactylus", [
+                    S("he_frenatus", "گکوی خانگی معمولی", "Hemidactylus frenatus", "Common house gecko", "گرم‌سیر در سراسر جهان")
+                  ])
+                ]),
+                F("lacertidae", "مارمولک‌های اروپایی", "Lacertidae", [
+                  G("lacerta", "مارمولک سبز", "Lacerta (genus)", [
+                    S("lc_agilis", "مارمولک تند", "Lacerta agilis", "Sand lizard", "اوراسیا")
+                  ])
+                ]),
+                F("varanidae", "بزمجه‌ها", "Varanidae", [
+                  G("varanus", "بزمجه", "Varanus", [
+                    S("v_komodoensis", "اژدهای کومودو", "Varanus komodoensis", "Komodo dragon", "اندونزی · بزرگ‌ترین مارمولک جهان"),
+                    S("v_niloticus",   "بزمجهٔ نیل",    "Varanus niloticus",   "Nile monitor",   "آفریقا")
+                  ])
+                ]),
+                F("helodermatidae", "هلودرماها", "Helodermatidae", [
+                  G("heloderma", "هلودرما", "Heloderma", [
+                    S("hd_suspectum", "گیلا مونستر", "Heloderma suspectum", "Gila monster", "صحرای جنوب غرب آمریکای شمالی · سمی")
+                  ])
+                ])
+              ])
+            ]),
+
+            // ── AMPHIBIA ──
+            C("amphibia", "دوزیستان", "Amphibia", [
+              O("anura", "قورباغه‌سانان", "Anura", [
+                F("dendrobatidae", "قورباغه‌های سمی", "Dendrobatidae", [
+                  G("dendrobates", "قورباغهٔ سمی", "Dendrobates", [
+                    S("d_auratus", "قورباغهٔ سمی طلایی-سبز", "Dendrobates auratus", "Green and black poison frog", "آمریکای مرکزی")
+                  ]),
+                  G("phyllobates", "قورباغه‌های زهر طلایی", "Phyllobates", [
+                    S("ph_terribilis", "قورباغهٔ زهر طلایی", "Phyllobates terribilis", "Golden poison frog", "کلمبیا · سمی‌ترین مهرهٔ زمین")
+                  ])
+                ]),
+                F("ranidae", "قورباغه‌های واقعی", "Ranidae", [
+                  G("rana", "قورباغه", "Rana (genus)", [
+                    S("r_temporaria", "قورباغهٔ معمولی اروپا", "Rana temporaria", "Common frog", "اروپا")
+                  ]),
+                  G("lithobates", "قورباغهٔ گاوی", "Lithobates", [
+                    S("li_catesbeianus", "قورباغهٔ گاوی آمریکایی", "Lithobates catesbeianus", "American bullfrog", "آمریکای شمالی · بزرگ و آوای بم")
+                  ])
+                ]),
+                F("hylidae", "قورباغه‌های درختی", "Hylidae", [
+                  G("hyla", "قورباغهٔ درختی", "Hyla", [
+                    S("hy_arborea", "قورباغهٔ درختی اروپایی", "Hyla arborea", "European tree frog", "اروپا · سبز روشن")
+                  ]),
+                  G("agalychnis", "قورباغهٔ چشم‌سرخ", "Agalychnis", [
+                    S("ag_callidryas", "قورباغهٔ درختی چشم‌سرخ", "Agalychnis callidryas", "Red-eyed tree frog", "آمریکای مرکزی · نمایه‌ای از جنگل بارانی")
+                  ])
+                ]),
+                F("bufonidae", "وزغ‌ها", "Bufonidae", [
+                  G("bufo", "وزغ", "Bufo", [
+                    S("b_bufo", "وزغ معمولی", "Bufo bufo", "Common toad", "اروپا و آسیا")
+                  ]),
+                  G("rhinella", "وزغ عصاره", "Rhinella", [
+                    S("rh_marina", "وزغ سرکانه", "Rhinella marina", "Cane toad", "آمریکای جنوبی · معرفی شده در استرالیا (آفت)")
+                  ])
+                ]),
+                F("pipidae", "قورباغه‌های پنجه‌دار", "Pipidae", [
+                  G("xenopus", "قورباغهٔ پنجه‌دار آفریقایی", "Xenopus", [
+                    S("xe_laevis", "قورباغهٔ پنجه‌دار آفریقایی", "Xenopus laevis", "African clawed frog", "آفریقا · مدل آزمایشگاهی")
+                  ])
+                ])
+              ]),
+              O("caudata", "سمندرسانان", "Caudata", [
+                F("salamandridae", "سمندرها", "Salamandridae", [
+                  G("salamandra", "سمندر آتشین", "Salamandra", [
+                    S("s_salamandra", "سمندر آتشین", "Salamandra salamandra", "Fire salamander", "اروپا")
+                  ]),
+                  G("triturus", "سمندر تاجدار", "Triturus", [
+                    S("tr_cristatus", "سمندر تاجدار شمالی", "Triturus cristatus", "Northern crested newt", "اروپا")
+                  ])
+                ]),
+                F("proteidae", "نکتورس‌ها", "Proteidae", [
+                  G("proteus", "اولم", "Proteus (genus)", [
+                    S("pr_anguinus", "اولم (سمندر کور غاری)", "Proteus anguinus", "Olm", "غارهای بالکان · زیست در آب زیرزمینی")
+                  ])
+                ]),
+                F("ambystomatidae", "آمبیستوماها", "Ambystomatidae", [
+                  G("ambystoma", "آکسولوتل", "Ambystoma", [
+                    S("am_mexicanum", "آکسولوتل", "Ambystoma mexicanum", "Axolotl", "مکزیک · حفظ صفات نوزادی در بزرگسالی")
+                  ])
+                ]),
+                F("cryptobranchidae", "غول‌سمندرها", "Cryptobranchidae", [
+                  G("andrias", "غول‌سمندر", "Andrias", [
+                    S("an_japonicus", "غول‌سمندر ژاپنی", "Andrias japonicus", "Japanese giant salamander", "ژاپن · یکی از بزرگ‌ترین دوزیستان جهان")
+                  ])
+                ])
+              ]),
+              O("gymnophiona", "کرم‌مارماهی‌سانان", "Gymnophiona", [
+                F("caeciliidae", "سیسیلیاها", "Caeciliidae", [
+                  G("caecilia", "سیسیلیا", "Caecilia (genus)", [
+                    S("ce_thompsoni", "سیسیلیای تامپسون", "Caecilia thompsoni", "Caecilia thompsoni", "کلمبیا · شبیه مار اما دوزیست")
+                  ])
+                ])
+              ])
+            ]),
+
+            // ── FISH ──
+            C("actinopterygii", "ماهیان پرتوباله", "Actinopterygii", [
+              O("perciformes", "سوف‌سانان", "Perciformes", [
+                F("scombridae", "تن‌ماهیان", "Scombridae", [
+                  G("thunnus", "تن‌ماهی", "Thunnus", [
+                    S("t_thynnus",   "تن آبی آتلانتیک", "Thunnus thynnus",   "Atlantic bluefin tuna", "آتلانتیک و مدیترانه · صید تجاری شدید"),
+                    S("t_albacares", "تن باله‌زرد",     "Thunnus albacares", "Yellowfin tuna",        "اقیانوس‌های گرمسیری")
+                  ]),
+                  G("scomber", "ماکرل", "Scomber", [
+                    S("sc_scombrus", "ماکرل آتلانتیک", "Scomber scombrus", "Atlantic mackerel", "آتلانتیک شمالی")
+                  ])
+                ]),
+                F("serranidae", "هامورها", "Serranidae", [
+                  G("epinephelus", "هامور", "Epinephelus", [
+                    S("ep_lanceolatus", "هامور غول‌پیکر", "Epinephelus lanceolatus", "Giant grouper", "هندوآرام · بزرگ‌ترین ماهی استخوانی صخره‌ای")
+                  ])
+                ]),
+                F("pomacentridae", "ماهیان دلقک و سرپرین", "Pomacentridae", [
+                  G("amphiprion", "ماهی دلقک", "Amphiprion", [
+                    S("am_ocellaris", "ماهی دلقک معمولی (نمو)", "Amphiprion ocellaris", "Ocellaris clownfish", "هندوآرام · همزیست با شقایق دریایی")
+                  ])
+                ]),
+                F("labridae", "راس‌ماهیان", "Labridae", [
+                  G("cheilinus", "ناپلئون", "Cheilinus", [
+                    S("ch_undulatus", "ماهی ناپلئون", "Cheilinus undulatus", "Humphead wrasse", "صخره‌های مرجانی هندوآرام")
+                  ])
+                ]),
+                F("cichlidae", "سیکلیدها", "Cichlidae", [
+                  G("oreochromis", "تیلاپیا", "Oreochromis", [
+                    S("or_niloticus", "تیلاپیای نیل", "Oreochromis niloticus", "Nile tilapia", "آفریقا · پرورش گسترده")
+                  ])
+                ])
+              ]),
+              O("salmoniformes", "آزادسانان", "Salmoniformes", [
+                F("salmonidae", "ماهی آزاد", "Salmonidae", [
+                  G("salmo", "آزاد", "Salmo", [
+                    S("s_salar",  "آزاد آتلانتیک", "Salmo salar",  "Atlantic salmon", "آتلانتیک شمالی"),
+                    S("s_trutta", "ماهی قهوه‌ای",  "Salmo trutta", "Brown trout",     "اروپا و آسیای غربی")
+                  ]),
+                  G("oncorhynchus", "آزاد اقیانوس آرام", "Oncorhynchus", [
+                    S("o_mykiss",      "قزل‌آلای رنگین‌کمان", "Oncorhynchus mykiss",      "Rainbow trout",         "آب‌های شیرین"),
+                    S("o_tshawytscha", "آزاد شاه",          "Oncorhynchus tshawytscha", "Chinook salmon",        "اقیانوس آرام شمالی · بزرگ‌ترین آزاد")
+                  ])
+                ])
+              ]),
+              O("cypriniformes", "کپورسانان", "Cypriniformes", [
+                F("cyprinidae", "کپورماهیان", "Cyprinidae", [
+                  G("carassius", "ماهی قرمز", "Carassius", [
+                    S("c_auratus", "ماهی قرمز", "Carassius auratus", "Goldfish", "اهلی‌شده · در همه‌جا")
+                  ]),
+                  G("cyprinus", "کپور", "Cyprinus", [
+                    S("cy_carpio", "کپور معمولی", "Cyprinus carpio", "Common carp", "اوراسیا · پایه پرورش ماهی")
+                  ]),
+                  G("danio", "زبراماهی", "Danio", [
+                    S("da_rerio", "زبراماهی", "Danio rerio", "Zebrafish", "آسیای جنوبی · مدل آزمایشگاهی")
+                  ])
+                ])
+              ]),
+              O("siluriformes", "گربه‌ماهی‌سانان", "Siluriformes", [
+                F("ictaluridae", "گربه‌ماهیان آمریکایی", "Ictaluridae", [
+                  G("ictalurus", "گربه‌ماهی کانال", "Ictalurus", [
+                    S("ic_punctatus", "گربه‌ماهی کانال", "Ictalurus punctatus", "Channel catfish", "آمریکای شمالی")
+                  ])
+                ]),
+                F("siluridae", "گربه‌ماهیان واقعی", "Siluridae", [
+                  G("silurus", "اسبله", "Silurus", [
+                    S("si_glanis", "اسبلهٔ بزرگ", "Silurus glanis", "Wels catfish", "اروپا و آسیای غربی · بزرگ‌ترین گربه‌ماهی اروپا")
+                  ])
+                ])
+              ]),
+              O("anguilliformes", "مارماهی‌سانان", "Anguilliformes", [
+                F("anguillidae", "مارماهیان", "Anguillidae", [
+                  G("anguilla", "مارماهی", "Anguilla", [
+                    S("a_anguilla",  "مارماهی اروپایی", "Anguilla anguilla",  "European eel",  "اروپا · IUCN: شدیداً در معرض خطر"),
+                    S("a_japonica",  "مارماهی ژاپنی",  "Anguilla japonica",  "Japanese eel",  "آسیای شرقی · پایهٔ اونگی ژاپنی")
+                  ])
+                ]),
+                F("muraenidae", "مارماهیان موری", "Muraenidae", [
+                  G("muraena", "موری", "Muraena", [
+                    S("mu_helena", "موری مدیترانه", "Muraena helena", "Mediterranean moray", "مدیترانه و آتلانتیک شرقی")
+                  ])
+                ])
+              ]),
+              O("clupeiformes", "شاه‌ماهی‌سانان", "Clupeiformes", [
+                F("clupeidae", "شاه‌ماهیان", "Clupeidae", [
+                  G("clupea", "شاه‌ماهی", "Clupea", [
+                    S("cl_harengus", "شاه‌ماهی آتلانتیک", "Clupea harengus", "Atlantic herring", "آتلانتیک شمالی · صید بزرگ")
+                  ]),
+                  G("sardina", "ساردین اروپایی", "Sardina", [
+                    S("sa_pilchardus", "ساردین اروپایی", "Sardina pilchardus", "European pilchard", "آتلانتیک شرقی و مدیترانه")
+                  ])
+                ]),
+                F("engraulidae", "آنچوی‌ها", "Engraulidae", [
+                  G("engraulis", "آنچوی", "Engraulis", [
+                    S("en_encrasicolus", "آنچوی اروپایی", "Engraulis encrasicolus", "European anchovy", "مدیترانه و آتلانتیک شرقی")
+                  ])
+                ])
+              ]),
+              O("gadiformes", "ماهی‌کاد‌سانان", "Gadiformes", [
+                F("gadidae", "کادها", "Gadidae", [
+                  G("gadus", "ماهی کاد", "Gadus", [
+                    S("ga_morhua", "کاد آتلانتیک", "Gadus morhua", "Atlantic cod", "آتلانتیک شمالی · ذخایر کاهش یافته")
+                  ]),
+                  G("melanogrammus", "هَدوک", "Melanogrammus", [
+                    S("me_aeglefinus", "هَدوک", "Melanogrammus aeglefinus", "Haddock", "آتلانتیک شمالی")
+                  ])
+                ])
+              ]),
+              O("pleuronectiformes", "کفشک‌ماهیان", "Pleuronectiformes", [
+                F("pleuronectidae", "کفشک‌های راست‌چشم", "Pleuronectidae", [
+                  G("hippoglossus", "هالیبوت", "Hippoglossus", [
+                    S("hi_hippoglossus", "هالیبوت آتلانتیک", "Hippoglossus hippoglossus", "Atlantic halibut", "آتلانتیک شمالی · بزرگ‌ترین کفشک")
+                  ])
+                ]),
+                F("soleidae", "کفشک‌های زبان‌گاوی", "Soleidae", [
+                  G("solea", "زبان‌گاوی", "Solea", [
+                    S("so_solea", "زبان‌گاوی معمولی", "Solea solea", "Common sole", "آتلانتیک شرقی و مدیترانه")
+                  ])
+                ])
+              ]),
+              O("tetraodontiformes", "ماهیان بادکنک‌سانان", "Tetraodontiformes", [
+                F("tetraodontidae", "ماهیان بادکنکی", "Tetraodontidae", [
+                  G("takifugu", "فوگو", "Takifugu", [
+                    S("ta_rubripes", "فوگوی ببری", "Takifugu rubripes", "Takifugu rubripes", "ژاپن · بسیار سمی، خوراکی با مهارت")
+                  ])
+                ]),
+                F("molidae", "ماهی‌های ماه", "Molidae", [
+                  G("mola", "ماهی ماه", "Mola (fish)", [
+                    S("mo_mola", "ماهی ماه معمولی", "Mola mola", "Ocean sunfish", "اقیانوس‌های گرم · سنگین‌ترین ماهی استخوانی")
+                  ])
+                ])
+              ]),
+              O("acipenseriformes", "تاس‌ماهی‌سانان", "Acipenseriformes", [
+                F("acipenseridae", "تاس‌ماهیان", "Acipenseridae", [
+                  G("acipenser", "تاس‌ماهی", "Acipenser", [
+                    S("ac_sturio",      "تاس‌ماهی اروپایی", "Acipenser sturio",      "Acipenser sturio",      "اروپا · IUCN: شدیداً در معرض خطر"),
+                    S("ac_gueldenstaedtii", "تاس‌ماهی روسی", "Acipenser gueldenstaedtii", "Russian sturgeon", "دریای خزر · منبع خاویار اوسترا")
+                  ]),
+                  G("huso", "بلوگا", "Huso", [
+                    S("hu_huso", "بلوگا", "Huso huso", "Beluga (sturgeon)", "دریای خزر و دریای سیاه · بزرگ‌ترین ماهی آب شیرین · خاویار بلوگا")
+                  ])
+                ])
+              ]),
+              O("lophiiformes", "ماهی شیطان‌سانان", "Lophiiformes", [
+                F("lophiidae", "ماهی شیطان‌های دریا", "Lophiidae", [
+                  G("lophius", "ماهی شیطان", "Lophius", [
+                    S("lo_piscatorius", "ماهی شیطان اروپایی", "Lophius piscatorius", "Lophius piscatorius", "آتلانتیک شرقی · دارای طعمهٔ نوری")
+                  ])
+                ])
+              ]),
+              O("syngnathiformes", "اسب‌دریایی‌سانان", "Syngnathiformes", [
+                F("syngnathidae", "اسب‌های دریایی", "Syngnathidae", [
+                  G("hippocampus", "اسب دریایی", "Hippocampus (genus)", [
+                    S("hp_hippocampus", "اسب دریایی کوتاه‌پوزه", "Hippocampus hippocampus", "Hippocampus hippocampus", "آتلانتیک شرقی و مدیترانه")
+                  ])
+                ])
+              ])
+            ]),
+
+            C("chondrichthyes", "ماهیان غضروفی", "Chondrichthyes", [
+              O("lamniformes", "کوسه‌های شاه‌ماهی", "Lamniformes", [
+                F("lamnidae", "کوسه‌های ماکرل", "Lamnidae", [
+                  G("carcharodon", "کوسهٔ سفید", "Carcharodon", [
+                    S("c_carcharias", "کوسهٔ سفید بزرگ", "Carcharodon carcharias", "Great white shark", "اقیانوس‌های معتدل و گرم")
+                  ]),
+                  G("isurus", "کوسهٔ ماکو", "Isurus", [
+                    S("is_oxyrinchus", "کوسهٔ ماکوی کوتاه‌باله", "Isurus oxyrinchus", "Shortfin mako shark", "اقیانوس‌های معتدل · سریع‌ترین کوسه")
+                  ])
+                ]),
+                F("alopiidae", "کوسه‌های دم‌بلند", "Alopiidae", [
+                  G("alopias", "کوسهٔ دم‌بلند", "Alopias", [
+                    S("alp_vulpinus", "کوسهٔ دم‌بلند معمولی", "Alopias vulpinus", "Common thresher", "اقیانوس‌های معتدل · دم شکارچی")
+                  ])
+                ])
+              ]),
+              O("carcharhiniformes", "کوسه‌های زمینی", "Carcharhiniformes", [
+                F("carcharhinidae", "کوسه‌های نیازی", "Carcharhinidae", [
+                  G("carcharhinus", "کوسهٔ نیازی", "Carcharhinus", [
+                    S("crh_leucas",     "کوسهٔ گاوی",         "Carcharhinus leucas",     "Bull shark",           "آب‌های گرم · واردشونده به آب شیرین"),
+                    S("crh_limbatus",   "کوسهٔ نوک‌سیاه",    "Carcharhinus limbatus",   "Blacktip shark",       "گرمسیری در سراسر جهان")
+                  ]),
+                  G("galeocerdo", "کوسهٔ ببری", "Galeocerdo", [
+                    S("gc_cuvier", "کوسهٔ ببری", "Galeocerdo cuvier", "Tiger shark", "اقیانوس‌های گرم · شکارچی فرصت‌طلب")
+                  ]),
+                  G("prionace", "کوسهٔ آبی", "Prionace", [
+                    S("pn_glauca", "کوسهٔ آبی", "Prionace glauca", "Blue shark", "اقیانوس‌های جهانی · مهاجر طولانی")
+                  ])
+                ]),
+                F("sphyrnidae", "کوسه‌های چکشی", "Sphyrnidae", [
+                  G("sphyrna", "کوسهٔ چکشی", "Sphyrna", [
+                    S("sf_mokarran", "کوسهٔ چکشی بزرگ", "Sphyrna mokarran", "Great hammerhead", "اقیانوس‌های گرمسیری · سر چکشی پهن"),
+                    S("sf_zygaena",  "کوسهٔ چکشی صاف", "Sphyrna zygaena",  "Smooth hammerhead","معتدل و گرمسیری")
+                  ])
+                ])
+              ]),
+              O("orectolobiformes", "کوسه‌های فرش‌مانند", "Orectolobiformes", [
+                F("rhincodontidae", "کوسهٔ نهنگ", "Rhincodontidae", [
+                  G("rhincodon", "کوسهٔ نهنگ", "Rhincodon", [
+                    S("r_typus", "کوسهٔ نهنگ", "Rhincodon typus", "Whale shark", "اقیانوس‌های گرمسیری · بزرگ‌ترین ماهی")
+                  ])
+                ]),
+                F("ginglymostomatidae", "کوسه‌های پرستار", "Ginglymostomatidae", [
+                  G("ginglymostoma", "کوسهٔ پرستار", "Ginglymostoma", [
+                    S("gn_cirratum", "کوسهٔ پرستار", "Ginglymostoma cirratum", "Nurse shark", "آتلانتیک و اقیانوس آرام شرقی")
+                  ])
+                ])
+              ]),
+              O("squaliformes", "کوسه‌های سگ‌ماهی", "Squaliformes", [
+                F("squalidae", "سگ‌ماهیان خار", "Squalidae", [
+                  G("squalus", "سگ‌ماهی خاردار", "Squalus", [
+                    S("sq_acanthias", "سگ‌ماهی خاردار", "Squalus acanthias", "Spiny dogfish", "آب‌های معتدل · ماهیگیری گسترده")
+                  ])
+                ])
+              ]),
+              O("hexanchiformes", "کوسه‌های گاوی", "Hexanchiformes", [
+                F("hexanchidae", "کوسه‌های شش‌آبشار", "Hexanchidae", [
+                  G("hexanchus", "کوسهٔ شش‌آبشار", "Hexanchus", [
+                    S("hx_griseus", "کوسهٔ شش‌آبشار بزرگ", "Hexanchus griseus", "Bluntnose sixgill shark", "اعماق اقیانوس · فسیل زنده")
+                  ])
+                ])
+              ]),
+              O("myliobatiformes", "سفره‌ماهی‌سانان", "Myliobatiformes", [
+                F("dasyatidae", "سفره‌ماهی‌های دم‌تیغ", "Dasyatidae", [
+                  G("dasyatis", "سفره‌ماهی", "Dasyatis", [
+                    S("d_pastinaca", "سفره‌ماهی معمولی", "Dasyatis pastinaca", "Common stingray", "آتلانتیک شرقی و مدیترانه")
+                  ])
+                ]),
+                F("mobulidae", "مانتاها", "Mobulidae", [
+                  G("mobula", "مانتا", "Mobula", [
+                    S("mb_birostris", "مانتای غول‌پیکر", "Mobula birostris", "Giant oceanic manta ray", "اقیانوس‌های گرمسیری · پهنای بال تا ۷ متر")
+                  ])
+                ])
+              ]),
+              O("rajiformes", "سفره‌ماهیان واقعی", "Rajiformes", [
+                F("rajidae", "سفره‌ماهیان", "Rajidae", [
+                  G("raja", "سفره‌ماهی واقعی", "Raja (fish)", [
+                    S("rj_clavata", "سفره‌ماهی خاردار", "Raja clavata", "Thornback ray", "آتلانتیک شرقی و مدیترانه")
+                  ])
+                ])
+              ]),
+              O("torpediniformes", "سفره‌ماهیان برقی", "Torpediniformes", [
+                F("torpedinidae", "تورپدوها", "Torpedinidae", [
+                  G("torpedo", "سفره‌ماهی برقی", "Torpedo (fish)", [
+                    S("tp_marmorata", "سفره‌ماهی برقی مرمری", "Torpedo marmorata", "Marbled electric ray", "آتلانتیک شرقی و مدیترانه · شوک الکتریکی")
+                  ])
+                ])
+              ])
+            ]),
+
+            C("sarcopterygii", "ماهیان گوشت‌باله", "Sarcopterygii", [
+              O("coelacanthiformes", "سلاکانت‌سانان", "Coelacanthiformes", [
+                F("latimeriidae", "سلاکانت‌ها", "Latimeriidae", [
+                  G("latimeria", "سلاکانت", "Latimeria", [
+                    S("la_chalumnae",   "سلاکانت آفریقای غربی", "Latimeria chalumnae",   "West Indian Ocean coelacanth", "اقیانوس هند · فسیل زنده، کشف ۱۹۳۸"),
+                    S("la_menadoensis", "سلاکانت اندونزی",      "Latimeria menadoensis", "Indonesian coelacanth",        "سولاوسی")
+                  ])
+                ])
+              ]),
+              O("ceratodontiformes", "ماهی‌شش‌داران", "Ceratodontiformes", [
+                F("ceratodontidae", "ماهی شش‌دار استرالیایی", "Ceratodontidae", [
+                  G("neoceratodus", "ماهی شش‌دار استرالیایی", "Neoceratodus", [
+                    S("ne_forsteri", "ماهی شش‌دار استرالیایی", "Neoceratodus forsteri", "Queensland lungfish", "استرالیا · شش زوج با آبشش")
+                  ])
+                ]),
+                F("protopteridae", "ماهیان شش‌دار آفریقایی", "Protopteridae", [
+                  G("protopterus", "ماهی شش‌دار آفریقایی", "Protopterus", [
+                    S("pt_annectens", "ماهی شش‌دار غرب آفریقا", "Protopterus annectens", "West African lungfish", "آفریقا · زنده‌مانی در گل خشک")
+                  ])
+                ])
+              ])
+            ]),
+
+            C("cyclostomata", "دایره‌دهانان (ماهیان بی‌آرواره)", "Cyclostomata", [
+              O("petromyzontiformes", "مارماهی‌های نُه‌چشم", "Petromyzontiformes", [
+                F("petromyzontidae", "مارماهی‌های نُه‌چشم (تیره)", "Petromyzontidae", [
+                  G("petromyzon", "مارماهی نُه‌چشم دریایی", "Petromyzon", [
+                    S("pm_marinus", "مارماهی نُه‌چشم دریایی", "Petromyzon marinus", "Sea lamprey", "آتلانتیک · گونهٔ مهاجم در دریاچه‌های بزرگ آمریکا")
+                  ]),
+                  G("lampetra", "مارماهی نُه‌چشم رودخانه‌ای", "Lampetra", [
+                    S("lp_fluviatilis", "مارماهی نُه‌چشم رودخانه‌ای", "Lampetra fluviatilis", "European river lamprey", "اروپا")
+                  ])
+                ])
+              ]),
+              O("myxiniformes", "مارماهی‌های مخاطی", "Myxiniformes", [
+                F("myxinidae", "مارماهی‌های مخاطی (تیره)", "Myxinidae", [
+                  G("myxine", "مارماهی مخاطی", "Myxine", [
+                    S("my_glutinosa", "مارماهی مخاطی آتلانتیک", "Myxine glutinosa", "Atlantic hagfish", "اعماق آتلانتیک · فاقد آرواره و مهره‌های واقعی")
+                  ])
+                ])
+              ])
+            ])
+
+          ]) // chordata
+        ]}, // vertebrata
+
+        // ════ INVERTEBRATES ════
+        { id: "invertebrata", rank: "Group", rankFa: "گروه", fa: "بی‌مهرگان", latin: "Invertebrata", wiki: "Invertebrate", children: [
+
+          P("arthropoda", "بندپایان", "Arthropoda", [
+            C("insecta", "حشرات", "Insecta", [
+              O("lepidoptera", "بال‌پولکداران", "Lepidoptera", [
+                F("nymphalidae", "پروانه‌های پابرسی", "Nymphalidae", [
+                  G("danaus", "پروانهٔ مونارک", "Danaus (genus)", [
+                    S("d_plexippus", "پروانهٔ مونارک", "Danaus plexippus", "Monarch butterfly", "مهاجرت بین کانادا و مکزیک")
+                  ])
+                ]),
+                F("papilionidae", "پروانه‌های دم‌چلچله‌ای", "Papilionidae", [
+                  G("papilio", "دم‌چلچله", "Papilio", [
+                    S("p_machaon", "دم‌چلچلهٔ معمولی", "Papilio machaon", "Old World swallowtail", "اوراسیا و آمریکای شمالی")
+                  ])
+                ])
+              ]),
+              O("hymenoptera", "بال‌غشاییان", "Hymenoptera", [
+                F("apidae", "زنبور عسل‌ها", "Apidae", [
+                  G("apis", "زنبور عسل", "Apis (genus)", [
+                    S("a_mellifera", "زنبور عسل اروپایی", "Apis mellifera", "Western honey bee", "اهلی‌شده، تولیدکنندهٔ عسل")
+                  ]),
+                  G("bombus", "زنبور درشت", "Bombus", [
+                    S("b_terrestris", "زنبور درشت زمینی", "Bombus terrestris", "Bumblebee", "اروپا · گردافشان مهم")
+                  ])
+                ]),
+                F("formicidae", "مورچه‌ها", "Formicidae", [
+                  G("atta", "مورچهٔ برگ‌بُر", "Atta (genus)", [
+                    S("a_cephalotes", "مورچهٔ برگ‌بُر", "Atta cephalotes", "Leafcutter ant", "آمریکای مرکزی و جنوبی")
+                  ])
+                ]),
+                F("vespidae", "زنبورهای کاغذی", "Vespidae", [
+                  G("vespa", "زنبور قرمز", "Vespa", [
+                    S("v_crabro", "زنبور قرمز اروپایی", "Vespa crabro", "European hornet", "اروپا و آسیا")
+                  ])
+                ])
+              ]),
+              O("coleoptera", "سخت‌بال‌پوشان", "Coleoptera", [
+                F("scarabaeidae", "سوسک‌های اسکارابه", "Scarabaeidae", [
+                  G("scarabaeus", "سوسک سرگین‌غلتان", "Scarabaeus", [
+                    S("s_sacer", "سوسک مقدس مصر", "Scarabaeus sacer", "Scarabaeus sacer", "مدیترانه · نماد در مصر باستان")
+                  ])
+                ]),
+                F("coccinellidae", "کفش‌دوزک‌ها", "Coccinellidae", [
+                  G("coccinella", "کفش‌دوزک", "Coccinella", [
+                    S("c_septempunctata", "کفش‌دوزک هفت‌خال", "Coccinella septempunctata", "Coccinella septempunctata", "اروپا و آسیا")
+                  ])
+                ])
+              ]),
+              O("diptera", "دوبال‌سانان", "Diptera", [
+                F("drosophilidae", "مگس‌های میوه", "Drosophilidae", [
+                  G("drosophila", "مگس سرکه", "Drosophila", [
+                    S("d_melanogaster", "مگس سرکهٔ معمولی", "Drosophila melanogaster", "Drosophila melanogaster", "مدل آزمایشگاهی")
+                  ])
+                ])
+              ]),
+              O("odonata", "سنجاقک‌سانان", "Odonata", [
+                F("aeshnidae", "سنجاقک‌های امپراتور", "Aeshnidae", [
+                  G("anax", "سنجاقک امپراتور", "Anax (genus)", [
+                    S("a_imperator", "سنجاقک امپراتور", "Anax imperator", "Emperor dragonfly", "اروپا، آفریقا، آسیا")
+                  ])
+                ])
+              ]),
+              O("orthoptera", "راست‌بالان", "Orthoptera", [
+                F("acrididae", "ملخ‌سانان", "Acrididae", [
+                  G("locusta", "ملخ مهاجر", "Locusta", [
+                    S("l_migratoria", "ملخ مهاجر", "Locusta migratoria", "Migratory locust", "آفریقا، آسیا، اروپا")
+                  ])
+                ])
+              ]),
+              O("mantodea", "آخوندک‌سانان", "Mantodea", [
+                F("mantidae", "آخوندک‌ها", "Mantidae", [
+                  G("mantis", "آخوندک", "Mantis (genus)", [
+                    S("m_religiosa", "آخوندک اروپایی", "Mantis religiosa", "European mantis", "اوراسیا و آفریقای شمالی")
+                  ])
+                ])
+              ])
+            ]),
+            C("arachnida", "عنکبوتیان", "Arachnida", [
+              O("araneae", "عنکبوت‌ها", "Araneae", [
+                F("theraphosidae", "رتیل‌ها", "Theraphosidae", [
+                  G("theraphosa", "رتیل غول‌پیکر", "Theraphosa", [
+                    S("t_blondi", "رتیل گوشت‌خوار", "Theraphosa blondi", "Goliath birdeater", "آمریکای جنوبی · بزرگ‌ترین عنکبوت جهان")
+                  ]),
+                  G("brachypelma", "رتیل مکزیکی", "Brachypelma", [
+                    S("b_hamorii", "رتیل زانوقرمز مکزیکی", "Brachypelma hamorii", "Brachypelma hamorii", "مکزیک · رنگ‌های روشن")
+                  ]),
+                  G("grammostola", "رتیل گل‌سرخی", "Grammostola", [
+                    S("g_rosea", "رتیل گل‌سرخی شیلیایی", "Grammostola rosea", "Chilean rose tarantula", "شیلی · رایج به‌عنوان حیوان خانگی")
+                  ]),
+                  G("aphonopelma", "رتیل آریزونا", "Aphonopelma", [
+                    S("a_chalcodes", "رتیل بور صحرا", "Aphonopelma chalcodes", "Aphonopelma chalcodes", "صحرای سونوران آمریکای شمالی")
+                  ])
+                ]),
+                F("salticidae", "عنکبوت‌های جهنده", "Salticidae", [
+                  G("phidippus", "عنکبوت جهندهٔ طاووسی", "Phidippus", [
+                    S("p_audax", "عنکبوت جهندهٔ شجاع", "Phidippus audax", "Phidippus audax", "آمریکای شمالی · پررنگ")
+                  ]),
+                  G("salticus", "عنکبوت گورخری", "Salticus", [
+                    S("s_scenicus", "عنکبوت جهندهٔ گورخری", "Salticus scenicus", "Salticus scenicus", "اروپا و آمریکای شمالی")
+                  ]),
+                  G("maratus", "عنکبوت طاووس", "Maratus", [
+                    S("m_volans", "عنکبوت طاووس", "Maratus volans", "Maratus volans", "استرالیا · رقص جفت‌گیری رنگارنگ")
+                  ])
+                ]),
+                F("lycosidae", "عنکبوت‌های گرگ", "Lycosidae", [
+                  G("lycosa", "عنکبوت گرگ", "Lycosa", [
+                    S("l_tarantula", "تارانتولای ایتالیایی", "Lycosa tarantula", "Lycosa tarantula", "اروپای جنوبی · نام تاریخی تارانتولا از این عنکبوت")
+                  ]),
+                  G("hogna", "گرگ‌عنکبوت بزرگ", "Hogna", [
+                    S("h_carolinensis", "گرگ‌عنکبوت کارولینا", "Hogna carolinensis", "Hogna carolinensis", "آمریکای شمالی · بزرگ‌ترین عنکبوت گرگ آمریکای شمالی")
+                  ])
+                ]),
+                F("araneidae", "عنکبوت‌های تورگردساز", "Araneidae", [
+                  G("araneus", "عنکبوت تور باغی", "Araneus", [
+                    S("a_diadematus", "عنکبوت تور باغی اروپایی", "Araneus diadematus", "European garden spider", "اروپا و آمریکای شمالی · تور کلاسیک")
+                  ]),
+                  G("argiope", "عنکبوت زنبوری", "Argiope (spider)", [
+                    S("ar_bruennichi", "عنکبوت زنبوری", "Argiope bruennichi", "Argiope bruennichi", "اروپا و آسیا · راه‌راه زرد و سیاه"),
+                    S("ar_aurantia", "عنکبوت باغی زرد و سیاه", "Argiope aurantia", "Argiope aurantia", "آمریکای شمالی")
+                  ]),
+                  G("nephila", "عنکبوت ابریشم طلایی", "Nephila", [
+                    S("n_pilipes", "نفیلای موهای طلایی", "Nephila pilipes", "Nephila pilipes", "آسیا و استرالیا · ابریشم طلایی")
+                  ])
+                ]),
+                F("theridiidae", "عنکبوت‌های تور درهم", "Theridiidae", [
+                  G("latrodectus", "بیوهٔ سیاه", "Latrodectus", [
+                    S("la_mactans", "بیوهٔ سیاه جنوبی", "Latrodectus mactans", "Latrodectus mactans", "جنوب آمریکای شمالی · سم نوروتوکسیک"),
+                    S("la_hesperus", "بیوهٔ سیاه غربی", "Latrodectus hesperus", "Western black widow", "غرب آمریکای شمالی"),
+                    S("la_geometricus", "بیوهٔ قهوه‌ای", "Latrodectus geometricus", "Brown widow spider", "گرمسیری در سراسر جهان")
+                  ]),
+                  G("steatoda", "عنکبوت بیوهٔ کاذب", "Steatoda", [
+                    S("st_grossa", "بیوهٔ کاذب", "Steatoda grossa", "Steatoda grossa", "اروپا و آمریکای شمالی")
+                  ])
+                ]),
+                F("sicariidae", "عنکبوت‌های گوشه‌نشین", "Sicariidae", [
+                  G("loxosceles", "عنکبوت گوشه‌نشین", "Loxosceles", [
+                    S("lo_reclusa", "گوشه‌نشین قهوه‌ای", "Loxosceles reclusa", "Brown recluse spider", "آمریکای شمالی · سم نکروتوکسیک")
+                  ])
+                ]),
+                F("pholcidae", "عنکبوت‌های پاگنده", "Pholcidae", [
+                  G("pholcus", "عنکبوت سرداب", "Pholcus", [
+                    S("ph_phalangioides", "عنکبوت سرداب پاگنده", "Pholcus phalangioides", "Pholcus phalangioides", "در سراسر جهان در داخل خانه‌ها")
+                  ])
+                ]),
+                F("sparassidae", "عنکبوت‌های شکارچی", "Sparassidae", [
+                  G("heteropoda", "عنکبوت شکارچی غول", "Heteropoda", [
+                    S("he_maxima", "شکارچی غول‌پیکر", "Heteropoda maxima", "Heteropoda maxima", "لائوس · بزرگ‌ترین عنکبوت از نظر طول پا")
+                  ])
+                ])
+              ]),
+              O("scorpiones", "عقرب‌ها", "Scorpiones", [
+                F("buthidae", "عقرب‌های دم‌چاق", "Buthidae", [
+                  G("androctonus", "گژدم", "Androctonus", [
+                    S("a_crassicauda", "گژدم سیاه", "Androctonus crassicauda", "Androctonus crassicauda", "خاورمیانه · سمی")
+                  ])
+                ])
+              ])
+            ]),
+            C("crustacea", "سخت‌پوستان", "Crustacea", [
+              O("decapoda", "ده‌پایان", "Decapoda", [
+                F("nephropidae", "خرچنگ‌های دریایی", "Nephropidae", [
+                  G("homarus", "خرچنگ دریایی", "Homarus", [
+                    S("h_americanus", "خرچنگ آمریکایی", "Homarus americanus", "American lobster", "آتلانتیک شمالی")
+                  ])
+                ]),
+                F("portunidae", "خرچنگ‌های شناگر", "Portunidae", [
+                  G("callinectes", "خرچنگ آبی", "Callinectes", [
+                    S("c_sapidus", "خرچنگ آبی آتلانتیک", "Callinectes sapidus", "Callinectes sapidus", "آتلانتیک غربی")
+                  ])
+                ])
+              ])
+            ])
+          ]),
+
+          P("mollusca", "نرم‌تنان", "Mollusca", [
+            C("cephalopoda", "سرپایان", "Cephalopoda", [
+              O("octopoda", "هشت‌پایان", "Octopoda", [
+                F("octopodidae", "هشت‌پایان معمولی", "Octopodidae", [
+                  G("octopus", "هشت‌پا", "Octopus (genus)", [
+                    S("o_vulgaris", "اختاپوس معمولی", "Octopus vulgaris", "Common octopus", "اقیانوس‌های گرمسیری")
+                  ])
+                ])
+              ]),
+              O("decapodiformes", "ماهی‌مرکب‌سانان", "Decapodiformes", [
+                F("loliginidae", "ماهی‌مرکب‌ها", "Loliginidae", [
+                  G("loligo", "ماهی‌مرکب", "Loligo", [
+                    S("l_vulgaris", "ماهی‌مرکب اروپایی", "Loligo vulgaris", "European squid", "آتلانتیک شرقی و مدیترانه")
+                  ])
+                ])
+              ])
+            ]),
+            C("gastropoda", "شکم‌پایان", "Gastropoda", [
+              O("stylommatophora", "حلزون‌های خشکی", "Stylommatophora", [
+                F("helicidae", "حلزون‌های باغی", "Helicidae", [
+                  G("helix", "حلزون", "Helix (genus)", [
+                    S("h_pomatia", "حلزون رومی", "Helix pomatia", "Roman snail", "اروپا · خوراکی")
+                  ])
+                ])
+              ])
+            ]),
+            C("bivalvia", "دوکفه‌ای‌ها", "Bivalvia", [
+              O("ostreoida", "صدف‌های خوراکی", "Ostreida", [
+                F("ostreidae", "صدف‌ها", "Ostreidae", [
+                  G("crassostrea", "صدف اقیانوس آرام", "Magallana", [
+                    S("c_gigas", "صدف اقیانوس آرام", "Magallana gigas", "Pacific oyster", "اقیانوس آرام · پرورش گسترده")
+                  ])
+                ])
+              ]),
+              O("mytiloida", "صدف‌های آبی", "Mytilida", [
+                F("mytilidae", "صدف آبی", "Mytilidae", [
+                  G("mytilus", "صدف آبی", "Mytilus", [
+                    S("m_edulis", "صدف آبی معمولی", "Mytilus edulis", "Blue mussel", "آتلانتیک شمالی")
+                  ])
+                ])
+              ])
+            ])
+          ]),
+
+          P("cnidaria", "کیسه‌تنان", "Cnidaria", [
+            C("scyphozoa", "عروس‌های دریایی واقعی", "Scyphozoa", [
+              O("semaeostomeae", "عروس‌های پرچم‌دار", "Semaeostomeae", [
+                F("ulmaridae", "عروس دریایی ماه", "Ulmaridae", [
+                  G("aurelia", "عروس دریایی", "Aurelia (cnidarian)", [
+                    S("a_aurita", "عروس دریایی ماه", "Aurelia aurita", "Aurelia aurita", "همهٔ اقیانوس‌ها")
+                  ])
+                ])
+              ])
+            ]),
+            C("anthozoa", "گل‌ساران", "Anthozoa", [
+              O("scleractinia", "مرجان‌های سخت", "Scleractinia", [
+                F("acroporidae", "مرجان‌های شاخی", "Acroporidae", [
+                  G("acropora", "مرجان شاخی", "Acropora", [
+                    S("a_cervicornis", "مرجان شاخ گوزنی", "Acropora cervicornis", "Acropora cervicornis", "کارائیب · IUCN: شدیداً در خطر")
+                  ])
+                ])
+              ])
+            ]),
+            C("hydrozoa", "مرجان‌نمایان", "Hydrozoa", [
+              O("anthoathecata", "هیدراها", "Anthoathecata", [
+                F("hydridae", "هیدراها", "Hydridae", [
+                  G("hydra", "هیدرا", "Hydra (genus)", [
+                    S("h_vulgaris", "هیدرای معمولی", "Hydra vulgaris", "Hydra vulgaris", "آب شیرین")
+                  ])
+                ])
+              ])
+            ])
+          ]),
+
+          P("echinodermata", "خارپوستان", "Echinodermata", [
+            C("asteroidea", "ستاره‌های دریایی", "Asteroidea", [
+              O("forcipulatida", "ستاره‌های انبرک‌دار", "Forcipulatida", [
+                F("asteriidae", "ستاره‌های معمولی", "Asteriidae", [
+                  G("asterias", "ستارهٔ دریایی", "Asterias", [
+                    S("a_rubens", "ستارهٔ دریایی معمولی", "Asterias rubens", "Common starfish", "آتلانتیک شمالی")
+                  ])
+                ])
+              ])
+            ]),
+            C("echinoidea", "توتیاهای دریایی", "Echinoidea", [
+              O("camarodonta", "توتیاهای منظم", "Camarodonta", [
+                F("strongylocentrotidae", "توتیاهای ارغوانی", "Strongylocentrotidae", [
+                  G("strongylocentrotus", "توتیای دریایی ارغوانی", "Strongylocentrotus", [
+                    S("s_purpuratus", "توتیای ارغوانی اقیانوس آرام", "Strongylocentrotus purpuratus", "Strongylocentrotus purpuratus", "ساحل غربی آمریکای شمالی")
+                  ])
+                ])
+              ])
+            ])
+          ]),
+
+          P("porifera", "اسفنج‌ها", "Porifera", [
+            C("demospongiae", "اسفنج‌های معمولی", "Demospongiae", [
+              O("dictyoceratida", "اسفنج‌های شاخی", "Dictyoceratida", [
+                F("spongiidae", "اسفنج‌های حمام", "Spongiidae", [
+                  G("spongia", "اسفنج حمام", "Spongia", [
+                    S("s_officinalis", "اسفنج حمام مدیترانه", "Spongia officinalis", "Spongia officinalis", "مدیترانه")
+                  ])
+                ])
+              ])
+            ])
+          ])
+
+        ]} // invertebrata
+
+      ]} // animalia
+    ]} // eukarya
+  ]
+};
+
+// ───── Helpers ─────
+function findPath(targetId, node = TAXONOMY, trail = []) {
+  if (node.id === targetId) return [...trail, node];
+  if (!node.children) return null;
+  for (const child of node.children) {
+    const r = findPath(targetId, child, [...trail, node]);
+    if (r) return r;
+  }
+  return null;
+}
+function getNode(id) {
+  const p = findPath(id);
+  return p ? p[p.length - 1] : null;
+}
+
+// ───── Image cache + lazy loading ─────
+const imageCache = new Map();
+async function fetchImage(wiki) {
+  if (imageCache.has(wiki)) return imageCache.get(wiki);
+  const promise = (async () => {
+    try {
+      const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(wiki.replace(/ /g, '_'))}`);
+      if (!r.ok) return null;
+      const data = await r.json();
+      return {
+        thumb: data.thumbnail?.source || null,
+        original: data.originalimage?.source || data.thumbnail?.source || null,
+        title: data.title,
+        url: data.content_urls?.desktop?.page || null
+      };
+    } catch (e) { return null; }
+  })();
+  imageCache.set(wiki, promise);
+  return promise;
+}
+
+async function loadNodeImage(imgEl, wiki) {
+  const data = await fetchImage(wiki);
+  if (data && data.thumb) {
+    imgEl.src = data.thumb;
+    imgEl.onload = () => imgEl.classList.add("loaded");
+    imgEl.onerror = () => imgEl.classList.add("missing");
+  } else {
+    imgEl.classList.add("missing");
+  }
+}
+
+// ───── State ─────
+let currentPath = ["eukarya", "animalia", "vertebrata", "chordata", "mammalia", "carnivora", "felidae", "panthera", "p_leo"];
+
+// ───── Render ─────
+function render() { renderBreadcrumb(); renderTree(); }
+
+function renderBreadcrumb() {
+  const crumb = document.getElementById("breadcrumb");
+  crumb.innerHTML = "";
+  currentPath.forEach((id, i) => {
+    const node = getNode(id);
+    if (!node) return;
+    if (i > 0) {
+      const s = document.createElement("span");
+      s.className = "crumb-sep"; s.textContent = "›";
+      crumb.appendChild(s);
+    }
+    const c = document.createElement("div");
+    c.className = "crumb";
+    c.innerHTML = `<span class="crumb-rank">${node.rankFa}</span><span class="crumb-name">${node.fa}</span>`;
+    c.onclick = () => { currentPath = currentPath.slice(0, i + 1); render(); };
+    crumb.appendChild(c);
+  });
+}
+
+function renderTree() {
+  const tree = document.getElementById("tree");
+  tree.innerHTML = "";
+
+  for (let i = 0; i < currentPath.length; i++) {
+    const id = currentPath[i];
+    const node = getNode(id);
+    if (!node) continue;
+    const siblings = i === 0 ? TAXONOMY.children : getNode(currentPath[i - 1]).children;
+    tree.appendChild(buildLevel(node.rank, node.rankFa, siblings, id, i));
+    tree.appendChild(buildConnector());
+  }
+
+  const last = getNode(currentPath[currentPath.length - 1]);
+  if (last && last.children && last.children.length) {
+    const childRank = last.children[0].rank;
+    const childRankFa = last.children[0].rankFa;
+    tree.appendChild(buildLevel(childRank, childRankFa, last.children, null, currentPath.length));
+  } else {
+    if (tree.lastChild && tree.lastChild.className === "connector") tree.removeChild(tree.lastChild);
+    if (last) tree.appendChild(buildSpeciesCard(last));
+  }
+
+  setTimeout(() => {
+    const lastEl = tree.lastChild;
+    if (lastEl) lastEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, 50);
+}
+
+function buildLevel(rank, rankFa, siblings, mainId, levelIndex) {
+  const level = document.createElement("div");
+  level.className = "level";
+
+  const label = document.createElement("div");
+  label.className = "level-label";
+  label.innerHTML = `${rank}<span class="fa">${rankFa}</span>`;
+  level.appendChild(label);
+
+  const row = document.createElement("div");
+  row.className = "siblings";
+  siblings.forEach(s => {
+    const n = document.createElement("div");
+    n.className = "node" + (s.id === mainId ? " main" : "");
+    n.setAttribute("data-color", RANK_COLORS[s.rank] || "indigo");
+
+    const img = document.createElement("img");
+    img.className = "node-img";
+    img.alt = s.latin;
+    n.appendChild(img);
+
+    const name = document.createElement("span");
+    name.className = "fa-name";
+    name.textContent = s.fa;
+    n.appendChild(name);
+
+    const latin = document.createElement("span");
+    latin.className = "latin";
+    latin.textContent = s.latin;
+    n.appendChild(latin);
+
+    n.onclick = () => onNodeClick(s.id, levelIndex);
+    row.appendChild(n);
+
+    if (s.wiki) loadNodeImage(img, s.wiki);
+    else img.classList.add("missing");
+  });
+  level.appendChild(row);
+  return level;
+}
+
+function buildConnector() {
+  const c = document.createElement("div");
+  c.className = "connector";
+  return c;
+}
+
+function buildSpeciesCard(node) {
+  const card = document.createElement("div");
+  card.className = "species-final";
+
+  const hero = document.createElement("img");
+  hero.className = "hero";
+  hero.alt = node.latin;
+  card.appendChild(hero);
+
+  const info = document.createElement("div");
+  info.className = "info";
+  info.innerHTML = `
+    <h2>${node.fa}</h2>
+    <div class="latin-full">${node.latin}</div>
+    <p>${node.info || ""}</p>
+  `;
+  card.appendChild(info);
+
+  if (node.wiki) {
+    fetchImage(node.wiki).then(d => {
+      if (d) {
+        if (d.original) hero.src = d.original;
+        if (d.url) {
+          const a = document.createElement("a");
+          a.className = "wiki-link";
+          a.href = d.url; a.target = "_blank"; a.rel = "noopener";
+          a.textContent = "View on Wikipedia ↗";
+          info.appendChild(a);
+        }
+      }
+    });
+  }
+  return card;
+}
+
+function onNodeClick(id, levelIndex) {
+  currentPath = currentPath.slice(0, levelIndex);
+  currentPath.push(id);
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
