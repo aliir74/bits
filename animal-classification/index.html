@@ -58,8 +58,8 @@
   .level {
     width: 100%; display: flex; flex-direction: column;
     align-items: center; position: relative;
-    animation: fadeIn 0.25s ease;
   }
+  .level.fresh { animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
   .level-label {
     position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
@@ -133,8 +133,9 @@
     background: linear-gradient(135deg, var(--green-soft), var(--mint-soft));
     border-radius: 24px;
     box-shadow: 0 14px 36px rgba(43, 168, 74, 0.16);
-    animation: fadeIn 0.3s ease; max-width: 800px;
+    max-width: 800px;
   }
+  .species-final.fresh { animation: fadeIn 0.3s ease; }
   .species-final .hero {
     width: 180px; height: 180px; border-radius: 20px;
     object-fit: cover; background: var(--card);
@@ -2294,33 +2295,93 @@ function renderBreadcrumb() {
   });
 }
 
+function updateMain(levelEl, mainId) {
+  const prev = levelEl.querySelector(".node.main");
+  if (prev) prev.classList.remove("main");
+  if (mainId) {
+    const target = levelEl.querySelector(`.node[data-node-id="${CSS.escape(mainId)}"]`);
+    if (target) target.classList.add("main");
+  }
+  levelEl.dataset.mainId = mainId || "";
+}
+
+function makeLevelElement(parentId, rank, rankFa, siblings, mainId, levelIndex) {
+  const el = buildLevel(rank, rankFa, siblings, mainId, levelIndex);
+  el.dataset.parentId = parentId;
+  el.dataset.mainId = mainId || "";
+  el.classList.add("fresh");
+  setTimeout(() => el.classList.remove("fresh"), 300);
+  return el;
+}
+
 function renderTree() {
   const tree = document.getElementById("tree");
-  tree.innerHTML = "";
 
+  // Compute wanted sequence of children: [level, connector, level, connector, ..., level|species]
+  const wanted = [];
   for (let i = 0; i < currentPath.length; i++) {
     const id = currentPath[i];
     const node = getNode(id);
     if (!node) continue;
+    const parentId = i === 0 ? "_root" : currentPath[i - 1];
     const siblings = i === 0 ? TAXONOMY.children : getNode(currentPath[i - 1]).children;
-    tree.appendChild(buildLevel(node.rank, node.rankFa, siblings, id, i));
-    tree.appendChild(buildConnector());
+    wanted.push({ type: "level", parentId, mainId: id, rank: node.rank, rankFa: node.rankFa, siblings, levelIndex: i });
+    wanted.push({ type: "connector" });
   }
-
   const last = getNode(currentPath[currentPath.length - 1]);
   if (last && last.children && last.children.length) {
-    const childRank = last.children[0].rank;
-    const childRankFa = last.children[0].rankFa;
-    tree.appendChild(buildLevel(childRank, childRankFa, last.children, null, currentPath.length));
+    const c0 = last.children[0];
+    wanted.push({ type: "level", parentId: last.id, mainId: null, rank: c0.rank, rankFa: c0.rankFa, siblings: last.children, levelIndex: currentPath.length });
   } else {
-    if (tree.lastChild && tree.lastChild.className === "connector") tree.removeChild(tree.lastChild);
-    if (last) tree.appendChild(buildSpeciesCard(last));
+    wanted.pop(); // drop trailing connector
+    if (last) wanted.push({ type: "species", speciesId: last.id, node: last });
   }
 
-  setTimeout(() => {
-    const lastEl = tree.lastChild;
-    if (lastEl) lastEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, 50);
+  // Walk the existing DOM and the wanted list in parallel; keep matching prefix.
+  const existing = Array.from(tree.children);
+  let common = 0;
+  while (common < existing.length && common < wanted.length) {
+    const ex = existing[common];
+    const w = wanted[common];
+    if (w.type === "level" && ex.classList.contains("level") && ex.dataset.parentId === w.parentId) {
+      if (ex.dataset.mainId !== (w.mainId || "")) updateMain(ex, w.mainId);
+      common++;
+    } else if (w.type === "connector" && ex.classList.contains("connector")) {
+      common++;
+    } else if (w.type === "species" && ex.classList.contains("species-final") && ex.dataset.speciesId === w.speciesId) {
+      common++;
+    } else {
+      break;
+    }
+  }
+
+  // Remove existing children after the common prefix.
+  while (tree.children.length > common) tree.removeChild(tree.lastChild);
+
+  // Append the new tail.
+  const scrollNeeded = wanted.length > common;
+  for (let i = common; i < wanted.length; i++) {
+    const w = wanted[i];
+    let el;
+    if (w.type === "connector") el = buildConnector();
+    else if (w.type === "species") {
+      el = buildSpeciesCard(w.node);
+      el.dataset.speciesId = w.speciesId;
+      el.classList.add("fresh");
+      setTimeout(() => el.classList.remove("fresh"), 350);
+    } else {
+      el = makeLevelElement(w.parentId, w.rank, w.rankFa, w.siblings, w.mainId, w.levelIndex);
+    }
+    tree.appendChild(el);
+  }
+
+  // Only scroll when new content was added (avoids jumping when only main toggled).
+  if (scrollNeeded) {
+    setTimeout(() => {
+      const lastEl = tree.lastChild;
+      if (lastEl) lastEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 50);
+  }
 }
 
 function buildLevel(rank, rankFa, siblings, mainId, levelIndex) {
@@ -2338,6 +2399,7 @@ function buildLevel(rank, rankFa, siblings, mainId, levelIndex) {
     const n = document.createElement("div");
     n.className = "node" + (s.id === mainId ? " main" : "");
     n.setAttribute("data-color", RANK_COLORS[s.rank] || "indigo");
+    n.setAttribute("data-node-id", s.id);
 
     const img = document.createElement("img");
     img.className = "node-img";
