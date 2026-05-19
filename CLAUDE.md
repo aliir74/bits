@@ -37,6 +37,12 @@ No build step. Vercel serves files directly.
 - **External APIs are fine:** Wikipedia REST, GBIF, etc. — called client-side, no backend.
 - **No bundler / no framework:** if a bit grows complex enough to need one, promote it to its own repo.
 - **Persian content welcome:** set `lang="fa" dir="rtl"` and use Vazirmatn via CDN (see `animal-classification/index.html`).
+- **Always include Vercel Analytics + Speed Insights** in the `<head>` of every new bit. The scripts 404 harmlessly in local dev and auto-resolve on the deployed bits.aliirani.com domain:
+
+  ```html
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  ```
 
 ## Deploy
 
