@@ -1,5 +1,8 @@
 # bits
 
+[![GitHub Sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/aliir74)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/aliir74)
+
 Ali Irani's one-page experiments — diagrams, recipes, micro-tools. Deployed at [bits.aliirani.com](https://bits.aliirani.com).
 
 Each "bit" is its own folder under the repo root containing a single `index.html` (plus any assets it needs). No build step — Vercel serves the structure as-is.
@@ -30,3 +33,11 @@ Hosted on Vercel as a static site. `vercel.json` enables clean URLs and trailing
 - **Self-contained:** each bit's `index.html` should include all its styles/scripts inline or via CDN. Avoid shared assets unless really needed.
 - **No build step:** if a bit needs bundling, it probably belongs in its own repo instead.
 - **External APIs welcome:** Wikipedia, GBIF, etc. are fine — they're called client-side.
+
+## Support This Project
+
+If you find this project useful, consider supporting its development:
+
+- Star this repo
+- Report bugs and submit PRs
+- [Sponsor on GitHub](https://github.com/sponsors/aliir74) or [Buy me a coffee](https://www.buymeacoffee.com/aliir74)
