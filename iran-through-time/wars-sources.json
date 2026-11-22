@@ -1,0 +1,1449 @@
+[
+ {
+  "war": "Fall of Nineveh",
+  "year": -612,
+  "source": "https://en.wikipedia.org/wiki/Fall_of_Nineveh",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%86%DB%8C%D9%86%D9%88%D8%A7_%28%DB%B6%DB%B1%DB%B2_%D9%BE%DB%8C%D8%B4_%D8%A7%D8%B2_%D9%85%DB%8C%D9%84%D8%A7%D8%AF%29",
+  "infobox": {
+   "date": "May–August 10, 612 BCE{{Sfn|Lipschits|2005|page=18}}<ref name=\"chronicle\" />",
+   "place": "[[Nineveh]]",
+   "result": "{{ublist|Medo-Babylonian victory<ref>[https://books.google.com/books?id=1FxzDgAAQBAJ&q=fall+of+assur+assyria%2F&pg=PA194 A Companion to Assyria] \"The decisive blow came in 612, when Babylonian and Median armies, after a two-month long siege, conquered Nineveh\"</ref>}}",
+   "c1": "[[Neo-Babylonian Empire]]<br>[[Median Kingdom]]",
+   "c2": "[[Neo-Assyrian Empire]]"
+  },
+  "site": {
+   "coord": [
+    43.15,
+    36.36
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Medes",
+    "state_article": "https://en.wikipedia.org/wiki/Median_kingdom",
+    "capital": "Ecbatana",
+    "capital_field": "[[Ecbatana]]"
+   },
+   {
+    "name": "Babylon",
+    "state_article": "https://en.wikipedia.org/wiki/Neo-Babylonian_Empire",
+    "capital": "Babylon",
+    "capital_field": "{{plainlist| *[[Babylon]]{{sfn|Sawyer|Clines|1983|p=41}}"
+   },
+   {
+    "name": "Assyria",
+    "state_article": "https://en.wikipedia.org/wiki/Neo-Assyrian_Empire",
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Cyrus defeats Astyages",
+  "year": -550,
+  "source": "https://en.wikipedia.org/wiki/Medo-Persian_conflict",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%AE%DB%8C%D8%B2%D8%B4_%D9%BE%D8%A7%D8%B1%D8%B3%E2%80%8C%D9%87%D8%A7",
+  "infobox": {
+   "date": "554/553–550 BCE?",
+   "place": "[[Achaemenid Empire|Persis]], [[Median kingdom|Media]]",
+   "result": "Persian victory",
+   "c1": "[[Median Kingdom]]",
+   "c2": "[[Achaemenid dynasty|Achaemenids]]"
+  },
+  "site": {
+   "coord": [
+    53.18,
+    30.2
+   ],
+   "from": "Pasargadae",
+   "approximate": true
+  },
+  "sides": [
+   {
+    "name": "Medes",
+    "state_article": "https://en.wikipedia.org/wiki/Median_kingdom",
+    "capital": "Ecbatana",
+    "capital_field": "[[Ecbatana]]"
+   },
+   {
+    "name": "Persians under Cyrus",
+    "state_article": "https://en.wikipedia.org/wiki/Achaemenid_Empire",
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Siege of Sardis",
+  "year": -547,
+  "source": "https://en.wikipedia.org/wiki/Siege_of_Sardis_(547_BC)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%85%D8%AD%D8%A7%D8%B5%D8%B1%D9%87_%D8%B3%D8%A7%D8%B1%D8%AF",
+  "infobox": {
+   "date": "December, 547 BC",
+   "place": "[[Sardis]], [[Lydia]]<br>(modern-day Sart, [[Manisa Province|Manisa]], [[Turkey]])",
+   "result": "Persian victory",
+   "c1": "[[Lydia]]",
+   "c2": "[[Achaemenid Empire]]"
+  },
+  "site": {
+   "coord": [
+    28.03,
+    38.48
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Lydia",
+    "state_article": "https://en.wikipedia.org/wiki/Lydia",
+    "capital": null,
+    "capital_field": null
+   },
+   {
+    "name": "Persians",
+    "state_article": "https://en.wikipedia.org/wiki/Achaemenid_Empire",
+    "capital": "Pasargadae",
+    "capital_field": "{{ubli|[[Babylon]]<ref name=EY>{{cite book|last=Yarshater|first=Ehsan|author-link=Ehsan Yarshater|title=The Cambridge History of Iran|volume =3|year=1993|publisher=[[Cambridge University Press]]|isbn=978-0-521-20092-9|page=482|quote=Of the four residences of the Achaemenids named by [[Herodotus]]—[["
+   }
+  ]
+ },
+ {
+  "war": "Battle of Opis",
+  "year": -539,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Opis",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%A7%D9%88%D9%BE%DB%8C%D8%B3",
+  "infobox": {
+   "date": "September 539 BC",
+   "place": "[[Opis]], [[Babylonia]], [[Mesopotamia]] (modern-day [[Iraq]]",
+   "result": "Persian victory",
+   "c1": "[[Neo-Babylonian Empire]]",
+   "c2": "[[Achaemenid Empire]]"
+  },
+  "site": {
+   "coord": [
+    44.7,
+    33.18
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Babylon",
+    "state_article": "https://en.wikipedia.org/wiki/Neo-Babylonian_Empire",
+    "capital": null,
+    "capital_field": null
+   },
+   {
+    "name": "Persians",
+    "state_article": "https://en.wikipedia.org/wiki/Achaemenid_Empire",
+    "capital": "Pasargadae",
+    "capital_field": "{{ubli|[[Babylon]]<ref name=EY>{{cite book|last=Yarshater|first=Ehsan|author-link=Ehsan Yarshater|title=The Cambridge History of Iran|volume =3|year=1993|publisher=[[Cambridge University Press]]|isbn=978-0-521-20092-9|page=482|quote=Of the four residences of the Achaemenids named by [[Herodotus]]—[["
+   }
+  ]
+ },
+ {
+  "war": "Battle of Pelusium",
+  "year": -525,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Pelusium",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%BE%D9%84%D9%88%D8%B2%DB%8C%D9%88%D9%85_%28%DB%B5%DB%B2%DB%B5_%D9%BE%DB%8C%D8%B4_%D8%A7%D8%B2_%D9%85%DB%8C%D9%84%D8%A7%D8%AF%29",
+  "infobox": {
+   "date": "525 BC",
+   "place": "[[Pelusium]], [[Egypt]]",
+   "result": "[[Achaemenid Empire|Persian]] victory<ref>{{cite book|title=The Oxford Handbook of the State in the Ancient Near East and Mediterranean |editor-first1=Peter Fibiger |editor-last1=Bang |editor-first2=Walter |editor-last2=Scheidel |publisher=[[Oxford University Press]]|date=February 2013|isbn=978-0195188318 |page=201 |quote=\"..Cambyses won a victory at Pelusium (525), took Memphis, and captured King Psammetichus III.\"}}</ref>",
+   "c1": "[[Achaemenid Empire]]<br/>Arabian and Greek mercenaries",
+   "c2": "[[Twenty-sixth dynasty of Egypt|Kingdom of Egypt]]<br/>Karian and Ionian mercenaries"
+  },
+  "site": {
+   "coord": [
+    32.55,
+    31.04
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Persians",
+    "state_article": "https://en.wikipedia.org/wiki/Achaemenid_Empire",
+    "capital": "Pasargadae",
+    "capital_field": "{{ubli|[[Babylon]]<ref name=EY>{{cite book|last=Yarshater|first=Ehsan|author-link=Ehsan Yarshater|title=The Cambridge History of Iran|volume =3|year=1993|publisher=[[Cambridge University Press]]|isbn=978-0-521-20092-9|page=482|quote=Of the four residences of the Achaemenids named by [[Herodotus]]—[["
+   },
+   {
+    "name": "Egypt",
+    "state_article": "https://en.wikipedia.org/wiki/Twenty-sixth_Dynasty_of_Egypt",
+    "capital": "Sais, Egypt",
+    "capital_field": "[[Sais, Egypt|Sais]]"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Marathon",
+  "year": -490,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Marathon",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%85%D8%A7%D8%B1%D8%A7%D8%AA%D9%88%D9%86",
+  "infobox": {
+   "date": "12 September 490 BC ([[Attic calendar|6 Boedromion]])<ref>{{cite book |author=[[Plutarch]] |title=The Parallel Lives |series=Loeb Classical Library |volume=II |year=1914 |pages=139–140 |chapter= The Life of Camillus |chapter-url=https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Camillus*.html |via=penelope.uchicago.edu}}</ref>",
+   "place": "[[Marathon, Greece]]",
+   "result": "Athenian victory",
+   "c1": "{{ubl|'''[[Athens (polis)|Athens]]'''|[[Plataea]]}}",
+   "c2": "'''[[Achaemenid Empire]]'''"
+  },
+  "site": {
+   "coord": [
+    23.98,
+    38.12
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Athens and Plataea",
+    "state_article": "https://en.wikipedia.org/wiki/Classical_Athens",
+    "capital": "Athens",
+    "capital_field": "[[Athens]]"
+   },
+   {
+    "name": "Persians",
+    "state_article": "https://en.wikipedia.org/wiki/Achaemenid_Empire",
+    "capital": "Susa",
+    "capital_field": "{{ubli|[[Babylon]]<ref name=EY>{{cite book|last=Yarshater|first=Ehsan|author-link=Ehsan Yarshater|title=The Cambridge History of Iran|volume =3|year=1993|publisher=[[Cambridge University Press]]|isbn=978-0-521-20092-9|page=482|quote=Of the four residences of the Achaemenids named by [[Herodotus]]—[["
+   }
+  ]
+ },
+ {
+  "war": "Battle of Salamis",
+  "year": -480,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Salamis",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%B3%D8%A7%D9%84%D8%A7%D9%85%DB%8C%D8%B3",
+  "infobox": {
+   "date": "26 or 27 September, 480 BC<ref>Gongaki (2021).</ref>",
+   "place": "Straits of [[Salamis Island|Salamis]]",
+   "result": "Greek victory",
+   "c1": "'''[[Classical Athens|Athens]]'''<br>[[Sparta]]<br>[[Ancient Corinth|Corinth]]<br>[[Aegina]]<br>other [[polis|Greek city-states]]",
+   "c2": "'''[[Achaemenid Empire]]'''"
+  },
+  "site": {
+   "coord": [
+    23.57,
+    37.95
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Greek city-states",
+    "state_article": "https://en.wikipedia.org/wiki/Classical_Athens",
+    "capital": "Athens",
+    "capital_field": "[[Athens]]"
+   },
+   {
+    "name": "Persians under Xerxes",
+    "state_article": "https://en.wikipedia.org/wiki/Achaemenid_Empire",
+    "capital": "Susa",
+    "capital_field": "{{ubli|[[Babylon]]<ref name=EY>{{cite book|last=Yarshater|first=Ehsan|author-link=Ehsan Yarshater|title=The Cambridge History of Iran|volume =3|year=1993|publisher=[[Cambridge University Press]]|isbn=978-0-521-20092-9|page=482|quote=Of the four residences of the Achaemenids named by [[Herodotus]]—[["
+   }
+  ]
+ },
+ {
+  "war": "Battle of Gaugamela",
+  "year": -331,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Gaugamela",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%DA%AF%D9%88%DA%AF%D9%85%D9%84",
+  "infobox": {
+   "date": "1 October 331 BC",
+   "place": "Probably Tel Gomel (Gaugamela) near [[Erbil]], modern [[Iraqi Kurdistan]], north of [[Mount Alfaf]]<ref name= Marciak-Visibility>{{cite journal |last1=Marciak |first1=M. |last2=Szypuła |first2=B. |last3=Sobiech |first3=M. |last4=Pirowski |first4=T. |title=The Battle of Gaugamela and the Question of Visibility on the Battlefield |journal=Iraq |date=2021 |volume=83 |pages=87–103 |doi=10.1017/irq.2021.11|s2cid=240824299 }}</ref>",
+   "result": "Macedonian victory<ref>[https://oxfordre.com/classics/view/10.1093/acrefore/9780199381135.001.0001/acrefore-9780199381135-e-2797 \"Gaugamela\"], ''Oxford Classical Dictionary''.</ref><ref>[https://www.britannica.com/biography/Alexander-the-Great#ref59257 \"Alexander the Great – Biography, Empire and Facts\"], ''[[Encyclopaedia Britannica]]''.</ref><ref>[https://www.livius.org/articles/battle/gaugamela-331-bce/ \"Gaugamela (331 BCE)\"], livius.org</ref><!-- Do not alter the field 'result' before discussisng it with other users at the talk page. -->",
+   "c1": "{{plainlist| *'''[[Macedonia (ancient kingdom)|Macedonia]]''' *[[League of Corinth|Hellenic League]]}}",
+   "c2": "'''[[Achaemenid Empire]]'''"
+  },
+  "site": {
+   "coord": [
+    43.44,
+    36.56
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Macedon under Alexander",
+    "state_article": "https://en.wikipedia.org/wiki/Macedonia_(ancient_kingdom)",
+    "capital": "Pella",
+    "capital_field": "{{plainlist| *[[Aigai (Macedonia)|Aigai]]<ref>{{harvnb|Hatzopoulos|1996|pp=105–106}}; {{harvnb|Roisman|2010|p=156}}.</ref><br />(before 399 BC) *[[Pella]]<ref>{{harvnb|Engels|2010|p=92}}; {{harvnb|Roisman|2010|p=156}}.</ref><br />(399–168 BC)}}"
+   },
+   {
+    "name": "Persians under Darius III",
+    "state_article": "https://en.wikipedia.org/wiki/Achaemenid_Empire",
+    "capital": "Susa",
+    "capital_field": "{{ubli|[[Babylon]]<ref name=EY>{{cite book|last=Yarshater|first=Ehsan|author-link=Ehsan Yarshater|title=The Cambridge History of Iran|volume =3|year=1993|publisher=[[Cambridge University Press]]|isbn=978-0-521-20092-9|page=482|quote=Of the four residences of the Achaemenids named by [[Herodotus]]—[["
+   }
+  ]
+ },
+ {
+  "war": "Battle of Carrhae",
+  "year": -53,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Carrhae",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%AD%D8%B1%D8%A7%D9%86",
+  "infobox": {
+   "date": "June 53 BC",
+   "place": "Near Carrhae ([[Harran]]), Upper Mesopotamia",
+   "result": "Parthian victory{{efn|\"Surena's extraordinary victory had enormous consequences. It halted Roman expansion, gave Mesopotamia back to the Parthians, and consolidated the Euphrates as the boundary between the two powers. It placed Persia on an equal footing with Rome, making them political rivals for the next seven centuries\"{{sfn|Shahbazi|1990}}}}{{sfn|Shahbazi|1990}}",
+   "c1": "[[Roman Republic]]",
+   "c2": "[[Parthian Empire]]"
+  },
+  "site": {
+   "coord": [
+    39.02,
+    36.87
+   ],
+   "from": "Harran",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Rome",
+    "state_article": "https://en.wikipedia.org/wiki/Roman_Republic",
+    "capital": "Rome",
+    "capital_field": "[[Rome]]"
+   },
+   {
+    "name": "Parthians",
+    "state_article": "https://en.wikipedia.org/wiki/Parthian_Empire",
+    "capital": "Ctesiphon",
+    "capital_field": "[[Ctesiphon]]{{efn|\"One characteristic of the [[Parthia]]ns that the kings themselves maintained was their [[nomad]]ic urge. The kings built or occupied numerous cities as their capitals, the most important being [[Ctesiphon]] on the [[Tigris River]], which they built from the ancient town of [[Opis"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Hormozdgan",
+  "year": 224,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Hormozdgan",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%87%D8%B1%D9%85%D8%B2%D8%AF%DA%AF%D8%A7%D9%86",
+  "infobox": {
+   "date": "28 April 224",
+   "place": "Hormozdgan (possibly [[Ramhormoz|Ram-Hormoz]])",
+   "result": "{{ubl|[[Sasanian]] victory}} * Fall of the [[Parthian Empire]]",
+   "c1": "[[Parthian Empire]]",
+   "c2": "[[Sasanian dynasty]]"
+  },
+  "site": {
+   "coord": [
+    49.6,
+    31.28
+   ],
+   "from": "Ramhormoz",
+   "approximate": true
+  },
+  "sides": [
+   {
+    "name": "Parthians under Artabanus IV",
+    "state_article": "https://en.wikipedia.org/wiki/Parthian_Empire",
+    "capital": "Ctesiphon",
+    "capital_field": "[[Ctesiphon]]{{efn|\"One characteristic of the [[Parthia]]ns that the kings themselves maintained was their [[nomad]]ic urge. The kings built or occupied numerous cities as their capitals, the most important being [[Ctesiphon]] on the [[Tigris River]], which they built from the ancient town of [[Opis"
+   },
+   {
+    "name": "Ardashir of Fars",
+    "state_article": "https://en.wikipedia.org/wiki/Sasanian_Empire",
+    "capital": "Istakhr",
+    "capital_field": "{{plainlist| * [[Istakhr]] (224–226){{sfnp|Iranica Online – Ctesiphon}} * [[Ctesiphon]] (226–637)}}"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Edessa",
+  "year": 260,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Edessa",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%A7%D8%AF%D8%B3%D8%A7",
+  "infobox": {
+   "date": "Spring 260",
+   "place": "[[Edessa, Mesopotamia|Edessa]], [[Osroene (Roman province)|Osroene]] <br />(modern-day [[Urfa|Şanlıurfa]], [[Turkey]])",
+   "result": "[[Sasanian Empire|Sasanian]] victory<ref>[https://books.google.com/books?id=MG2hqcRDvJgC&q=battle+of+edessa+decisive+persian+victory%2F&pg=PA80 Rome and Persia in Late Antiquity: Neighbours and Rivals] \"We learn that during the decisive battle near Edessa, not only high Roman officials but also the emperor Valerian himself were captured by Shapur with his own hands ... The Sasanians celebrated this victory, which was one of their greatest successes over the Western opponent, as an unparalleled triumph\"</ref>",
+   "c1": "[[Sasanian Empire]]",
+   "c2": "[[Roman Empire]]<br>[[Germania|Germanic]] and [[Goths|Goth]] allies"
+  },
+  "site": {
+   "coord": [
+    38.8,
+    37.15
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Sasanians under Shapur I",
+    "state_article": "https://en.wikipedia.org/wiki/Sasanian_Empire",
+    "capital": "Ctesiphon",
+    "capital_field": "{{plainlist| * [[Istakhr]] (224–226){{sfnp|Iranica Online – Ctesiphon}} * [[Ctesiphon]] (226–637)}}"
+   },
+   {
+    "name": "Rome under Valerian",
+    "state_article": "https://en.wikipedia.org/wiki/Roman_Empire",
+    "capital": "Rome",
+    "capital_field": "{{Plainlist}} * [[Rome]] {{nwr|(27 BC{{snd}}AD 476){{Efn|In 286, Emperor Diocletian divided the Roman Empire into two administrative units–[[Eastern Roman Empire|East]] and [[Western Roman Empire|West]]–an arrangement that periodically returned until the two halves were permanently divided in 395.{{"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Avarayr",
+  "year": 451,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Avarayr",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%A2%D9%88%D8%A7%D8%B1%D8%A7%DB%8C%D8%B1",
+  "infobox": {
+   "date": "26 May 451<ref>{{Cite web|url=http://www.iranicaonline.org/articles/avarayr-a-village-in-armenia-in-the-principality-of-artaz-southeast-of-the-iranian-town-of-maku|title = Welcome to Encyclopaedia Iranica}}</ref><ref>{{Cite book | url=https://books.google.com/books?id=A09WDwAAQBAJ&q=avarayr+451+june&pg=PA185 |title = The Oxford Dictionary of Late Antiquity|isbn = 9780192562463|last1 = Nicholson|first1 = Oliver|date = 2018-04-19| publisher=Oxford University Press }}</ref>",
+   "place": "[[Yerevan]] }} pp. 110-111</ref>)",
+   "result": "Sasanian victory<ref>Susan Paul Pattie, ''Faith in History: Armenians Rebuilding Community'' (Smithsonian Institution Press, 1997), p. 40.</ref><ref name=\"Hewsen\"/><ref name=\"Pattie\"/>",
+   "c1": "[[Sasanian Empire]]<br/>Pro-Sasanian Armenians",
+   "c2": "Christian [[Armenians]]"
+  },
+  "site": {
+   "coord": [
+    45.06,
+    39.34
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Sasanians",
+    "state_article": "https://en.wikipedia.org/wiki/Sasanian_Empire",
+    "capital": "Ctesiphon",
+    "capital_field": "{{plainlist| * [[Istakhr]] (224–226){{sfnp|Iranica Online – Ctesiphon}} * [[Ctesiphon]] (226–637)}}"
+   },
+   {
+    "name": "Christian Armenians",
+    "state_article": "https://en.wikipedia.org/wiki/Sasanian_Armenia",
+    "capital": "Dvin (ancient city)",
+    "capital_field": "[[Dvin (ancient city)|Dvin]]"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Dara",
+  "year": 530,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Dara",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%AF%D8%A7%D8%B1%D8%A7",
+  "infobox": {
+   "date": "June 530 AD",
+   "place": "[[Dara (Mesopotamia)|Dara]] (also known as Anastasioupolis), [[Mardin Province]], Turkey",
+   "result": "Byzantine victory",
+   "c1": "{{ubl|[[Byzantine Empire]]|[[Heruli]]|[[Huns]]}}",
+   "c2": "[[Sasanian Empire]]"
+  },
+  "site": {
+   "coord": [
+    40.95,
+    37.18
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Byzantium",
+    "state_article": "https://en.wikipedia.org/wiki/Byzantine_Empire",
+    "capital": "Constantinople",
+    "capital_field": "[[Constantinople]]"
+   },
+   {
+    "name": "Sasanians",
+    "state_article": "https://en.wikipedia.org/wiki/Sasanian_Empire",
+    "capital": "Ctesiphon",
+    "capital_field": "{{plainlist| * [[Istakhr]] (224–226){{sfnp|Iranica Online – Ctesiphon}} * [[Ctesiphon]] (226–637)}}"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Nineveh",
+  "year": 627,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Nineveh_(627)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%86%DB%8C%D9%86%D9%88%D8%A7_%28%DB%B6%DB%B2%DB%B7_%D9%85%DB%8C%D9%84%D8%A7%D8%AF%DB%8C%29",
+  "infobox": {
+   "date": "12 December 627",
+   "place": "Near [[Nineveh]]",
+   "result": "Byzantine victory",
+   "c1": "[[Byzantine Empire under the Heraclian dynasty|Byzantine Empire]]",
+   "c2": "[[Sasanian Empire]]"
+  },
+  "site": {
+   "coord": [
+    43.15,
+    36.36
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Byzantium under Heraclius",
+    "state_article": "https://en.wikipedia.org/wiki/Byzantine_Empire",
+    "capital": "Constantinople",
+    "capital_field": "[[Constantinople]]"
+   },
+   {
+    "name": "Sasanians",
+    "state_article": "https://en.wikipedia.org/wiki/Sasanian_Empire",
+    "capital": "Ctesiphon",
+    "capital_field": "{{plainlist| * [[Istakhr]] (224–226){{sfnp|Iranica Online – Ctesiphon}} * [[Ctesiphon]] (226–637)}}"
+   }
+  ]
+ },
+ {
+  "war": "Battle of al-Qadisiyyah",
+  "year": 636,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_al-Qadisiyyah",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%82%D8%A7%D8%AF%D8%B3%DB%8C%D9%87",
+  "infobox": {
+   "date": "16–19 November 636",
+   "place": "[[al-Qadisiyyah (historical city)|Al-Qadisiyyah]], Sasanian Empire",
+   "result": "Rashidun victory",
+   "c1": "[[Rashidun Caliphate]]",
+   "c2": "[[Sasanian Empire]]"
+  },
+  "site": {
+   "coord": [
+    44.5,
+    31.58
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Rashidun Caliphate",
+    "state_article": "https://en.wikipedia.org/wiki/Rashidun_Caliphate",
+    "capital": "Medina",
+    "capital_field": "{{ubl|[[Medina]] (632–656)|[[Kufa]] (656–661)}}"
+   },
+   {
+    "name": "Sasanians",
+    "state_article": "https://en.wikipedia.org/wiki/Sasanian_Empire",
+    "capital": "Ctesiphon",
+    "capital_field": "{{plainlist| * [[Istakhr]] (224–226){{sfnp|Iranica Online – Ctesiphon}} * [[Ctesiphon]] (226–637)}}"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Nahavand",
+  "year": 642,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Nahavand",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%86%D9%87%D8%A7%D9%88%D9%86%D8%AF",
+  "infobox": {
+   "date": "642",
+   "place": "[[Nahāvand]], near [[Hamadan]]",
+   "result": "[[Rashidun Caliphate|Rashidun]] victory",
+   "c1": "[[Rashidun Caliphate]]",
+   "c2": "[[Sasanian Empire]]"
+  },
+  "site": {
+   "coord": [
+    48.37,
+    34.19
+   ],
+   "from": "Nahavand",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Rashidun Caliphate",
+    "state_article": "https://en.wikipedia.org/wiki/Rashidun_Caliphate",
+    "capital": "Medina",
+    "capital_field": "{{ubl|[[Medina]] (632–656)|[[Kufa]] (656–661)}}"
+   },
+   {
+    "name": "Sasanians",
+    "state_article": null,
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Battle of Talas",
+  "year": 751,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Talas",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%B7%D8%B1%D8%A7%D8%B2",
+  "infobox": {
+   "date": "May–September 751",
+   "place": "Talas River, Tang dynasty",
+   "result": "Abbasid victory",
+   "c1": "[[Abbasid Caliphate]]<br>[[Tibetan Empire]]",
+   "c2": "{{Tree list}} *[[Tang dynasty]] **[[Ferghana Kingdom]] **[[Karkota dynasty]]{{Tree list/end}}"
+  },
+  "site": {
+   "coord": [
+    72.23,
+    42.52
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Abbasid Caliphate",
+    "state_article": "https://en.wikipedia.org/wiki/Abbasid_Caliphate",
+    "capital": "Kufa",
+    "capital_field": "{{plainlist| * [[Kufa]]<br />(750–762){{refn|group=nb|Kufa remained the overall administrative capital but the caliphs resided in multiple other sites during these years.<ref name=\"Kufa\" /><ref name=\"Hashimiyya\" /> See article for details.}} * [[Baghdad]]<br />(762–836, 892–1258) * [[Abbasid Samarra"
+   },
+   {
+    "name": "Tang China",
+    "state_article": "https://en.wikipedia.org/wiki/Tang_dynasty",
+    "capital": "Chang'an",
+    "capital_field": "{{plainlist| * [[Chang'an]] {{nowrap|(618–690, 705–904)}} * [[Luoyang]] {{nowrap|(904–907)}}}}"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Dandanaqan",
+  "year": 1040,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Dandanaqan",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%AF%D9%86%D8%AF%D8%A7%D9%86%D9%82%D8%A7%D9%86",
+  "infobox": {
+   "date": "May 23, 1040",
+   "place": "Dandanaqan, near [[Merv]]",
+   "result": "Seljuk victory",
+   "c1": "[[Ghaznavids|Ghaznavid Empire]]",
+   "c2": "[[Seljuk Empire|Seljuk Turks]]"
+  },
+  "site": {
+   "coord": [
+    61.35,
+    37.39
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Ghaznavids",
+    "state_article": "https://en.wikipedia.org/wiki/Ghaznavid_Empire",
+    "capital": "Ghazni",
+    "capital_field": "[[Ghazni]]<br/><small>(977–1163)</small><br/>[[Lahore]]<br/><small>(1163–1186)</small>"
+   },
+   {
+    "name": "Seljuk Turks",
+    "state_article": "https://en.wikipedia.org/wiki/Seljuk_Empire",
+    "capital": "Nishapur",
+    "capital_field": "{{plainlist| * [[Nishapur]] (1037–1043) * [[Ray, Iran|Ray]] (1043–1051) * [[Isfahan]] (1051–1118) * [[Merv]] (1118–1153, eastern) * [[Hamadan]] (1118–1194, western)"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Manzikert",
+  "year": 1071,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Manzikert",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%85%D9%84%D8%A7%D8%B2%DA%AF%D8%B1%D8%AF",
+  "infobox": {
+   "date": "26 August 1071",
+   "place": "Near Manzikert, [[Iberia (theme)|Iberia]]<ref>Nesbitt, John and Eric McGeer. ''Catalogue of Byzantine Seals at Dumbarton Oaks and in the Fogg Museum of Art''. 1st ed. Washington, D.C.: N.p., 2001. Print.</ref><ref>Church, Kenneth. ''From Dynastic Principality to Imperial District''. 1st ed. 2001. Print.</ref> / [[Armeniac Theme|Byzantine Armenia]]<ref>{{cite book |last1=Tanner |first1=J. R. |last2=Previté-Orton |first2=C. W. |last3=Brooke |first3=Z. N. |title=The Cambridge Medieval History |volume=6 |date=1929 |publisher=Cambridge University Press |page=791 |url=https://archive.org/details/in.ernet.dli.2015.282059 |access-date=23 January 2025 |chapter=The early Crusades |quote=In 1071, five years after Hastings, the Byzantine army, the oldest and best trained military force in Europe, was destroyed in battle with the Seljuk Turks at Manzikert in [[Anatolia]].}}</ref>{{sfn|Runciman|1951|pp=62–63|loc=\"With this large but untrustworthy army, Romanus set out in the spring of 1071 to reconquer Armenia. As he was leaving the capital the news came through from Italy that Bary, the last Byzantine possession in the peninsula, had fallen to the Normans. The chroniclers tell in tragic detail of the Emperor's march eastward along the great Byzantine military road. His intention was to capture and garrison the Armenian fortresses before the Turkish army should come up from the south. Alp Arslan was in Syria, near Aleppo, when he heard of the Byzantine advance. He realized how vital was the challenge; and he hurried northward to meet the Emperor. Romanus entered Armenia along the southern branch of the upper Euphrates. Near Manzikert he divided his forces.\"}}<br />(present-day [[Malazgirt]], Turkey)",
+   "result": "[[Seljuk Empire|Seljuk]] victory",
+   "c1": "{{tree list}} *[[Byzantine Empire under the Doukas dynasty|Byzantine Empire]] ** Regulars and provincial troops ** Feudal levies of frontier land owners ** [[Latin]], [[Alanian]], [[Georgians|Georgian]], [[Armenians|Armenian]], [[Bulgarians|Bulgarian]], [[Turkic peoples|Turkic]] mercenaries {{tree list/end}}",
+   "c2": "{{tree list}} *[[Seljuk Empire]] ** Turkic mercenaries{{refn|Pechenegs and Uzes defected to the Seljuk side when the war began.|group=\"note\"}} {{tree list/end}}"
+  },
+  "site": {
+   "coord": [
+    42.59,
+    39.1
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Byzantium",
+    "state_article": "https://en.wikipedia.org/wiki/Byzantine_Empire",
+    "capital": "Constantinople",
+    "capital_field": "[[Constantinople]]"
+   },
+   {
+    "name": "Seljuks",
+    "state_article": "https://en.wikipedia.org/wiki/Seljuk_Empire",
+    "capital": "Isfahan",
+    "capital_field": "{{plainlist| * [[Nishapur]] (1037–1043) * [[Ray, Iran|Ray]] (1043–1051) * [[Isfahan]] (1051–1118) * [[Merv]] (1118–1153, eastern) * [[Hamadan]] (1118–1194, western)"
+   }
+  ]
+ },
+ {
+  "war": "Siege of Samarkand",
+  "year": 1220,
+  "source": "https://en.wikipedia.org/wiki/Siege_of_Samarkand_(1220)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%85%D8%AD%D8%A7%D8%B5%D8%B1%D9%87_%D8%B3%D9%85%D8%B1%D9%82%D9%86%D8%AF_%28%DB%B1%DB%B2%DB%B2%DB%B0%29",
+  "infobox": {
+   "date": "March 1220",
+   "place": "[[Samarkand]], [[Khwarazmian Empire]], present-day [[Uzbekistan]]",
+   "result": "Mongol victory",
+   "c1": "[[Mongol Empire]]",
+   "c2": "[[Khwarazmian Empire]]"
+  },
+  "site": {
+   "coord": [
+    66.97,
+    39.62
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Mongols",
+    "state_article": "https://en.wikipedia.org/wiki/Mongol_Empire",
+    "capital": "Avarga",
+    "capital_field": "{{Ubl|[[Avarga]] (1206–1235)|[[Karakorum]] (1235–1271)}}"
+   },
+   {
+    "name": "Khwarazmians",
+    "state_article": "https://en.wikipedia.org/wiki/Khwarazmian_Empire",
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Fall of Nishapur",
+  "year": 1221,
+  "source": "https://en.wikipedia.org/wiki/Siege_of_Nishapur_(1221)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%B3%D9%82%D9%88%D8%B7_%D9%86%DB%8C%D8%B4%D8%A7%D8%A8%D9%88%D8%B1_%D8%AF%D8%B1_%D8%AD%D9%85%D9%84%D9%87_%D9%85%D8%BA%D9%88%D9%84_%D8%A8%D9%87_%D8%A7%DB%8C%D8%B1%D8%A7%D9%86",
+  "infobox": {
+   "date": "April 1221 CE (Muharram 618 AH)",
+   "place": "[[Nishapur]], [[Khwarazmian Empire]] (present-day [[Razavi Khorasan province]], [[Iran]])",
+   "result": "[[Mongol Empire|Mongol]] victory",
+   "c1": "[[Mongol Empire]]",
+   "c2": "[[Khwarazmian Empire]]"
+  },
+  "site": {
+   "coord": [
+    58.8,
+    36.21
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Mongols",
+    "state_article": "https://en.wikipedia.org/wiki/Mongol_Empire",
+    "capital": "Avarga",
+    "capital_field": "{{Ubl|[[Avarga]] (1206–1235)|[[Karakorum]] (1235–1271)}}"
+   },
+   {
+    "name": "Khwarazmians",
+    "state_article": "https://en.wikipedia.org/wiki/Khwarazmian_Empire",
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Siege of Baghdad",
+  "year": 1258,
+  "source": "https://en.wikipedia.org/wiki/Siege_of_Baghdad",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%B3%D9%82%D9%88%D8%B7_%D8%A8%D8%BA%D8%AF%D8%A7%D8%AF_%28%DB%B1%DB%B2%DB%B5%DB%B8%29",
+  "infobox": {
+   "date": "{{nowrap|29/30 January – 10 February 1258}}<br />(13 days)",
+   "place": "[[Baghdad]]",
+   "result": "Mongol victory",
+   "c1": "[[Ilkhanate]]",
+   "c2": "[[Abbasid Caliphate]]"
+  },
+  "site": {
+   "coord": [
+    44.34,
+    33.35
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Mongols under Hulagu",
+    "state_article": "https://en.wikipedia.org/wiki/Ilkhanate",
+    "capital": "Maragheh",
+    "capital_field": "{{plainlist| * [[Maragheh]] (1258-1265)<ref>{{Encyclopaedia of Islam, Second Edition|last1=Minorsky|first1=V.|volume=6|pages=498–503|article=Marāg̲h̲a}}</ref> * [[Tabriz]] (1265–1307)<ref name=\"Tabriz\">{{Encyclopaedia of Islam, Second Edition|last1=Minorsky|first1=V.|last2=Bosworth|first2=C.E.|first"
+   },
+   {
+    "name": "Abbasid Caliphate",
+    "state_article": "https://en.wikipedia.org/wiki/Abbasid_Caliphate",
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Battle of Ain Jalut",
+  "year": 1260,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Ain_Jalut",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%B9%DB%8C%D9%86_%D8%AC%D8%A7%D9%84%D9%88%D8%AA",
+  "infobox": {
+   "date": "3 September 1260 (26 [[Ramadan]] 658 [[Hijri year|H]])",
+   "place": "Near [[Ma'ayan Harod]] ([[Hebrew]]) or [[Ayn Jalut]] ([[Arabic]]), [[Jezreel Valley]], [[Mamluk Sultanate]]",
+   "result": "Mamluk victory",
+   "c1": "[[Mamluk Sultanate]]<br />",
+   "c2": "[[Ilkhanate]]<br />[[Armenian Kingdom of Cilicia|Cilician Armenia]]<br />[[Kingdom of Georgia]]"
+  },
+  "site": {
+   "coord": [
+    35.36,
+    32.55
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Mamluks",
+    "state_article": "https://en.wikipedia.org/wiki/Mamluk_Sultanate",
+    "capital": "Cairo",
+    "capital_field": "[[Cairo]]"
+   },
+   {
+    "name": "Ilkhanate",
+    "state_article": "https://en.wikipedia.org/wiki/Ilkhanate",
+    "capital": "Maragheh",
+    "capital_field": "{{plainlist| * [[Maragheh]] (1258-1265)<ref>{{Encyclopaedia of Islam, Second Edition|last1=Minorsky|first1=V.|volume=6|pages=498–503|article=Marāg̲h̲a}}</ref> * [[Tabriz]] (1265–1307)<ref name=\"Tabriz\">{{Encyclopaedia of Islam, Second Edition|last1=Minorsky|first1=V.|last2=Bosworth|first2=C.E.|first"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Herat",
+  "year": 1270,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Herat_(1270)",
+  "source_fa": null,
+  "infobox": {
+   "date": "22 July 1270",
+   "place": "[[Ghurian]], [[Ilkhanate]] (modern-day [[Afghanistan]])",
+   "result": "[[Ilkhanate]] victory",
+   "c1": "[[Ilkhanate]]",
+   "c2": "[[Chagatai Khanate]]"
+  },
+  "site": {
+   "coord": [
+    61.47,
+    34.34
+   ],
+   "from": "Ghorian",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Ilkhanate under Abaqa",
+    "state_article": "https://en.wikipedia.org/wiki/Ilkhanate",
+    "capital": "Tabriz",
+    "capital_field": "{{plainlist| * [[Maragheh]] (1258-1265)<ref>{{Encyclopaedia of Islam, Second Edition|last1=Minorsky|first1=V.|volume=6|pages=498–503|article=Marāg̲h̲a}}</ref> * [[Tabriz]] (1265–1307)<ref name=\"Tabriz\">{{Encyclopaedia of Islam, Second Edition|last1=Minorsky|first1=V.|last2=Bosworth|first2=C.E.|first"
+   },
+   {
+    "name": "Chagatai Khanate",
+    "state_article": "https://en.wikipedia.org/wiki/Chagatai_Khanate",
+    "capital": "Almaliq, Xinjiang",
+    "capital_field": "[[Almaliq, Xinjiang|Almaliq]], [[Qarshi]]"
+   }
+  ]
+ },
+ {
+  "war": "Siege of Isfahan",
+  "year": 1387,
+  "source": "https://en.wikipedia.org/wiki/Siege_of_Isfahan_(1387)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%B3%D9%82%D9%88%D8%B7_%D8%A7%D8%B5%D9%81%D9%87%D8%A7%D9%86_%28%DB%B1%DB%B3%DB%B8%DB%B7_%D9%85%DB%8C%D9%84%D8%A7%D8%AF%DB%8C%29",
+  "infobox": {
+   "date": "1387",
+   "place": "[[Isfahan]], [[Iran]]",
+   "result": "Timurid victory",
+   "c1": "[[Timurid Empire]]",
+   "c2": "[[Muzaffarids (Iran)|Muzaffarid dynasty]]"
+  },
+  "site": {
+   "coord": [
+    51.67,
+    32.67
+   ],
+   "from": "Isfahan",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Timur",
+    "state_article": "https://en.wikipedia.org/wiki/Timurid_Empire",
+    "capital": "Samarkand",
+    "capital_field": "{{plainlist| *[[Samarkand]] (1370–1405; 1447–1459)<ref>{{cite book|url=https://uodiyala.edu.iq/uploads/PDF%20ELIBRARY%20UODIYALA/EL45/A%20History%20of%20Inner%20Asia%20%282000%20ebook%29.pdf|title=A History of Inner Asia|publisher=Princeton University|p=126}}</ref> *[[Herat]] (1405–1447; 1459–1507)<"
+   },
+   {
+    "name": "Muzaffarids",
+    "state_article": null,
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Battle of Ankara",
+  "year": 1402,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Ankara",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%A2%D9%86%DA%A9%D8%A7%D8%B1%D8%A7",
+  "infobox": {
+   "date": "28 July 1402",
+   "place": "[[Çubuk, Ankara|Çubuk plain]] near [[Ankara]]",
+   "result": "Timurid victory",
+   "c1": "'''[[Timurid Empire]]'''",
+   "c2": "'''[[Ottoman Empire]]'''<br>[[Anatolian beyliks]]<br>[[Black Tatars]]{{efn|Anatolian Beyliks and Black Tatars defected to Timurid side during course of the battle.}}<br>[[Moravian Serbia]]<br>[[District of Branković]]<br>[[Principality of Kastrioti]]<br>[[Jonima family|Principality of Jonima]]"
+  },
+  "site": {
+   "coord": [
+    32.95,
+    40.15
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Timur",
+    "state_article": "https://en.wikipedia.org/wiki/Timurid_Empire",
+    "capital": "Samarkand",
+    "capital_field": "{{plainlist| *[[Samarkand]] (1370–1405; 1447–1459)<ref>{{cite book|url=https://uodiyala.edu.iq/uploads/PDF%20ELIBRARY%20UODIYALA/EL45/A%20History%20of%20Inner%20Asia%20%282000%20ebook%29.pdf|title=A History of Inner Asia|publisher=Princeton University|p=126}}</ref> *[[Herat]] (1405–1447; 1459–1507)<"
+   },
+   {
+    "name": "Ottomans under Bayezid I",
+    "state_article": "https://en.wikipedia.org/wiki/Ottoman_Empire",
+    "capital": "Edirne",
+    "capital_field": "{{Plainlist| * [[Söğüt]]<ref name=\"Shaw-13\">{{Cite book |first1=Stanford |last1=Shaw |first2=Ezel |last2=Shaw |date=1977 |title=History of the Ottoman Empire and Modern Turkey |publisher=Cambridge University Press |volume=I |isbn=978-0-521-29166-8 |page=13}}</ref> * ({{circa|1299}}–1331) * [[Nicaea]"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Merv",
+  "year": 1510,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Merv",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D9%85%D8%B1%D9%88",
+  "infobox": {
+   "date": "2 December 1510{{sfn|Savory|1998|pp=628–636}}",
+   "place": "",
+   "result": "[[Safavid Iran|Safavid]] victory{{sfn|Savory|2007|p=35}}",
+   "c1": "{{flagicon image|Flag of Persia (1502-1524).svg}} [[Safavid Iran]]",
+   "c2": "{{flag icon|Khanate of Bukhara}} [[Khanate of Bukhara]]"
+  },
+  "site": {
+   "coord": [
+    62.19,
+    37.66
+   ],
+   "from": "Merv",
+   "approximate": true
+  },
+  "sides": [
+   {
+    "name": "Safavids under Ismail I",
+    "state_article": "https://en.wikipedia.org/wiki/Safavid_Iran",
+    "capital": "Tabriz",
+    "capital_field": "{{plainlist| * [[Tabriz]] (1501–1555) * [[Qazvin]] (1555–1598) * [[Isfahan]] (1598–1736)"
+   },
+   {
+    "name": "Shaybanid Uzbeks",
+    "state_article": "https://en.wikipedia.org/wiki/Khanate_of_Bukhara",
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Battle of Chaldiran",
+  "year": 1514,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Chaldiran",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%AC%D9%86%DA%AF_%DA%86%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D9%86",
+  "infobox": {
+   "date": "23 August 1514 (infobox date field holds a citation; date from the article intro)",
+   "place": "[[Chaldoran County|Chaldiran plain]], [[Iranian Azerbaijan|Azerbaijan]], [[Safavid Iran]]<ref>{{TDV İslâm Ansiklopedisi|url=https://islamansiklopedisi.org.tr/caldiran-Savaşı|title=Çaldiran Savasi Yavuz Sultan Selim ile Safevî Hükümdarı Şah İsmâil arasında Çaldıran ovasında 23 Ağustos 1514’te yapılan meydan savaşı|author=Mustafa Çetin Varlık}}</ref>",
+   "result": "Ottoman victory<ref>{{cite book |editor1-last=Tucker |editor1-first=Spencer C. |title=A Global Chronology of Conflict: From the Ancient World to the Modern Middle East |date=2010 |publisher=ABC-CLIO |isbn=978-1851096725 |page=483}}</ref><ref name=\"David Eggenberger 1985\">David Eggenberger, ''An Encyclopedia of Battles'', (Dover Publications, 1985), 85.</ref>",
+   "c1": "{{flagicon image|Flag of Ottoman.svg}} [[Ottoman Empire]]",
+   "c2": "{{flagicon image|Flag of Persia (1502-1524).svg}} [[Safavid Iran]]"
+  },
+  "site": {
+   "coord": [
+    44.33,
+    39.09
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Ottomans under Selim I",
+    "state_article": "https://en.wikipedia.org/wiki/Ottoman_Empire",
+    "capital": "Constantinople",
+    "capital_field": "{{Plainlist| * [[Söğüt]]<ref name=\"Shaw-13\">{{Cite book |first1=Stanford |last1=Shaw |first2=Ezel |last2=Shaw |date=1977 |title=History of the Ottoman Empire and Modern Turkey |publisher=Cambridge University Press |volume=I |isbn=978-0-521-29166-8 |page=13}}</ref> * ({{circa|1299}}–1331) * [[Nicaea]"
+   },
+   {
+    "name": "Safavids under Ismail I",
+    "state_article": "https://en.wikipedia.org/wiki/Safavid_Iran",
+    "capital": "Tabriz",
+    "capital_field": "{{plainlist| * [[Tabriz]] (1501–1555) * [[Qazvin]] (1555–1598) * [[Isfahan]] (1598–1736)"
+   }
+  ]
+ },
+ {
+  "war": "Capture of Hormuz",
+  "year": 1622,
+  "source": "https://en.wikipedia.org/wiki/Anglo-Persian_capture_of_Hormuz",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%A8%D8%A7%D8%B2%D9%BE%D8%B3%E2%80%8C%DA%AF%DB%8C%D8%B1%DB%8C_%D9%87%D8%B1%D9%85%D8%B2_%28%DB%B1%DB%B6%DB%B2%DB%B2%29",
+  "infobox": {
+   "date": "9 February – 23 April 1622",
+   "place": "[[Hormuz Island]], [[Persian Gulf]]",
+   "result": "Anglo-Persian victory",
+   "c1": "{{flagicon|Safavid Empire}} [[Safavid Iran]]<br>{{flagicon image|British East India Company flag.svg}} [[East India Company]]",
+   "c2": "{{flagicon|Portuguese Empire|1667}} [[Kingdom of Portugal]]"
+  },
+  "site": {
+   "coord": [
+    56.46,
+    27.07
+   ],
+   "from": "Hormuz Island",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Safavids and the English East India Company",
+    "state_article": "https://en.wikipedia.org/wiki/Safavid_Iran",
+    "capital": "Isfahan",
+    "capital_field": "{{plainlist| * [[Tabriz]] (1501–1555) * [[Qazvin]] (1555–1598) * [[Isfahan]] (1598–1736)"
+   },
+   {
+    "name": "Portugal",
+    "state_article": "https://en.wikipedia.org/wiki/Kingdom_of_Portugal",
+    "capital": "Lisbon",
+    "capital_field": "[[Coimbra]]<br>(until 1255)<br>[[Lisbon]]<br>(1255–1910){{efn|From 1808 to 1821 [[Rio de Janeiro]] [[Transfer of the Portuguese court to Brazil|was the seat of the Portuguese court and the ''de facto'' seat of government]]. Additionally, [[Antony I of Portugal|Antony I]] and [[Mary II of Portugal|Ma"
+   }
+  ]
+ },
+ {
+  "war": "Siege of Baghdad",
+  "year": 1638,
+  "source": "https://en.wikipedia.org/wiki/Siege_of_Baghdad_(1638)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%B3%D9%82%D9%88%D8%B7_%D8%A8%D8%BA%D8%AF%D8%A7%D8%AF_%28%DB%B1%DB%B6%DB%B3%DB%B8%29",
+  "infobox": {
+   "date": "15 November – 25 December 1638",
+   "place": "[[Baghdad]]",
+   "result": "Ottoman victory",
+   "c1": "{{flagicon image|Safavid Flag.svg}} [[Safavid Iran|Safavid Empire]]",
+   "c2": "{{Flagicon image|Flag of Ottoman Empire (1517-1793).svg}} [[Ottoman Empire]]"
+  },
+  "site": {
+   "coord": [
+    44.42,
+    33.35
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Safavids",
+    "state_article": "https://en.wikipedia.org/wiki/Safavid_Iran",
+    "capital": "Isfahan",
+    "capital_field": "{{plainlist| * [[Tabriz]] (1501–1555) * [[Qazvin]] (1555–1598) * [[Isfahan]] (1598–1736)"
+   },
+   {
+    "name": "Ottomans",
+    "state_article": "https://en.wikipedia.org/wiki/Ottoman_Empire",
+    "capital": "Constantinople",
+    "capital_field": "{{Plainlist| * [[Söğüt]]<ref name=\"Shaw-13\">{{Cite book |first1=Stanford |last1=Shaw |first2=Ezel |last2=Shaw |date=1977 |title=History of the Ottoman Empire and Modern Turkey |publisher=Cambridge University Press |volume=I |isbn=978-0-521-29166-8 |page=13}}</ref> * ({{circa|1299}}–1331) * [[Nicaea]"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Gulnabad",
+  "year": 1722,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Gulnabad",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%DA%AF%D9%84%D9%88%D9%86%E2%80%8C%D8%A2%D8%A8%D8%A7%D8%AF",
+  "infobox": {
+   "date": "Sunday, March 8, 1722",
+   "place": "[[Jilanabad|Golūnābād]], [[Isfahan Province|Isfahan]], [[Iran]]",
+   "result": "[[Hotaki]] victory",
+   "c1": "{{flagicon image|Safavid Flag.svg}} [[Safavid Empire]]",
+   "c2": "{{flagicon image|Black flag.svg}} [[Hotak dynasty|Hotak Dynasty]]"
+  },
+  "site": {
+   "coord": [
+    51.67,
+    32.67
+   ],
+   "from": "Isfahan",
+   "approximate": true
+  },
+  "sides": [
+   {
+    "name": "Safavids",
+    "state_article": "https://en.wikipedia.org/wiki/Safavid_Iran",
+    "capital": "Isfahan",
+    "capital_field": "{{plainlist| * [[Tabriz]] (1501–1555) * [[Qazvin]] (1555–1598) * [[Isfahan]] (1598–1736)"
+   },
+   {
+    "name": "Afghan Hotaks",
+    "state_article": "https://en.wikipedia.org/wiki/Hotak_dynasty",
+    "capital": "Kandahar",
+    "capital_field": "[[Kandahar]] (1709–1722), (1725–1738)<br />[[Isfahan]] (1722–1729)"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Damghan",
+  "year": 1729,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Damghan_(1729)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%AF%D8%A7%D9%85%D8%BA%D8%A7%D9%86_%28%DB%B1%DB%B7%DB%B2%DB%B9%29",
+  "infobox": {
+   "date": "29 September – 5 October [[1729]]",
+   "place": "[[Mehmandust, Semnan|Mihmandoost]] near [[Damghan]]",
+   "result": "[[Safavid]] victory",
+   "c1": "{{flagicon image|Safavid Flag.svg}} [[Safavid Empire]]",
+   "c2": "{{flagicon image|Black flag.svg}} [[Hotak dynasty|Hotak Emirate]]"
+  },
+  "site": {
+   "coord": [
+    54.7,
+    36.25
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Safavids, led by Nader",
+    "state_article": null,
+    "capital": null,
+    "capital_field": null
+   },
+   {
+    "name": "Afghan Hotaks",
+    "state_article": "https://en.wikipedia.org/wiki/Hotak_dynasty",
+    "capital": "Isfahan",
+    "capital_field": "[[Kandahar]] (1709–1722), (1725–1738)<br />[[Isfahan]] (1722–1729)"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Karnal",
+  "year": 1739,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Karnal",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%DA%A9%D8%B1%D9%86%D8%A7%D9%84",
+  "infobox": {
+   "date": "24 February 1739",
+   "place": "Westport, CT |publisher=Greenwood }}</ref><br> * Hundreds of cannons and [[zamburak]]s",
+   "result": "Afsharid victory<ref name=\"Dupuy711\">Dupuy, R. Ernest and Trevor N. Dupuy, ''The Harper Encyclopedia of Military History'', 4th Ed., (HarperCollinsPublishers, 1993), 711.</ref>",
+   "c1": "{{flagicon image|Afsharid Imperial Standard (3 Stripes).svg|border=}} [[Afsharid Empire]]<br>{{flag|Kingdom of Kakheti}}",
+   "c2": "{{flagicon image|Alam of the Mughal Empire.svg|border=}} [[Mughal Empire]]<br>{{flagicon image|Flag of the State of Hyderabad (18th century-1900).svg|border=}} [[Hyderabad State]]<br>{{flagicon image|Flag of Awadh.svg|border=}} [[Oudh]]"
+  },
+  "site": {
+   "coord": [
+    77.07,
+    29.73
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Nader Shah (Afsharids)",
+    "state_article": "https://en.wikipedia.org/wiki/Afsharid_Iran",
+    "capital": "Mashhad",
+    "capital_field": "[[Mashhad]]"
+   },
+   {
+    "name": "Mughal India",
+    "state_article": "https://en.wikipedia.org/wiki/Mughal_Empire",
+    "capital": "Delhi",
+    "capital_field": "{{ubli | [[Agra]] (1526–1530; {{nwr|1560–1571;}} {{nwr|1598–1648}}) | [[Delhi]] (1530–1540; {{nwr|1639–1857}}) | [[Fatehpur Sikri]] (1571–1585) | [[Lahore]] (1586–1598){{sfn|Sinopoli|1994|p=294}}"
+   }
+  ]
+ },
+ {
+  "war": "Siege of Kerman",
+  "year": 1794,
+  "source": "https://en.wikipedia.org/wiki/Siege_of_Kerman",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%85%D8%AD%D8%A7%D8%B5%D8%B1%D9%87_%DA%A9%D8%B1%D9%85%D8%A7%D9%86",
+  "infobox": {
+   "date": "14 May 1794 - 24 October 1794",
+   "place": "[[Kerman]], [[Zand Iran]]",
+   "result": "Qajar victory • Fall of the [[Zand dynasty]]",
+   "c1": "[[File:Zand Dynasty flag.svg|Zand_Dynasty_flag|25px]] [[Zand Iran]]",
+   "c2": "[[File:Flag of Agha Mohammad Khan.svg|Flag_of_Agha_Mohammad_Khan|21px]] [[Qajar Iran]]"
+  },
+  "site": {
+   "coord": [
+    57.08,
+    30.28
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Zands under Lotf Ali Khan",
+    "state_article": "https://en.wikipedia.org/wiki/Zand_Iran",
+    "capital": null,
+    "capital_field": null
+   },
+   {
+    "name": "Qajars under Agha Mohammad Khan",
+    "state_article": "https://en.wikipedia.org/wiki/Qajar_Iran",
+    "capital": "Tehran",
+    "capital_field": "[[Tehran]]"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Aslanduz",
+  "year": 1812,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Aslanduz",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%D8%A7%D8%B5%D9%84%D8%A7%D9%86%D8%AF%D9%88%D8%B2",
+  "infobox": {
+   "date": "31 October – 1 November 1812",
+   "place": "[[Aslan Duz]], North Bank of the [[Aras River]] ([[South Caucasus]])",
+   "result": "Russian victory",
+   "c1": "{{flagicon|Russian Empire}} [[Russian Empire]]",
+   "c2": "{{flagicon image|War Flag of Fath Ali Shah.svg}} [[Qajar Iran]]"
+  },
+  "site": {
+   "coord": [
+    47.41,
+    39.44
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Russia",
+    "state_article": "https://en.wikipedia.org/wiki/Russian_Empire",
+    "capital": "Saint Petersburg",
+    "capital_field": "[[Saint Petersburg]]{{Efn|In 1914, the city was renamed [[Saint Petersburg#Toponymy|Petrograd]] to reflect anti-German sentiments of Russia during [[World War I]].<ref>{{Cite web |title=St. Petersburg through the Ages |url=https://forumspb.com/en/o-sankt-peterburge/history |url-status=live |archive-"
+   },
+   {
+    "name": "Qajar Iran",
+    "state_article": "https://en.wikipedia.org/wiki/Qajar_Iran",
+    "capital": "Tehran",
+    "capital_field": "[[Tehran]]"
+   }
+  ]
+ },
+ {
+  "war": "Battle of Ganja",
+  "year": 1826,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Ganja_(1826)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D9%86%D8%A8%D8%B1%D8%AF_%DA%AF%D9%86%D8%AC%D9%87_%28%DB%B1%DB%B8%DB%B2%DB%B6%29",
+  "infobox": {
+   "date": "25 September 1826",
+   "place": "[[Ganja, Azerbaijan|Ganja]] (present-day [[Azerbaijan|Republic of Azerbaijan]])",
+   "result": "Russian victory",
+   "c1": "{{flag|Russian Empire}}",
+   "c2": "{{flagicon image|War Flag of Fath Ali Shah.svg}} [[Qajar Iran]]"
+  },
+  "site": {
+   "coord": [
+    46.36,
+    40.68
+   ],
+   "from": "Ganja, Azerbaijan",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Russia",
+    "state_article": "https://en.wikipedia.org/wiki/Russian_Empire",
+    "capital": "Saint Petersburg",
+    "capital_field": "[[Saint Petersburg]]{{Efn|In 1914, the city was renamed [[Saint Petersburg#Toponymy|Petrograd]] to reflect anti-German sentiments of Russia during [[World War I]].<ref>{{Cite web |title=St. Petersburg through the Ages |url=https://forumspb.com/en/o-sankt-peterburge/history |url-status=live |archive-"
+   },
+   {
+    "name": "Qajar Iran",
+    "state_article": "https://en.wikipedia.org/wiki/Qajar_Iran",
+    "capital": "Tehran",
+    "capital_field": "[[Tehran]]"
+   }
+  ]
+ },
+ {
+  "war": "Siege of Herat",
+  "year": 1856,
+  "source": "https://en.wikipedia.org/wiki/Second_Herat_War",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%AC%D9%86%DA%AF_%D8%AF%D9%88%D9%85_%D9%87%D8%B1%D8%A7%D8%AA",
+  "infobox": {
+   "date": "Late March 1856 – 26 October 1856<br>({{Age in years, months, weeks and days|month1=3|day1=26|year1=1856|month2=10|day2=26|year2=1856}})",
+   "place": "Herat, Afghanistan",
+   "result": "Persian victory",
+   "c1": "{{flagicon image|Flag of the Emirate of Herat.svg}} [[Herat (1793-1863)|Emirate of Herat]] ---- '''Supported by:'''<br>{{flag|British Empire}}<br>",
+   "c2": "{{flagicon image|Early 20th Century Qajar Flag.svg}} [[Qajar Iran| Sublime State of Iran]]"
+  },
+  "site": {
+   "coord": [
+    62.2,
+    34.34
+   ],
+   "from": "Herat",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Emirate of Herat",
+    "state_article": "https://en.wikipedia.org/wiki/Herat_State",
+    "capital": null,
+    "capital_field": null
+   },
+   {
+    "name": "Qajar Iran",
+    "state_article": "https://en.wikipedia.org/wiki/Qajar_Iran",
+    "capital": "Tehran",
+    "capital_field": "[[Tehran]]"
+   }
+  ]
+ },
+ {
+  "war": "Anglo-Persian War",
+  "year": 1856,
+  "source": "https://en.wikipedia.org/wiki/Anglo-Persian_War",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%AC%D9%86%DA%AF_%D8%A7%DB%8C%D8%B1%D8%A7%D9%86_%D9%88_%D8%A7%D9%86%DA%AF%D9%84%D8%B3%D8%AA%D8%A7%D9%86",
+  "infobox": {
+   "date": "1 November 1856 – 4 April 1857<br>({{Age in years, months, weeks and days|month1=11|day1=01|year1=1856|month2=04|day2=04|year2=1857}})",
+   "place": "Southern [[Qajar Iran|Persia]]",
+   "result": "British victory<ref name=\"D&R\">Denemark & Robert p. 148</ref><ref>{{Cite web|url=http://www.iranicaonline.org/articles/anglo-iranian-relations-ii|title=ANGLO-IRANIAN RELATIONS ii. Qajar period – Encyclopaedia Iranica|website=www.iranicaonline.org|access-date=2019-08-01|quote=Relations between Britain and Iran were further exacerbated by an imbroglio with the British Minister to Iran, Mr. Murray, who left Tehran in high dudgeon. Mīrzā Āqā Khan turned his attention to Herat where (1855) a new opportunity to reestablish Iranian control presented itself. Grasping the opportunity, the Shah sent an army do Afghanistan. In October, 1856, Herat fell to the Iranians. In response Britain began the Anglo-Persian war (q.v.) which resulted in Iran’s quick defeat and the conclusion of the peace treaty of Paris in 1857, by which Iran finally gave up its claim to Afghanistan.}}</ref> * [[Treaty of Paris (1857)|Treaty of Paris]] * British withdrawal from Persia * Persian withdrawal from [[Herat]]",
+   "c1": "{{tree list}} *{{flagicon|UKGBI}} [[United Kingdom of Great Britain and Ireland|United Kingdom]] ** {{flagicon|East India Company}} [[Company rule in India|East India Company]] {{tree list/end}} [[File:Flag of Afghanistan (1843–1880).svg|12px]] [[Emirate of Afghanistan|Afghanistan]]",
+   "c2": "{{flagicon image|Early 20th Century Qajar Flag.svg}} [[Qajar Iran]]"
+  },
+  "site": {
+   "coord": [
+    50.85,
+    28.93
+   ],
+   "from": "Bushehr",
+   "approximate": true
+  },
+  "sides": [
+   {
+    "name": "Britain",
+    "state_article": "https://en.wikipedia.org/wiki/British_Empire",
+    "capital": "London",
+    "capital_field": "[[London]]"
+   },
+   {
+    "name": "Qajar Iran",
+    "state_article": "https://en.wikipedia.org/wiki/Qajar_Iran",
+    "capital": "Tehran",
+    "capital_field": "[[Tehran]]"
+   }
+  ]
+ },
+ {
+  "war": "Anglo-Soviet invasion",
+  "year": 1941,
+  "source": "https://en.wikipedia.org/wiki/Anglo-Soviet_invasion_of_Iran",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%A7%D8%B4%D8%BA%D8%A7%D9%84_%D8%A7%DB%8C%D8%B1%D8%A7%D9%86_%D8%AF%D8%B1_%D8%AC%D9%86%DA%AF_%D8%AC%D9%87%D8%A7%D9%86%DB%8C_%D8%AF%D9%88%D9%85",
+  "infobox": {
+   "date": "25–31 August 1941<ref name=\"auto\">{{cite book |title= Immortal: A Military History of Iran and Its Armed Forces |last=Ward |first=Steven R. |year=2009 |publisher=Georgetown University Press |isbn=978-1-58901-258-5 |page=169 |url=https://books.google.com/books?id=8eUTLaaVOOQC&pg=PA169}}</ref><br />({{Age in years, months, weeks and days|month1=8|day1=25|year1=1941|month2=8|day2=31|year2=1941}})",
+   "place": "Iran",
+   "result": "Anglo-Soviet victory{{bulletedlist | Abdication of Iranian monarch [[Reza Shah]] on 16 September 1941<ref name=\"auto\"/> | Rise to power of Iranian crown prince [[Mohammad Reza Pahlavi]]<ref name=Milani /> | Opening of the [[Persian Corridor]] by the [[Allies of World War II|Allies]] to support the Soviets against the [[Operation Barbarossa|German invasion]]}} *The invasion resulted in the [[Iranian famine of 1942–1943]]",
+   "c1": "{{flag|Soviet Union|1936}}<br/>{{Tree list}} *{{flag|British Empire}} **{{UK}} **{{flagcountry|British Raj}} **{{flag|Australia}} (naval only) {{Tree list/end}}",
+   "c2": "{{flagcountry|Pahlavi Iran|1933}}"
+  },
+  "site": {
+   "coord": [
+    51.39,
+    35.69
+   ],
+   "from": "Tehran",
+   "approximate": true
+  },
+  "sides": [
+   {
+    "name": "USSR",
+    "state_article": "https://en.wikipedia.org/wiki/Soviet_Union",
+    "capital": "Moscow",
+    "capital_field": "[[Moscow]]"
+   },
+   {
+    "name": "Britain",
+    "state_article": "https://en.wikipedia.org/wiki/British_Empire",
+    "capital": "London",
+    "capital_field": "[[London]]"
+   },
+   {
+    "name": "Pahlavi Iran",
+    "state_article": "https://en.wikipedia.org/wiki/Pahlavi_Iran",
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "Siege of Abadan",
+  "year": 1980,
+  "source": "https://en.wikipedia.org/wiki/Siege_of_Abadan",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%AD%D8%B5%D8%B1_%D8%A2%D8%A8%D8%A7%D8%AF%D8%A7%D9%86",
+  "infobox": {
+   "date": "6 November 1980 – 27 September 1981<br>({{Age in months, weeks and days|month1=11|day1=06|year1=1980|month2=09|day2=27|year2=1981|}})",
+   "place": "[[Abadan]], [[Khuzestan province]], southwest [[Iran]]",
+   "result": "{{Tree list}} * Iranian victory ** Iraqi siege broken {{Tree list/end}}",
+   "c1": "{{flagicon|Iraq|1963}} [[Ba'athist Iraq|Iraq]]",
+   "c2": "{{flag|Iran}}"
+  },
+  "site": {
+   "coord": [
+    48.28,
+    30.33
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Iraq",
+    "state_article": "https://en.wikipedia.org/wiki/Ba%27athist_Iraq",
+    "capital": "Baghdad",
+    "capital_field": "[[Baghdad]]"
+   },
+   {
+    "name": "Iran",
+    "state_article": "https://en.wikipedia.org/wiki/Pahlavi_Iran",
+    "capital": "Tehran",
+    "capital_field": "[[Tehran]]"
+   }
+  ]
+ },
+ {
+  "war": "Liberation of Khorramshahr",
+  "year": 1982,
+  "source": "https://en.wikipedia.org/wiki/Battle_of_Khorramshahr_(1982)",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%A2%D8%B2%D8%A7%D8%AF%D8%B3%D8%A7%D8%B2%DB%8C_%D8%AE%D8%B1%D9%85%D8%B4%D9%87%D8%B1",
+  "infobox": {
+   "date": "24 April – 24 May 1982<br />({{Age in months, weeks and days|month1=04|day1=24|year1=1982|month2=05|day2=24|year2=1982|}})",
+   "place": "[[Khorramshahr]], [[Khuzestan Province|Khuzestan]], [[Iran]]",
+   "result": "Iranian victory",
+   "c1": "{{plainlist| * {{flagicon image|Flag of Iraq (1963–1991); Flag of Syria (1963–1972).svg}} '''[[Ba'athist Iraq|Iraq]]''' }}",
+   "c2": "{{plainlist |'''{{flag|Iran|1980}}''' }}"
+  },
+  "site": {
+   "coord": [
+    48.18,
+    30.43
+   ],
+   "from": "article coordinates",
+   "approximate": false
+  },
+  "sides": [
+   {
+    "name": "Iraq",
+    "state_article": "https://en.wikipedia.org/wiki/Ba%27athist_Iraq",
+    "capital": "Baghdad",
+    "capital_field": "[[Baghdad]]"
+   },
+   {
+    "name": "Iran",
+    "state_article": "https://en.wikipedia.org/wiki/Pahlavi_Iran",
+    "capital": "Tehran",
+    "capital_field": "[[Tehran]]"
+   }
+  ]
+ }
+]
