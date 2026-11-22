@@ -2488,5 +2488,89 @@
     "capital_field": "[[Tehran]]"
    }
   ]
+ },
+ {
+  "war": "Twelve-Day War",
+  "year": 2025,
+  "source": "https://en.wikipedia.org/wiki/Twelve-Day_War",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%AC%D9%86%DA%AF_%D8%AF%D9%88%D8%A7%D8%B2%D8%AF%D9%87%E2%80%8C%D8%B1%D9%88%D8%B2%D9%87",
+  "infobox": {
+   "date": "{{Start and end dates|2025|06|13|2025|06|24|df=y}}<br />(12 days)<!-- DO NOT CHANGE WITHOUT CONSENSUS -->",
+   "place": "Iran and Israel (infobox place field empty; from the article intro)",
+   "result": "{{ubl|Inconclusive<ref>* {{Cite news |last=Raine |first=John |date=23 July 2025 |title=How 12 days have changed Iran |url=https://www.iiss.org/online-analysis/online-analysis/2025/07/how-12-days-have-changed-iran/ |work=International Institute for Strategic Studies |quote=United States President Donald Trump, Israeli Prime Minister Benjamin Netanyahu and the Iranian leadership have all made claims, in their widely different idioms, that they won. But those claims, and Trump’s additional assertion that he will bring peace to the Middle East, require qualification. The strategic outcome of the war is likely to prove inconclusive, bringing neither peace nor an end to military action. }} * {{Cite web |last=Strachota |first=Krzysztof |date=18 December 2025 |title=Iran in crisis: the landscape after the Twelve-Day War |url=https://www.osw.waw.pl/en/publikacje/osw-commentary/2025-12-18/iran-crisis-landscape-after-twelve-day-war |access-date=2026-03-18 |website=www.osw.waw.pl |quote=The outcome of the war remains inconclusive. There is no doubt that Iran’s military capabilities were significantly degraded, its air defence systems crippled and its missile arsenal partially destroyed. Its ability to support regional proxies, including Hezbollah in Lebanon and the Houthis in Yemen, was significantly curtailed. }} * {{Cite journal |last1=Popalzay |first1=Abdul Wasi |last2=Mir |first2=Musssaib Rasool |last3=Mol |first3=Rajani |date=December 2025 |title=From Proxy Warfare to Direct Confrontation: The Evolving Landscape of the Israel–Iran Conflict 2024–2025 |journal=Chinese Journal of International Review |volume=07 |issue=4 |pages=2550017 |doi=10.1142/S2630531325500179 |issn=2630-5313 |quote=From a policy and academic perspective, expert assessments remain divided. The IISS labeled the outcome “strategically inconclusive”, suggesting the war may inaugurate a new phase of structured hostility, not resolution [...] The International Institute for Strategic Studies underscores the inconclusive nature of the war, with Israeli objectives only partially fulfilled and Iran’s nuclear infrastructure retaining limited operational capacity. |doi-access=free }} * {{Cite web |title=The Iran threat will haunt the Gulf for years |url=https://www.iiss.org/online-analysis/commentary/2025/06/the-iran-threat-will-haunt-the-gulf-for-years/ |archive-url=https://web.archive.org/web/20260313052101/https://www.iiss.org/online-analysis/commentary/2025/06/the-iran-threat-will-haunt-the-gulf-for-years/ |archive-date=13 March 2026 |access-date=2026-03-18 |website=IISS |language=en |quote=Instead, and despite all their efforts, Israel attacked Iran two weeks ago, followed by a US strike against Iranian nuclear facilities [...] The Gulf states must now plan for a prolonged period of uncertainty and instability. From their perspective, the war has been inconclusive. |url-status=live }} * {{Cite news |last=Lonsdorf |first=Kat |date=2025-06-25 |title=Trump says early report on damage to Iran's nuclear program was inconclusive |url=https://www.npr.org/2025/06/24/nx-s1-5444303/iran-nuclear-program-u-s-strikes-intelligence-assessment |access-date=2026-03-18 |work=NPR |language=en |quote=President Trump on Wednesday said that a preliminary U.S. intelligence assessment of the damage caused by U.S. strikes on Iranian nuclear facilities was inconclusive... }}</ref>}} * [[Twelve-Day War ceasefire|Ceasefire]]",
+   "c1": "{{flag|Israel}}<br />{{flag|United States}}{{efn|Indirectly involved{{Specify|reason=Do reliable sources describe initial US involvement as \"indirect\"?|date=March 2026}} during the first nine days of the war, and became directly involved on the tenth day when [[2025 United States strikes on Iranian nuclear sites|it struck Iranian nuclear sites]] on 22 June (02:10–02:35 IRST).}}<hr>{{collapsible list|title=Defensive only:|{{flag|France}}<ref name=\"FranceInvolvement\">{{cite web |title=France says it intercepted drones targeting Israel prior to Iran ceasefire |url=https://www.reuters.com/world/middle-east/france-says-it-intercepted-drones-targeting-israel-prior-iran-ceasefire-2025-06-26/ |website=[[Reuters]] |publisher=Reuters |date=26 June 2025}}</ref><br />{{flag|Iraq}}<ref>{{cite web|url=https://thedefensepost.com/2025/06/24/iraq-drone-attacks-military-radar/|title=Iraq Probes Drone Attacks on Military Radar Systems|website=The Defense Post|date=24 June 2025}}</ref><br />{{flag|Jordan}}<ref name=\"JordanInvolvement\">{{cite web |last1=Knipp |first1=Kersten |title=Are Jordan and Saudi Arabia defending Israel? |url=https://www.dw.com/en/saudi-arabia-jordan-israel-iran-war-united-states/a-72977996 |website=[[Deutsche Welle]] |publisher=Government of Germany |archive-url=https://web.archive.org/web/20260423222225/https://www.dw.com/en/saudi-arabia-jordan-israel-iran-war-united-states/a-72977996 |archive-date=23 April 2026 |location=[[Germany]] |date=21 June 2025 |quote=Jordan shot down Iranian missiles and drones crossing overhead and Saudi Arabia likely allowed Israel to use its airspace to do so...As with any other sovereign state, missiles or other unauthorized objects crossing a country's airspace are often deemed violations of either domestic or international law. |url-status=live}}</ref><br />{{#invoke:flag||Saudi Arabia}}<ref name=\"JordanInvolvement\"/><br />{{flag|Qatar}}<ref name=\"QatarInvolvement\">{{cite web |last1=Ravid |first1=Barak |title=No casualties reported after Iran missile attack on U.S. base in Qatar |url=https://www.axios.com/2025/06/23/iran-retaliation-trump-israel-war |website=[[Axios (website)|Axios]] |publisher=Cox Enterprises |archive-url=https://web.archive.org/web/20260609122344/https://www.axios.com/2025/06/23/iran-retaliation-trump-israel-war |archive-date=9 June 2026 |date=23 June 2025 |quote=The Foreign Ministry of Qatar issued a statement saying Qatari air defenses 'thwarted the attack and successfully intercepted the Iranian missiles,' with no injuries or deaths reported. |url-status=live}}</ref>}}",
+   "c2": "{{flag|Iran}}<br />{{flag|Houthis}}{{efn|The Houthis joined Iran in launching rockets on Israel in retaliation for the 13 June strikes.}}<!--Do not remove this efn-->"
+  },
+  "territory": null,
+  "site": {
+   "coord": [
+    51.39,
+    35.69
+   ],
+   "from": "Tehran",
+   "approximate": true
+  },
+  "sides": [
+   {
+    "name": "Israel",
+    "state_article": "https://en.wikipedia.org/wiki/Israel",
+    "capital": "Jerusalem",
+    "capital_field": "[[Jerusalem]]<br />([[Status of Jerusalem|limited recognition]])<!-- DO NOT put this into a note, \"(limited recognition)\" is the parenthetical comment used per last RfC (see RfC link in the talk page's FAQ) -->{{refn|group=fn|[[Jerusalem]] has [[Status of Jerusalem|limited international recognition]"
+   },
+   {
+    "name": "United States",
+    "state_article": "https://en.wikipedia.org/wiki/United_States",
+    "capital": "Washington, D.C.",
+    "capital_field": "[[Washington, D.C.]]{{efn|D.C. stands for [[District of Columbia]], the formal name of the U.S. [[federal district]].}}<br />{{coord|38|53|N|77|1|W|display=inline}}"
+   },
+   {
+    "name": "Iran",
+    "state_article": null,
+    "capital": null,
+    "capital_field": null
+   }
+  ]
+ },
+ {
+  "war": "2026 Iran war",
+  "year": 2026,
+  "source": "https://en.wikipedia.org/wiki/2026_Iran_war",
+  "source_fa": "https://fa.wikipedia.org/wiki/%D8%AC%D9%86%DA%AF_%D8%A2%D9%85%D8%B1%DB%8C%DA%A9%D8%A7_%D9%88_%D8%A7%D8%B3%D8%B1%D8%A7%D8%A6%DB%8C%D9%84_%D8%A8%D8%A7_%D8%A7%DB%8C%D8%B1%D8%A7%D9%86",
+  "infobox": {
+   "date": "Since 28 February 2026 (article intro; infobox lives in Template:2026 Iran war infobox)",
+   "place": "West Asia (Template:2026 Iran war infobox)",
+   "result": "Ongoing (status field, Template:2026 Iran war infobox, read 22 November 2026)",
+   "c1": "United States, Israel, Saudi Arabia and others (Template:2026 Iran war infobox)",
+   "c2": "Iran, Axis of Resistance (Template:2026 Iran war infobox)"
+  },
+  "territory": null,
+  "site": {
+   "coord": [
+    51.39,
+    35.69
+   ],
+   "from": "Tehran",
+   "approximate": true
+  },
+  "sides": [
+   {
+    "name": "United States",
+    "state_article": "https://en.wikipedia.org/wiki/United_States",
+    "capital": "Washington, D.C.",
+    "capital_field": "[[Washington, D.C.]]{{efn|D.C. stands for [[District of Columbia]], the formal name of the U.S. [[federal district]].}}<br />{{coord|38|53|N|77|1|W|display=inline}}"
+   },
+   {
+    "name": "Israel",
+    "state_article": "https://en.wikipedia.org/wiki/Israel",
+    "capital": "Jerusalem",
+    "capital_field": "[[Jerusalem]]<br />([[Status of Jerusalem|limited recognition]])<!-- DO NOT put this into a note, \"(limited recognition)\" is the parenthetical comment used per last RfC (see RfC link in the talk page's FAQ) -->{{refn|group=fn|[[Jerusalem]] has [[Status of Jerusalem|limited international recognition]"
+   },
+   {
+    "name": "Iran",
+    "state_article": null,
+    "capital": null,
+    "capital_field": null
+   }
+  ]
  }
 ]
