@@ -10,9 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap">
 <style>
-:root{--bg:#fbfbfa;--fg:#1d1f1e;--line:#d6d9d7;--mut:#6f7572;--acc:#1d9e63;--warn:#a8650a;--war:#c8372d;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111312;--fg:#eceeed;--line:#343937;--mut:#9aa19d;--acc:#2fc47f;--warn:#e0a440;--war:#ff6b57;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#111312;--fg:#eceeed;--line:#343937;--mut:#9aa19d;--acc:#2fc47f;--warn:#e0a440;--war:#ff6b57;color-scheme:dark}
+:root{--bg:#fbfbfa;--fg:#1d1f1e;--line:#d6d9d7;--mut:#6f7572;--acc:#1d9e63;--warn:#a8650a;--war:#c8372d;--won:#fff;--acct:#157a4c;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111312;--fg:#eceeed;--line:#343937;--mut:#9aa19d;--acc:#2fc47f;--warn:#e0a440;--war:#ff6b57;--won:#111312;--acct:#2fc47f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111312;--fg:#eceeed;--line:#343937;--mut:#9aa19d;--acc:#2fc47f;--warn:#e0a440;--war:#ff6b57;--won:#111312;--acct:#2fc47f;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
 :root[lang="fa"] body{font-family:Vazirmatn,Tahoma,sans-serif}
@@ -31,10 +31,10 @@ svg{display:block;width:100%;height:auto}
 .lab{font-size:10px;fill:var(--mut);text-anchor:middle}
 .hl{font-size:13px;font-weight:650;fill:var(--fg);text-anchor:middle}
 :root[lang="fa"] .lab{font-size:11px}:root[lang="fa"] .hl{font-size:14px}
-.lab,.hl{transition:transform .45s ease,opacity .35s ease}
+.lab,.hl{transition:transform .45s ease,opacity .35s ease;paint-order:stroke;stroke:var(--bg);stroke-opacity:.85;stroke-width:3px;stroke-linejoin:round}
 .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:14px 2px 4px}
 .yr{font-size:30px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.ttl{font-size:17px;font-weight:600;color:var(--acc)}
+.ttl{font-size:17px;font-weight:600;color:var(--acct)}
 .note{color:var(--mut);margin:0 2px 4px;min-height:1.5em}
 .fix{font-size:12px;color:var(--warn);margin:0 2px 10px;min-height:1.5em}.fix a{color:inherit}
 [dir="rtl"] p{text-align:justify}
@@ -54,13 +54,14 @@ svg{display:block;width:100%;height:auto}
 .foot{font-size:11px;color:var(--mut);margin:12px 2px 0}.foot a{color:inherit}
 .tb{display:flex;gap:8px}#wt:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;margin-inline-end:6px;vertical-align:0}#wt[aria-pressed="true"]:before{background:currentColor}.lang[aria-pressed="true"]{border-color:var(--war);color:var(--war)}
 .wa{fill:none;stroke:var(--war);stroke-linecap:round}.wa.l{stroke:var(--mut)}.wo{fill:var(--war)}.wo.l{fill:var(--mut)}
-.ws{fill:var(--war);stroke:var(--bg)}.wr{fill:none;stroke:var(--war)}.wn{fill:#fff;font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.ws{fill:var(--war);stroke:var(--bg)}.wr{fill:none;stroke:var(--war)}.wn{fill:var(--won);font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .wars{margin:2px 2px 10px}.wars h2{font-size:12px;font-weight:600;color:var(--mut);margin:0 0 4px}.wars ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
-.wars li button{all:unset;cursor:pointer;display:flex;gap:8px;align-items:flex-start;width:100%;padding:4px 6px;border-radius:8px;box-sizing:border-box}
+.wars li{display:flex;align-items:flex-start;gap:2px}.wars li button{all:unset;cursor:pointer;display:flex;gap:8px;align-items:flex-start;flex:1;min-width:0;padding:4px 6px;border-radius:8px;box-sizing:border-box}
 .wars li button:hover,.wars li button.on{background:color-mix(in srgb,var(--war) 9%,transparent)}
-.wars .b{flex:0 0 18px;height:18px;border-radius:50%;background:var(--war);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;margin-top:1px}
-.wars .t{font-size:13px}.wars .t b{font-weight:650}.wars .t span{color:var(--mut)}.wars a{color:var(--mut);font-size:12px}
-button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wars .b{flex:0 0 18px;height:18px;border-radius:50%;background:var(--war);color:var(--won);font-size:11px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.wars .t{font-size:13px}.wars .t b{font-weight:650}.wars .t span{color:var(--mut)}.wars li>a{flex:none;color:var(--mut);font-size:12px;padding:4px 8px;border-radius:8px;line-height:1.6}.wars h2+ol+h2{margin-top:10px}
+button:focus-visible,a:focus-visible,.strip:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media (pointer:coarse){.lang{min-height:44px;padding:5px 16px}.play{flex-basis:44px;height:44px}.wars li>a{min-height:44px;display:inline-flex;align-items:center}.wars li button{min-height:44px}}
 @media (prefers-reduced-motion:reduce){.layer,.lab,.hl{transition:none!important}}
 </style>
 </head>
@@ -70,10 +71,10 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 <div class="map"><svg id="svg"><g id="M"></g><path class="base" id="base"/><g id="W"></g><g id="L"></g></svg></div>
 <div class="head"><span class="yr" id="yr"></span><span class="ttl" id="ttl"></span></div>
 <p class="note" id="note"></p><p class="fix" id="fix"></p>
-<div class="wars" id="wars"></div>
 <div class="row" dir="ltr"><button class="play" id="play" type="button"><svg viewBox="0 0 14 14" id="pi"><path d="M3 1.5v11l9.5-5.5z"/></svg></button><div class="tl"><div class="strip" id="strip" dir="ltr"><div class="track" id="track"></div></div><div class="needle"></div></div></div>
 <div class="hint" data-t="hint"></div>
 <div class="key"><span><i style="background:color-mix(in srgb,var(--acc) 45%,var(--bg));border:1px solid var(--acc)"></i><span data-t="k1"></span></span><span><i style="border:1px dashed var(--mut)"></i><span data-t="k2"></span></span><span><i style="background:color-mix(in srgb,var(--fg) 8%,var(--bg));border:1px solid var(--line)"></i><span data-t="k3"></span></span><span><i style="background:var(--war);border-radius:50%;width:10px"></i><span data-t="k4"></span></span></div>
+<div class="wars" id="wars"></div>
 <p class="foot" data-t="foot"></p>
 </div>
 <script>
@@ -148,10 +149,10 @@ const WARS=[
 {"y":2026,"n":"2026 Iran war","nf":"جنگ آمریکا و اسرائیل با ایران","s":[51.39,35.69],"p":[{"n":"United States","f":"آمریکا","c":[-77.02,38.9]},{"n":"Israel","f":"اسرائیل","c":[35.23,31.78]},{"n":"Iran","f":"ایران","c":null}],"w":-1,"r":"Ongoing since 28 February 2026; Supreme Leader Ali Khamenei is assassinated and Iran blocks the Strait of Hormuz","rf":"از 28 فوریهٔ 2026 ادامه دارد؛ رهبر، علی خامنه‌ای، ترور می‌شود و ایران تنگهٔ هرمز را می‌بندد","u":"https://en.wikipedia.org/wiki/2026_Iran_war","uf":"https://fa.wikipedia.org/wiki/%D8%AC%D9%86%DA%AF_%D8%A2%D9%85%D8%B1%DB%8C%DA%A9%D8%A7_%D9%88_%D8%A7%D8%B3%D8%B1%D8%A7%D8%A6%DB%8C%D9%84_%D8%A8%D8%A7_%D8%A7%DB%8C%D8%B1%D8%A7%D9%86","ax":1,"a":[0,1]}];
 const SRC='<a href="https://github.com/aourednik/historical-basemaps" target="_blank" rel="noopener"><bdi dir="ltr">historical-basemaps</bdi></a>';
 const UI={
-en:{h1:"Iran Through Time",other:"فارسی",hint:"Press play, scroll sideways, drag, or use ← → (space plays)",k1:"Who held the Iranian plateau",k2:"Today's borders",k3:"Other states",k4:"Battle; lines run from each side's capital, not the route",wt:"Wars",wh:"Battles that led to this map",vs:" vs ",and:" and ",ax:"place approximate",
+en:{h1:"Iran Through Time",other:"فارسی",hint:"Press play, scroll sideways, drag, or use ← → (space plays)",k1:"Who held the Iranian plateau",k2:"Today's borders",k3:"Other states",k4:"Battle; lines run from each side's capital, not the route",wt:"Wars",wh:"Battles that led to this map",ah:"Since this map",vs:" vs ",and:" and ",ax:"place approximate",
  foot:`Borders: ${SRC} (A. Ourednik, GPL-3.0), simplified. Pre-modern borders are approximate. Captions were cross-checked against cited sources (mostly Wikipedia). Amber lines mark where the dataset's borders are wrong. Wars: ${WARS.length} battles that made or moved these borders. Date, place, sides and result come from each battle's Wikipedia article (<a href="wars-sources.json" target="_blank" rel="noopener">audit file</a>); lines start at each side's capital at the time and do not show the route.`,
  fix:"Map correction: ",src:"source",play:"Play",pause:"Pause",yr:y=>y<0?`${-y} BC`:y===1?"AD 1":`${y}`},
-fa:{h1:"ایران در گذر تاریخ",other:"English",hint:"دکمهٔ پخش را بزنید، خط زمان را بکشید یا از کلیدهای ← → استفاده کنید (کلید فاصله پخش می‌کند).",k1:"فرمانروای فلات ایران",k2:"مرزهای امروز",k3:"دیگر دولت‌ها",k4:"نبرد؛ خط‌ها از پایتخت هر طرف کشیده شده‌اند، نه مسیر لشکر",wt:"جنگ‌ها",wh:"نبردهایی که به این نقشه انجامید",vs:" در برابر ",and:" و ",ax:"محل تقریبی",
+fa:{h1:"ایران در گذر تاریخ",other:"English",hint:"دکمهٔ پخش را بزنید، خط زمان را بکشید یا از کلیدهای ← → استفاده کنید (کلید فاصله پخش می‌کند).",k1:"فرمانروای فلات ایران",k2:"مرزهای امروز",k3:"دیگر دولت‌ها",k4:"نبرد؛ خط‌ها از پایتخت هر طرف کشیده شده‌اند، نه مسیر لشکر",wt:"جنگ‌ها",wh:"نبردهایی که به این نقشه انجامید",ah:"پس از این نقشه",vs:" در برابر ",and:" و ",ax:"محل تقریبی",
  foot:`مرزها: ${SRC} (<bdi dir="ltr">A. Ourednik, GPL-3.0</bdi>)، ساده‌شده. مرزهای پیش از دوران مدرن تقریبی‌اند. متن‌ها با منابع مستند (بیشتر ویکی‌پدیا) سنجیده شده‌اند. خط‌های نارنجی جاهایی را نشان می‌دهند که مرزهای داده نادرست است. جنگ‌ها: ${WARS.length} نبرد که این مرزها را ساختند یا جابه‌جا کردند. تاریخ، محل، دو طرف و نتیجه از مقالهٔ ویکی‌پدیای هر نبرد آمده است (<a href="wars-sources.json" target="_blank" rel="noopener">فایل منابع</a>)؛ خط‌ها از پایتخت هر طرف در آن زمان شروع می‌شوند و مسیر لشکر را نشان نمی‌دهند.`,
  fix:"اصلاح نقشه: ",src:"منبع",play:"پخش",pause:"توقف",yr:y=>y<0?`${-y} پ.م`:y===1?"1 م":`${y}`}};
 let L="en";
@@ -179,15 +180,16 @@ let WON=true;try{WON=localStorage.getItem("itt-wars")!=="0"}catch(e){}
 const isW=(w,si)=>Array.isArray(w.w)?w.w.includes(si):w.w===si,inF=i=>WARS.filter(w=>(w.y<=D.s[i].y||i===D.s.length-1)&&(i===0||w.y>D.s[i-1].y));
 function warsUI(){const u=UI[L],fa=L==="fa",b=$("wt"),box=$("wars");b.textContent=u.wt;b.setAttribute("aria-pressed",WON);box.replaceChildren();
  const ws=cur<0?[]:inF(cur);if(!WON||!ws.length)return;
- const h=document.createElement("h2");h.textContent=u.wh;const ol=document.createElement("ol");
- ws.forEach((w,j)=>{const li=document.createElement("li"),bt=document.createElement("button");bt.type="button";
-  bt.innerHTML=`<span class="b">${j+1}</span><span class="t"><b></b> <span></span> </span>`;
-  const t=bt.querySelector(".t");t.firstChild.textContent=u.yr(w.y)+" · "+(fa?w.nf:w.n);
+ const mk=t=>{const h=document.createElement("h2");h.textContent=t;const ol=document.createElement("ol");box.append(h,ol);return ol};
+ let ol=mk(u.wh);const last=D.s[cur].y;
+ ws.forEach((w,j)=>{if(w.y>last&&(j===0||ws[j-1].y<=last))ol=mk(u.ah);
+  const li=document.createElement("li"),bt=document.createElement("button");bt.type="button";
+  bt.innerHTML=`<span class="b">${j+1}</span><span class="t"><b></b> <span></span></span>`;
+  const t=bt.querySelector(".t"),title=fa?w.nf:w.n;t.firstChild.textContent=u.yr(w.y)+" · "+title;
   const nm2=x=>fa?x.f:x.n,g=si=>w.a?w.a.includes(si):isW(w,si),A=w.p.filter((x,si)=>g(si)===g(0)).map(nm2),B=w.p.filter((x,si)=>g(si)!==g(0)).map(nm2);
   t.children[1].textContent=A.join(u.and)+(B.length?u.vs+B.join(u.and):"")+(fa?"؛ ":": ")+(fa?w.rf:w.r)+(w.ax?" ("+u.ax+")":"");
-  const a=document.createElement("a");a.href=fa&&w.uf?w.uf:w.u;a.target="_blank";a.rel="noopener";a.textContent=u.src;t.append(a);
-  a.onclick=e=>e.stopPropagation();bt.onclick=()=>{stop();drawWars(cur,j)};li.append(bt);ol.append(li)});
- box.append(h,ol)}
+  const a=document.createElement("a");a.href=fa&&w.uf?w.uf:w.u;a.target="_blank";a.rel="noopener";a.textContent=u.src;a.setAttribute("aria-label",u.src+": "+title);
+  bt.onclick=()=>{stop();drawWars(cur,j)};li.append(bt,a);ol.append(li)})}
 let wT=[];
 function drawWars(i,focus){const W=$("W");W.replaceChildren();if(!WON||i<0)return 0;
  const ws=inF(i),r=$("svg").getBoundingClientRect().width,k=r?D.W/r:1,still=RM.matches,GL=el("g",{}),GM=el("g",{}),put=[];W.append(GL,GM);
@@ -231,7 +233,7 @@ $("play").onclick=play;strip.addEventListener("pointerdown",stop);strip.addEvent
 addEventListener("keydown",e=>{const fwd="ArrowRight",back="ArrowLeft";
  if(e.key===fwd){stop();go(cur+1)}if(e.key===back){stop();go(cur-1)}if(e.key===" "&&e.target===document.body){e.preventDefault();play()}});
 function setLang(l){L=l;const u=UI[l],fa=l==="fa";
- document.documentElement.lang=l;$("wrap").dir=fa?"rtl":"ltr";document.title=u.h1;
+ document.documentElement.lang=l;document.documentElement.dir=fa?"rtl":"ltr";$("wrap").dir=fa?"rtl":"ltr";document.title=u.h1;
  document.querySelectorAll("[data-t]").forEach(e=>{e.innerHTML=u[e.dataset.t]});
  const b=$("lang");b.textContent=u.other;b.className="lang"+(fa?"":" fa");b.lang=fa?"en":"fa";
  track.replaceChildren();ticks.forEach((t,i)=>{t.textContent=u.yr(D.s[i].y);t.dir=fa?"rtl":"ltr";track.appendChild(t)});
