@@ -40,7 +40,7 @@ svg{display:block;width:100%;height:auto}
 [dir="rtl"] p{text-align:justify}
 .row{display:flex;align-items:center;gap:10px;margin-top:4px}.tl{position:relative;flex:1;min-width:0}
 .play{flex:0 0 40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer;display:grid;place-items:center;padding:0}
-.play:hover{border-color:var(--acc)}.play svg{width:14px;height:14px;fill:currentColor}
+.play:hover,.spd:hover{border-color:var(--acc)}.spd{flex:0 0 auto;height:32px;min-width:40px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--mut);font:inherit;font-size:12px;font-weight:650;cursor:pointer;padding:0 8px;font-variant-numeric:tabular-nums}.spd[aria-pressed="true"]{color:var(--acc);border-color:var(--acc)}.play svg{width:14px;height:14px;fill:currentColor}
 .strip{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
 .strip::-webkit-scrollbar{display:none}.strip.drag{cursor:grabbing;scroll-snap-type:none}
 .track{display:flex;width:max-content;padding:0 calc(50% - 32px)}
@@ -61,7 +61,7 @@ svg{display:block;width:100%;height:auto}
 .wars .b{flex:0 0 18px;height:18px;border-radius:50%;background:var(--war);color:var(--won);font-size:11px;font-weight:700;display:grid;place-items:center;margin-top:1px}
 .wars .t{font-size:13px}.wars .t b{font-weight:650}.wars .t span{color:var(--mut)}.wars li>a{flex:none;color:var(--mut);font-size:12px;padding:4px 8px;border-radius:8px;line-height:1.6}.wars h2+ol+h2{margin-top:10px}
 button:focus-visible,a:focus-visible,.strip:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-@media (pointer:coarse){.lang{min-height:44px;padding:5px 16px}.play{flex-basis:44px;height:44px}.wars li>a{min-height:44px;display:inline-flex;align-items:center}.wars li button{min-height:44px}}
+@media (pointer:coarse){.spd{height:44px;min-width:48px}.lang{min-height:44px;padding:5px 16px}.play{flex-basis:44px;height:44px}.wars li>a{min-height:44px;display:inline-flex;align-items:center}.wars li button{min-height:44px}}
 @media (prefers-reduced-motion:reduce){.layer,.lab,.hl{transition:none!important}}
 </style>
 </head>
@@ -71,7 +71,7 @@ button:focus-visible,a:focus-visible,.strip:focus-visible{outline:2px solid var(
 <div class="map"><svg id="svg"><g id="M"></g><path class="hi" id="MO"/><path class="base" id="base"/><g id="W"></g><g id="L"></g><g id="WM"></g></svg></div>
 <div class="head"><span class="yr" id="yr"></span><span class="ttl" id="ttl"></span></div>
 <p class="note" id="note"></p><p class="fix" id="fix"></p>
-<div class="row" dir="ltr"><button class="play" id="play" type="button"><svg viewBox="0 0 14 14" id="pi"><path d="M3 1.5v11l9.5-5.5z"/></svg></button><div class="tl"><div class="strip" id="strip" dir="ltr"><div class="track" id="track"></div></div><div class="needle"></div></div></div>
+<div class="row" dir="ltr"><button class="play" id="play" type="button"><svg viewBox="0 0 14 14" id="pi"><path d="M3 1.5v11l9.5-5.5z"/></svg></button><button class="spd" id="spd" type="button" dir="ltr" aria-pressed="false">1×</button><div class="tl"><div class="strip" id="strip" dir="ltr"><div class="track" id="track"></div></div><div class="needle"></div></div></div>
 <div class="hint" data-t="hint"></div>
 <div class="key"><span><i style="background:color-mix(in srgb,var(--acc) 45%,var(--bg));border:1px solid var(--acc)"></i><span data-t="k1"></span></span><span><i style="border:1px dashed var(--mut)"></i><span data-t="k2"></span></span><span><i style="background:color-mix(in srgb,var(--fg) 8%,var(--bg));border:1px solid var(--line)"></i><span data-t="k3"></span></span><span><i style="background:var(--war);border-radius:50%;width:10px"></i><span data-t="k4"></span></span></div>
 <div class="wars" id="wars"></div>
@@ -151,10 +151,10 @@ const SRC='<a href="https://github.com/aourednik/historical-basemaps" target="_b
 const UI={
 en:{h1:"Iran Through Time",other:"فارسی",hint:"Press play, scroll sideways, drag, or use ← → (space plays)",k1:"Who held the Iranian plateau",k2:"Today's borders",k3:"Other states",k4:"Battle; lines run from each side's capital, not the route",wt:"Wars",wh:"Battles that led to this map",ah:"Since this map",vs:" vs ",and:" and ",ax:"place approximate",
  foot:`Borders: ${SRC} (A. Ourednik, GPL-3.0), simplified. Pre-modern borders are approximate. Captions were cross-checked against cited sources (mostly Wikipedia). Amber lines mark where the dataset's borders are wrong. Wars: ${WARS.length} battles that made or moved these borders. Date, place, sides and result come from each battle's Wikipedia article (<a href="wars-sources.json" target="_blank" rel="noopener">audit file</a>); lines start at each side's capital at the time and do not show the route.`,
- fix:"Map correction: ",src:"source",play:"Play",pause:"Pause",tl:"Timeline",yr:y=>y<0?`${-y} BC`:y===1?"AD 1":`${y}`},
+ fix:"Map correction: ",src:"source",play:"Play",pause:"Pause",tl:"Timeline",spd:"Playback speed",yr:y=>y<0?`${-y} BC`:y===1?"AD 1":`${y}`},
 fa:{h1:"ایران در گذر تاریخ",other:"English",hint:"دکمهٔ پخش را بزنید، خط زمان را بکشید یا از کلیدهای ← → استفاده کنید (کلید فاصله پخش می‌کند).",k1:"فرمانروای فلات ایران",k2:"مرزهای امروز",k3:"دیگر دولت‌ها",k4:"نبرد؛ خط‌ها از پایتخت هر طرف کشیده شده‌اند، نه مسیر لشکر",wt:"جنگ‌ها",wh:"نبردهایی که به این نقشه انجامید",ah:"پس از این نقشه",vs:" در برابر ",and:" و ",ax:"محل تقریبی",
  foot:`مرزها: ${SRC} (<bdi dir="ltr">A. Ourednik, GPL-3.0</bdi>)، ساده‌شده. مرزهای پیش از دوران مدرن تقریبی‌اند. متن‌ها با منابع مستند (بیشتر ویکی‌پدیا) سنجیده شده‌اند. خط‌های نارنجی جاهایی را نشان می‌دهند که مرزهای داده نادرست است. جنگ‌ها: ${WARS.length} نبرد که این مرزها را ساختند یا جابه‌جا کردند. تاریخ، محل، دو طرف و نتیجه از مقالهٔ ویکی‌پدیای هر نبرد آمده است (<a href="wars-sources.json" target="_blank" rel="noopener">فایل منابع</a>)؛ خط‌ها از پایتخت هر طرف در آن زمان شروع می‌شوند و مسیر لشکر را نشان نمی‌دهند.`,
- fix:"اصلاح نقشه: ",src:"منبع",play:"پخش",pause:"توقف",tl:"خط زمان",yr:y=>y<0?`${-y} پ.م`:y===1?"1 م":`${y}`}};
+ fix:"اصلاح نقشه: ",src:"منبع",play:"پخش",pause:"توقف",tl:"خط زمان",spd:"سرعت پخش",yr:y=>y<0?`${-y} پ.م`:y===1?"1 م":`${y}`}};
 let L="en";
 try{const q=new URLSearchParams(location.search).get("lang");L=q==="fa"||q==="en"?q:(localStorage.getItem("itt-lang")||(navigator.language||"").startsWith("fa")&&"fa"||"en")}catch(e){}
 const svg=$("svg");svg.setAttribute("viewBox",`0 0 ${D.W} ${D.H}`);$("base").setAttribute("d",D.base);
@@ -241,7 +241,7 @@ function drawWars(i,focus){const W=$("W");W.replaceChildren();$("WM").replaceChi
    ring.style.transformOrigin=`${mx}px ${my}px`;ring.style.opacity=0;ring.animate([{transform:"scale(1)",opacity:.9},{transform:"scale(3.6)",opacity:0}],{duration:900,delay:t0+800,iterations:2});
    fade.forEach(e=>e.animate([{opacity:1},{opacity:.3}],{duration:400,delay:t0+800,fill:"both"}))}
   else{ring.style.opacity=0;fade.forEach(e=>e.style.opacity=.3)}});
- declutter();return ws.length}
+ declutter();if(SPD!==1)wAnims().forEach(a=>a.updatePlaybackRate(SPD));return ws.length}
 addEventListener("resize",()=>{clearTimeout(wT);wT=setTimeout(()=>{sizeLabs();drawWars(cur,-1)},150)});
 $("wt").onclick=()=>{WON=!WON;try{localStorage.setItem("itt-wars",WON?"1":"0")}catch(e){}warsUI();drawWars(cur)};
 const track=$("track"),strip=$("strip"),TW=64;
@@ -257,9 +257,11 @@ addEventListener("pointerup",()=>{if(dx===null)return;dx=null;strip.classList.re
 const P="M3 1.5v11l9.5-5.5z",Q="M2.5 1.5h3.5v11H2.5zM8 1.5h3.5v11H8z";
 function playIcon(){const on=!!timer;$("pi").firstChild.setAttribute("d",on?Q:P);$("play").setAttribute("aria-label",on?UI[L].pause:UI[L].play)}
 const wAnims=()=>document.getAnimations().filter(a=>{const t=a.effect&&a.effect.target;return t&&t.closest&&t.closest("#W,#WM,.wars")});
-let PL=null,raf=0,last=0;
+let PL=null,raf=0,last=0,SPD=1;try{SPD=localStorage.getItem("itt-spd")==="2"?2:1}catch(e){}
+function spdUI(){const b=$("spd");b.textContent=SPD+"×";b.setAttribute("aria-pressed",SPD===2);b.setAttribute("aria-label",UI[L].spd+" "+SPD+"×");wAnims().forEach(a=>a.updatePlaybackRate(SPD))}
+$("spd").onclick=()=>{SPD=SPD===2?1:2;try{localStorage.setItem("itt-spd",SPD)}catch(e){}spdUI()};
 const segDur=i=>RM.matches?0:Math.max(1600,WON?inF(i).length*STEP+700:0),HOLD=()=>RM.matches?2600:900;
-function loop(now){const dt=Math.min(64,now-last);last=now;PL.el+=dt;
+function loop(now){const dt=Math.min(64,now-last);last=now;PL.el+=dt*SPD;
  if(PL.ph==="move"){const u=PL.dur?Math.min(1,PL.el/PL.dur):1;strip.scrollLeft=(PL.i-1+u)*TW;setPos(PL.i-1+u);if(u>=1){PL.ph="hold";PL.el=0;PL.dur=HOLD()}}
  else if(PL.el>=PL.dur){if(PL.i>=N-1)return stop();startSeg(PL.i+1)}
  raf=requestAnimationFrame(loop)}
@@ -281,7 +283,7 @@ function setLang(l){L=l;const u=UI[l],fa=l==="fa";
  track.replaceChildren();ticks.forEach((t,i)=>{t.textContent=u.yr(D.s[i].y);t.dir=fa?"rtl":"ltr";track.appendChild(t)});
  for(const [n,t] of labs)t.textContent=nm(n);
  warsUI();if(cur>=0){texts();strip.scrollTo({left:pos(cur)*TW,behavior:"auto"})}
- playIcon();sizeLabs();try{localStorage.setItem("itt-lang",l)}catch(e){}}
+ playIcon();sizeLabs();if(typeof spdUI==="function"&&$("spd"))try{spdUI()}catch(e){}try{localStorage.setItem("itt-lang",l)}catch(e){}}
 $("lang").onclick=()=>{const l=L==="fa"?"en":"fa";setLang(l);try{const p=new URL(location.href);p.searchParams.set("lang",l);history.replaceState(null,"",p)}catch(e){}};
 setLang(L);sizeLabs();show(0);setPos(0);requestAnimationFrame(()=>go(0,false));document.fonts&&document.fonts.ready.then(declutter);
 </script>
