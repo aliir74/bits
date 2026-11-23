@@ -28,10 +28,10 @@ svg{display:block;width:100%;height:auto}
 .oth path{fill:color-mix(in srgb,var(--fg) 7%,var(--bg));stroke:color-mix(in srgb,var(--fg) 30%,var(--bg));stroke-width:.6}
 .hi{fill:color-mix(in srgb,var(--acc) 38%,var(--bg));stroke:var(--acc);stroke-width:1.4;stroke-linejoin:round}
 .base{fill:none;stroke:color-mix(in srgb,var(--fg) 45%,transparent);stroke-width:.5;stroke-dasharray:2 2}
-.lab{font-size:10px;fill:var(--mut);text-anchor:middle}
-.hl{font-size:13px;font-weight:650;fill:var(--fg);text-anchor:middle}
-:root[lang="fa"] .lab{font-size:11px}:root[lang="fa"] .hl{font-size:14px}
-.lab,.hl{transition:transform .45s ease,opacity .35s ease;paint-order:stroke;stroke:var(--bg);stroke-opacity:.85;stroke-width:3px;stroke-linejoin:round}
+.lab{font-size:var(--lf,10px);fill:var(--mut);text-anchor:middle}
+.hl{font-size:var(--hf,13px);font-weight:650;fill:var(--fg);text-anchor:middle}
+:root[lang="fa"] .lab{font-size:var(--lf,11px)}:root[lang="fa"] .hl{font-size:var(--hf,14px)}
+.lab,.hl{transition:transform .45s ease,opacity .35s ease;paint-order:stroke;stroke:var(--bg);stroke-opacity:.85;stroke-width:var(--hw,3px);stroke-linejoin:round}
 .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:14px 2px 4px}
 .yr{font-size:30px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .ttl{font-size:17px;font-weight:600;color:var(--acct)}
@@ -52,7 +52,7 @@ svg{display:block;width:100%;height:auto}
 .key{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:10px 2px 0}
 .key i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-inline-end:6px;vertical-align:-1px}
 .foot{font-size:11px;color:var(--mut);margin:12px 2px 0}.foot a{color:inherit}
-.tb{display:flex;gap:8px}#wt:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;margin-inline-end:6px;vertical-align:0}#wt[aria-pressed="true"]:before{background:currentColor}#W .wg{transition:opacity .25s}#W.foc .wg:not(.on){opacity:.18}.ws{cursor:pointer}.lang[aria-pressed="true"]{border-color:var(--war);color:var(--war)}
+.tb{display:flex;gap:8px}#wt:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;margin-inline-end:6px;vertical-align:0}#wt[aria-pressed="true"]:before{background:currentColor}#W .wg,#WM .wg{transition:opacity .25s}#W.foc .wg:not(.on),#WM.foc .wg:not(.on){opacity:.18}.ws{cursor:pointer}.wl{stroke:var(--war)}.wsd{fill:var(--war)}.we{direction:ltr;text-anchor:start;fill:var(--mut);font-weight:600;paint-order:stroke;stroke:var(--bg);stroke-opacity:.85;stroke-linejoin:round}.lang[aria-pressed="true"]{border-color:var(--war);color:var(--war)}
 .wa{fill:none;stroke:var(--war);stroke-linecap:round}.wa.l{stroke:var(--mut)}.wo{fill:var(--war)}.wo.l{fill:var(--mut)}
 .ws{fill:var(--war);stroke:var(--bg)}.wr{fill:none;stroke:var(--war)}.wn{fill:var(--won);font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .wars{margin:2px 2px 10px}.wars h2{font-size:12px;font-weight:600;color:var(--mut);margin:0 0 4px}.wars ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
@@ -68,7 +68,7 @@ button:focus-visible,a:focus-visible,.strip:focus-visible{outline:2px solid var(
 <body>
 <div class="wrap" id="wrap">
 <div class="top"><h1 data-t="h1"></h1><div class="tb"><button class="lang" id="wt" type="button"></button><button class="lang" id="lang" type="button"></button></div></div>
-<div class="map"><svg id="svg"><g id="M"></g><path class="base" id="base"/><g id="W"></g><g id="L"></g></svg></div>
+<div class="map"><svg id="svg"><g id="M"></g><path class="base" id="base"/><g id="W"></g><g id="L"></g><g id="WM"></g></svg></div>
 <div class="head"><span class="yr" id="yr"></span><span class="ttl" id="ttl"></span></div>
 <p class="note" id="note"></p><p class="fix" id="fix"></p>
 <div class="row" dir="ltr"><button class="play" id="play" type="button"><svg viewBox="0 0 14 14" id="pi"><path d="M3 1.5v11l9.5-5.5z"/></svg></button><div class="tl"><div class="strip" id="strip" dir="ltr"><div class="track" id="track"></div></div><div class="needle"></div></div></div>
@@ -162,6 +162,10 @@ const labs=new Map();let timer=null,cur=-1,hideT=0;const G=[],M=$("M");
 const nm=n=>L==="fa"?(D.names[n]||n):n;
 function el(t,a,txt){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt)e.textContent=txt;return e}
 function layer(i){if(G[i])return G[i];const s=D.s[i],g=el("g",{class:"layer"});g.appendChild(el("rect",{class:"sea",width:D.W,height:D.H}));const o=el("g",{class:"oth"});s.o.forEach(d=>o.appendChild(el("path",{d})));g.appendChild(o);g.appendChild(el("path",{class:"hi",d:s.hi}));g.style.opacity=0;return G[i]=g}
+function declutter(){const put=[...document.querySelectorAll("#W .we")].map(e=>{const b=e.getBBox();return[b.x-2,b.y-1,b.x+b.width+2,b.y+b.height+1]}),ts=[...labs.values()].filter(t=>t.isConnected).sort((a,b)=>(b.getAttribute("class")==="hl")-(a.getAttribute("class")==="hl"));
+ for(const t of ts){let b;try{b=t.getBBox()}catch(e){continue}const r=[t._x+b.x-2,t._y+b.y-1,t._x+b.x+b.width+2,t._y+b.y+b.height+1];
+  const hit=t.getAttribute("class")!=="hl"&&(r[0]<0||r[2]>D.W||put.some(q=>r[0]<q[2]&&q[0]<r[2]&&r[1]<q[3]&&q[1]<r[3]));t.style.visibility=hit?"hidden":"";if(!hit)put.push(r)}}
+function sizeLabs(){const r=svg.getBoundingClientRect().width,k=r?D.W/r:1,fa=L==="fa";svg.style.setProperty("--lf",Math.max(fa?11:10,(fa?9.5:9)*k)+"px");svg.style.setProperty("--hf",Math.max(fa?14:13,12.5*k)+"px");svg.style.setProperty("--hw",Math.max(3,2.5*k)+"px");declutter()}
 function texts(){const s=D.s[cur],u=UI[L],fa=L==="fa";
  $("yr").textContent=u.yr(s.y);$("ttl").textContent=fa?s.fa[0]:s.t;$("note").textContent=fa?s.fa[1]:s.n;
  strip.setAttribute("aria-label",u.tl);strip.setAttribute("aria-valuenow",cur);strip.setAttribute("aria-valuetext",u.yr(s.y)+", "+(fa?s.fa[0]:s.t));
@@ -172,10 +176,11 @@ function show(i){if(i===cur)return;cur=i;const s=D.s[i];
  clearTimeout(hideT);hideT=setTimeout(()=>G.forEach((x,j)=>{if(x&&j!==cur){x.style.visibility="hidden";x.style.opacity=0}}),650);
  const want=new Map();s.l.forEach(([n,x,y])=>want.set(n,[x,y,"lab"]));s.hl.forEach(([n,x,y])=>want.set(n,[x,y,"hl"]));
  for(const [n,t] of labs)if(!want.has(n)){labs.delete(n);t.style.opacity=0;setTimeout(()=>t.remove(),400)}
- for(const [n,[x,y,c]] of want){let t=labs.get(n);const tr=`translate(${x}px,${y}px)`;
+ for(const [n,[x,y,c]] of want){let t=labs.get(n);const tr=`translate(${x}px,${y}px)`;if(t)t._x=x,t._y=y;
   if(t){t.setAttribute("class",c);t.style.transform=tr}
-  else{t=el("text",{class:c},nm(n));t.style.transform=tr;t.style.opacity=0;$("L").appendChild(t);labs.set(n,t);requestAnimationFrame(()=>requestAnimationFrame(()=>{if(labs.get(n)===t)t.style.opacity=1}))}}
- texts();warsUI();drawWars(i);ticks.forEach((t,j)=>t.classList.toggle("on",j===i))}
+  else{t=el("text",{class:c},nm(n));t._x=x;t._y=y;t.style.transform=tr;t.style.opacity=0;$("L").appendChild(t);labs.set(n,t);requestAnimationFrame(()=>requestAnimationFrame(()=>{if(labs.get(n)===t)t.style.opacity=1}))}}
+ declutter();texts();warsUI();drawWars(i);ticks.forEach((t,j)=>t.classList.toggle("on",j===i))}
+const RING=[[0,0]];for(const [rr,nA] of [[16,8],[30,12]])for(let q=0;q<nA;q++){const an=-Math.PI/2+q*2*Math.PI/nA;RING.push([rr*Math.cos(an),rr*Math.sin(an)])}
 const pj=([a,b])=>[8.6677*a-87.0105,560.038-10.0006*b],RM=matchMedia("(prefers-reduced-motion: reduce)"),STEP=1300;
 let WON=true;try{WON=localStorage.getItem("itt-wars")!=="0"}catch(e){}
 const isW=(w,si)=>Array.isArray(w.w)?w.w.includes(si):w.w===si,inF=i=>WARS.filter(w=>(w.y<=D.s[i].y||i===D.s.length-1)&&(i===0||w.y>D.s[i-1].y));
@@ -192,32 +197,37 @@ function warsUI(){const u=UI[L],fa=L==="fa",b=$("wt"),box=$("wars");b.textConten
   const a=document.createElement("a");a.href=fa&&w.uf?w.uf:w.u;a.target="_blank";a.rel="noopener";a.textContent=u.src;a.setAttribute("aria-label",u.src+": "+title);
   bt.onclick=()=>{stop();drawWars(cur,j)};bt.onmouseenter=bt.onfocus=()=>hi(j);bt.onmouseleave=bt.onblur=()=>hi();li.append(bt,a);ol.append(li)})}
 let wT=[],paused=null;
-function hi(j){const W=$("W"),f=j!=null?j:W.dataset.f!==""&&W.dataset.f!=null?+W.dataset.f:null;W.classList.toggle("foc",f!=null);W.querySelectorAll(".wg").forEach(g=>g.classList.toggle("on",+g.dataset.j===f))}
+function hi(j){const W=$("W"),f=j!=null?j:W.dataset.f!==""&&W.dataset.f!=null?+W.dataset.f:null;W.classList.toggle("foc",f!=null);$("WM").classList.toggle("foc",f!=null);document.querySelectorAll("#W .wg,#WM .wg").forEach(g=>g.classList.toggle("on",+g.dataset.j===f))}
 const HL=()=>{const h=getComputedStyle(document.documentElement).getPropertyValue("--war").trim().replace("#","");return`rgba(${parseInt(h.slice(0,2),16)},${parseInt(h.slice(2,4),16)},${parseInt(h.slice(4,6),16)},.13)`};
-function drawWars(i,focus){const W=$("W");W.replaceChildren();paused=null;W.dataset.f=focus!=null&&focus>=0?focus:"";hi();if(!WON||i<0)return 0;
- const ws=inF(i),r=$("svg").getBoundingClientRect().width,k=r?D.W/r:1,still=RM.matches,GL=el("g",{}),GM=el("g",{}),put=[];W.append(GL,GM);
+function drawWars(i,focus){const W=$("W");W.replaceChildren();$("WM").replaceChildren();paused=null;W.dataset.f=focus!=null&&focus>=0?focus:"";hi();if(!WON||i<0){declutter();return 0}
+ const ws=inF(i),r=$("svg").getBoundingClientRect().width,k=r?D.W/r:1,still=RM.matches,GL=el("g",{}),GM=el("g",{}),put=[];W.append(GL);$("WM").append(GM);
  const rows=document.querySelectorAll(".wars li button"),hl=HL();rows.forEach((b,j)=>b.classList.toggle("on",j===focus));
- ws.forEach((w,j)=>{const anim=!still&&(focus==null||focus===j),t0=focus==null?j*STEP:0,[sx,sy]=pj(w.s),g=el("g",{class:"wg","data-j":j}),gm=el("g",{class:"wg","data-j":j});GL.append(g);GM.append(gm);
+ const edge=new Set();ws.forEach((w,j)=>{const anim=!still&&(focus==null||focus===j),t0=focus==null?j*STEP:0,[sx,sy]=pj(w.s),g=el("g",{class:"wg","data-j":j}),gm=el("g",{class:"wg","data-j":j});GL.append(g);GM.append(gm);
   if(anim&&focus==null&&rows[j])rows[j].animate([{backgroundColor:hl},{backgroundColor:hl}],{duration:STEP,delay:t0});
   const fade=[];
   w.p.forEach((x,si)=>{if(!x.c)return;const [ox,oy]=pj(x.c),dx=sx-ox,dy=sy-oy,len=Math.hypot(dx,dy);if(len<12*k)return;
    const lose=!isW(w,si)&&w.w!==-1,cx=(ox+sx)/2-dy*.18,cy=(oy+sy)/2+dx*.18;
    const pa=el("path",{class:"wa"+(lose?" l":""),d:`M${ox},${oy}Q${cx},${cy} ${sx},${sy}`,"stroke-width":2*k});g.appendChild(pa);
    const o=el("circle",{class:"wo"+(lose?" l":""),cx:ox,cy:oy,r:2.6*k});g.appendChild(o);
+   if((ox<0||ox>D.W||oy<0||oy>D.H)&&!edge.has(""+x.c)){edge.add(""+x.c);const T=pa.getTotalLength();let pt=null;for(let d=0;d<=T;d+=3*k){const q=pa.getPointAtLength(d);if(q.x>=1&&q.x<=D.W-1&&q.y>=1&&q.y<=D.H-1){pt=q;break}}
+    if(pt){const lb=el("text",{class:"we","font-size":9*k,"stroke-width":2.5*k,x:pt.x,y:pt.y},L==="fa"?x.f:x.n);g.appendChild(lb);const b=lb.getBBox(),m=4*k;
+     let ex=pt.x+(pt.x<D.W/2?m:-m-b.width),ey=pt.y+(pt.y<D.H/2?b.height+m:-m);ex=Math.max(m,Math.min(D.W-m-b.width,ex));ey=Math.max(b.height+m,Math.min(D.H-m,ey));
+     lb.setAttribute("x",ex);lb.setAttribute("y",ey);if(anim)lb.animate([{opacity:0},{opacity:1}],{duration:300,delay:t0+200,fill:"both"})}}
    if(anim){const L2=pa.getTotalLength();pa.style.strokeDasharray=L2;pa.animate([{strokeDashoffset:L2},{strokeDashoffset:0}],{duration:800,delay:t0,easing:"ease-in-out",fill:"both"});
     o.animate([{opacity:0},{opacity:1}],{duration:200,delay:t0,fill:"both"});}
    if(lose)fade.push(pa,o)});
-  let mx=sx,my=sy;while(put.some(([a,b])=>Math.hypot(a-mx,b-my)<14*k))my-=15*k;put.push([mx,my]);
+  let mx=sx,my=sy;for(const [ux,uy] of RING){const tx=sx+ux*k,ty=sy+uy*k;if(!put.some(([a,b])=>Math.hypot(a-tx,b-ty)<14.5*k)){mx=tx;my=ty;break}}put.push([mx,my]);
+  const lead=[];if(mx!==sx||my!==sy){lead.push(el("line",{class:"wl",x1:sx,y1:sy,x2:mx,y2:my,"stroke-width":k}),el("circle",{class:"wsd",cx:sx,cy:sy,r:2.4*k}));lead.forEach(e=>gm.appendChild(e))}
   const ring=el("circle",{class:"wr",cx:mx,cy:my,r:6*k,"stroke-width":2*k});gm.appendChild(ring);
   const dot=el("circle",{class:"ws",cx:mx,cy:my,r:7*k,"stroke-width":1.5*k});gm.appendChild(dot);dot.appendChild(el("title",{},(L==="fa"?w.nf:w.n)));dot.onclick=()=>{stop();drawWars(cur,j)};
   const n=el("text",{class:"wn",x:mx,y:my,"font-size":9*k},String(j+1));gm.appendChild(n);
-  if(anim){[dot,n].forEach(e=>e.animate([{opacity:0,transform:"scale(.2)"},{opacity:1,transform:"scale(1)"}],{duration:300,delay:t0+750,fill:"both",easing:"ease-out"}));
+  if(anim){[dot,n,...lead].forEach(e=>e.animate([{opacity:0,transform:"scale(.2)"},{opacity:1,transform:"scale(1)"}],{duration:300,delay:t0+750,fill:"both",easing:"ease-out"}));
    dot.style.transformOrigin=n.style.transformOrigin=`${mx}px ${my}px`;
    ring.style.transformOrigin=`${mx}px ${my}px`;ring.style.opacity=0;ring.animate([{transform:"scale(1)",opacity:.9},{transform:"scale(3.6)",opacity:0}],{duration:900,delay:t0+800,iterations:2});
    fade.forEach(e=>e.animate([{opacity:1},{opacity:.3}],{duration:400,delay:t0+800,fill:"both"}))}
   else{ring.style.opacity=0;fade.forEach(e=>e.style.opacity=.3)}});
- return ws.length}
-addEventListener("resize",()=>{clearTimeout(wT);wT=setTimeout(()=>drawWars(cur,-1),150)});
+ declutter();return ws.length}
+addEventListener("resize",()=>{clearTimeout(wT);wT=setTimeout(()=>{sizeLabs();drawWars(cur,-1)},150)});
 $("wt").onclick=()=>{WON=!WON;try{localStorage.setItem("itt-wars",WON?"1":"0")}catch(e){}warsUI();drawWars(cur)};
 const track=$("track"),strip=$("strip"),TW=64;
 const ticks=D.s.map((s,i)=>{const t=document.createElement("div");t.className="tick";t.onclick=()=>{stop();go(i)};return t});
@@ -231,7 +241,7 @@ addEventListener("pointermove",e=>{if(dx!==null)strip.scrollLeft=sl-(e.clientX-d
 addEventListener("pointerup",()=>{if(dx===null)return;dx=null;strip.classList.remove("drag");go(here())});
 const P="M3 1.5v11l9.5-5.5z",Q="M2.5 1.5h3.5v11H2.5zM8 1.5h3.5v11H8z";
 function playIcon(){const on=!!timer;$("pi").firstChild.setAttribute("d",on?Q:P);$("play").setAttribute("aria-label",on?UI[L].pause:UI[L].play)}
-let tickAt=0;const wAnims=()=>document.getAnimations().filter(a=>{const t=a.effect&&a.effect.target;return t&&t.closest&&t.closest("#W,.wars")});
+let tickAt=0;const wAnims=()=>document.getAnimations().filter(a=>{const t=a.effect&&a.effect.target;return t&&t.closest&&t.closest("#W,#WM,.wars")});
 function sched(ms){tickAt=Date.now()+ms;timer=setTimeout(tick,ms)}
 function stop(){if(!timer)return;clearTimeout(timer);timer=null;playIcon()}
 const dwell=i=>1900+(WON&&!RM.matches?inF(i).length*STEP+1200:0);
@@ -251,9 +261,9 @@ function setLang(l){L=l;const u=UI[l],fa=l==="fa";
  track.replaceChildren();ticks.forEach((t,i)=>{t.textContent=u.yr(D.s[i].y);t.dir=fa?"rtl":"ltr";track.appendChild(t)});
  for(const [n,t] of labs)t.textContent=nm(n);
  warsUI();if(cur>=0){texts();strip.scrollTo({left:pos(cur)*TW,behavior:"auto"})}
- playIcon();try{localStorage.setItem("itt-lang",l)}catch(e){}}
+ playIcon();sizeLabs();try{localStorage.setItem("itt-lang",l)}catch(e){}}
 $("lang").onclick=()=>{const l=L==="fa"?"en":"fa";setLang(l);try{const p=new URL(location.href);p.searchParams.set("lang",l);history.replaceState(null,"",p)}catch(e){}};
-setLang(L);show(0);requestAnimationFrame(()=>go(0,false));
+setLang(L);sizeLabs();show(0);requestAnimationFrame(()=>go(0,false));document.fonts&&document.fonts.ready.then(declutter);
 </script>
 </body>
 </html>
