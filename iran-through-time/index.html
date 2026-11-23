@@ -24,7 +24,7 @@ h1{font-size:16px;font-weight:650;margin:0;letter-spacing:-.01em}
 .lang.fa{font-family:Vazirmatn,Tahoma,sans-serif}
 .map{position:relative;width:100%;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 svg{display:block;width:100%;height:auto}
-.layer{transition:opacity .6s ease;will-change:opacity}.sea{fill:var(--bg)}
+.layer{will-change:opacity}#M .hi{display:none}.sea{fill:var(--bg)}
 .oth path{fill:color-mix(in srgb,var(--fg) 7%,var(--bg));stroke:color-mix(in srgb,var(--fg) 30%,var(--bg));stroke-width:.6}
 .hi{fill:color-mix(in srgb,var(--acc) 38%,var(--bg));stroke:var(--acc);stroke-width:1.4;stroke-linejoin:round}
 .base{fill:none;stroke:color-mix(in srgb,var(--fg) 45%,transparent);stroke-width:.5;stroke-dasharray:2 2}
@@ -68,7 +68,7 @@ button:focus-visible,a:focus-visible,.strip:focus-visible{outline:2px solid var(
 <body>
 <div class="wrap" id="wrap">
 <div class="top"><h1 data-t="h1"></h1><div class="tb"><button class="lang" id="wt" type="button"></button><button class="lang" id="lang" type="button"></button></div></div>
-<div class="map"><svg id="svg"><g id="M"></g><path class="hi" id="MO" style="display:none"/><path class="base" id="base"/><g id="W"></g><g id="L"></g><g id="WM"></g></svg></div>
+<div class="map"><svg id="svg"><g id="M"></g><path class="hi" id="MO"/><path class="base" id="base"/><g id="W"></g><g id="L"></g><g id="WM"></g></svg></div>
 <div class="head"><span class="yr" id="yr"></span><span class="ttl" id="ttl"></span></div>
 <p class="note" id="note"></p><p class="fix" id="fix"></p>
 <div class="row" dir="ltr"><button class="play" id="play" type="button"><svg viewBox="0 0 14 14" id="pi"><path d="M3 1.5v11l9.5-5.5z"/></svg></button><div class="tl"><div class="strip" id="strip" dir="ltr"><div class="track" id="track"></div></div><div class="needle"></div></div></div>
@@ -173,24 +173,22 @@ function resample(r){const P=r.slice();if(P.length>1&&P[0][0]===P[P.length-1][0]
 const area=r=>r.reduce((s,p,i)=>{const q=r[(i+1)%r.length];return s+p[0]*q[1]-q[0]*p[1]},0),cen=r=>{let x=0,y=0;r.forEach(p=>{x+=p[0];y+=p[1]});return[x/r.length,y/r.length]};
 function align(a,b){if(area(a)*area(b)<0)b=b.slice().reverse();let best=0,bd=1/0;
  for(let o=0;o<RN;o+=2){let d=0;for(let k=0;k<RN;k+=4){const p=a[k],q=b[(k+o)%RN];d+=(p[0]-q[0])**2+(p[1]-q[1])**2}if(d<bd){bd=d;best=o}}return b.map((_,k)=>b[(k+best)%RN])}
-let mR=null,mRaf=0;
-function morphTo(i){const MO=$("MO"),hp=G[i].querySelector(".hi"),tgt=ringsOf(D.s[i].hi).map(resample);cancelAnimationFrame(mRaf);
- if(RM.matches||!mR){mR=tgt;MO.style.display="none";G.forEach(x=>x&&(x.querySelector(".hi").style.visibility=""));return}
- const from=mR,used=new Set(),pairs=tgt.map(t=>{const c=cen(t);let bi=0,bd=1/0;from.forEach((f,j)=>{const q=cen(f),d=(q[0]-c[0])**2+(q[1]-c[1])**2;if(d<bd){bd=d;bi=j}});used.add(bi);return[from[bi],align(from[bi],t),1]});
- from.forEach((f,j)=>{if(!used.has(j)){const c=cen(f);pairs.push([f,f.map(()=>c),0])}});
- G.forEach(x=>x&&(x.querySelector(".hi").style.visibility="hidden"));MO.style.display="";const t0=performance.now(),DUR=900;
- const step=now=>{const u=Math.min(1,(now-t0)/DUR),e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2,cr=pairs.map(([a,b])=>a.map((p,k)=>[p[0]+(b[k][0]-p[0])*e,p[1]+(b[k][1]-p[1])*e]));
-  MO.setAttribute("d",cr.map(r=>"M"+r.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join("L")+"Z").join(""));mR=cr.filter((r,k)=>pairs[k][2]);
-  if(u<1)mRaf=requestAnimationFrame(step);else{mR=tgt;MO.style.display="none";hp.style.visibility=""}};
- mRaf=requestAnimationFrame(step)}
+const pairC=new Map();
+function pairsAt(i){if(pairC.has(i))return pairC.get(i);const from=ringsOf(D.s[i].hi).map(resample),tgt=ringsOf(D.s[i+1].hi).map(resample),used=new Set();
+ const pr=tgt.map(t=>{const c=cen(t);let bi=0,bd=1/0;from.forEach((f,j)=>{const q=cen(f),d=(q[0]-c[0])**2+(q[1]-c[1])**2;if(d<bd){bd=d;bi=j}});used.add(bi);return[from[bi],align(from[bi],t)]});
+ from.forEach((f,j)=>{if(!used.has(j)){const c=cen(f);pr.push([f,f.map(()=>c)])}});pairC.set(i,pr);return pr}
+let posNow=-1;
+function setPos(p){p=Math.max(0,Math.min(N-1,p));if(Math.abs(p-posNow)<1e-4)return;posNow=p;const i=Math.min(N-2,Math.floor(p)),f=p-i,a=layer(i),b=layer(i+1);
+ if(b.previousSibling!==a||M.lastChild!==b)M.append(a,b);
+ G.forEach((g,j)=>{if(g&&j!==i&&j!==i+1)g.style.visibility="hidden"});a.style.visibility="visible";a.style.opacity=1;b.style.visibility=f>0?"visible":"hidden";b.style.opacity=f;
+ const MO=$("MO");if(f<1e-3)MO.setAttribute("d",D.s[i].hi);else if(f>1-1e-3)MO.setAttribute("d",D.s[i+1].hi);
+ else MO.setAttribute("d",pairsAt(i).map(([A,B])=>"M"+A.map((q,k)=>(q[0]+(B[k][0]-q[0])*f).toFixed(1)+","+(q[1]+(B[k][1]-q[1])*f).toFixed(1)).join("L")+"Z").join(""))}
 function texts(){const s=D.s[cur],u=UI[L],fa=L==="fa";
  $("yr").textContent=u.yr(s.y);$("ttl").textContent=fa?s.fa[0]:s.t;$("note").textContent=fa?s.fa[1]:s.n;
  strip.setAttribute("aria-label",u.tl);strip.setAttribute("aria-valuenow",cur);strip.setAttribute("aria-valuetext",u.yr(s.y)+", "+(fa?s.fa[0]:s.t));
  const F=$("fix"),f=fa?s.fa[2]:s.f&&s.f[0];F.replaceChildren();
  if(f){F.append(u.fix+f+" ");const a=document.createElement("a");a.href=s.f[1];a.target="_blank";a.rel="noopener";a.textContent=u.src;F.append(a)}}
 function show(i){if(i===cur)return;cur=i;const s=D.s[i];
- const g=layer(i);M.appendChild(g);g.style.visibility="visible";g.style.transition="none";g.style.opacity=0;g.getBoundingClientRect();g.style.transition="";g.style.opacity=1;morphTo(i);
- clearTimeout(hideT);hideT=setTimeout(()=>G.forEach((x,j)=>{if(x&&j!==cur){x.style.visibility="hidden";x.style.opacity=0}}),650);
  const want=new Map();s.l.forEach(([n,x,y])=>want.set(n,[x,y,"lab"]));s.hl.forEach(([n,x,y])=>want.set(n,[x,y,"hl"]));
  for(const [n,t] of labs)if(!want.has(n)){labs.delete(n);t.style.opacity=0;setTimeout(()=>t.remove(),400)}
  for(const [n,[x,y,c]] of want){let t=labs.get(n);const tr=`translate(${x}px,${y}px)`;if(t)t._x=x,t._y=y;
@@ -251,21 +249,26 @@ const ticks=D.s.map((s,i)=>{const t=document.createElement("div");t.className="t
 const pos=i=>i,clamp=i=>Math.max(0,Math.min(N-1,i)),here=()=>clamp(pos(clamp(Math.round(strip.scrollLeft/TW))));
 let lock=-1,lockT=0;const unlock=()=>{lock=-1;clearTimeout(lockT)};
 function go(i,smooth=true){i=clamp(i);lock=i;clearTimeout(lockT);lockT=setTimeout(unlock,smooth?900:60);strip.scrollTo({left:pos(i)*TW,behavior:smooth?"smooth":"auto"});show(i)}
-strip.addEventListener("scroll",()=>{if(lock>=0){clearTimeout(lockT);lockT=setTimeout(unlock,150);return}if(!timer)show(here())},{passive:true});
+strip.addEventListener("scroll",()=>{setPos(strip.scrollLeft/TW);if(lock>=0){clearTimeout(lockT);lockT=setTimeout(unlock,150);return}if(!timer)show(here())},{passive:true});
 strip.setAttribute("role","slider");strip.tabIndex=0;strip.setAttribute("aria-valuemin",0);strip.setAttribute("aria-valuemax",N-1);
 let dx=null,sl=0;strip.addEventListener("pointerdown",e=>{unlock();if(e.pointerType!=="mouse")return;dx=e.clientX;sl=strip.scrollLeft;strip.classList.add("drag")});
 addEventListener("pointermove",e=>{if(dx!==null)strip.scrollLeft=sl-(e.clientX-dx)});
 addEventListener("pointerup",()=>{if(dx===null)return;dx=null;strip.classList.remove("drag");go(here())});
 const P="M3 1.5v11l9.5-5.5z",Q="M2.5 1.5h3.5v11H2.5zM8 1.5h3.5v11H8z";
 function playIcon(){const on=!!timer;$("pi").firstChild.setAttribute("d",on?Q:P);$("play").setAttribute("aria-label",on?UI[L].pause:UI[L].play)}
-let tickAt=0;const wAnims=()=>document.getAnimations().filter(a=>{const t=a.effect&&a.effect.target;return t&&t.closest&&t.closest("#W,#WM,.wars")});
-function sched(ms){tickAt=Date.now()+ms;timer=setTimeout(tick,ms)}
-function stop(){if(!timer)return;clearTimeout(timer);timer=null;playIcon()}
-const dwell=i=>1900+(WON&&!RM.matches?inF(i).length*STEP+1200:0);
-function tick(){if(cur>=N-1)return stop();go(cur+1);sched(dwell(cur))}
-function play(){if(timer){const rem=Math.max(0,tickAt-Date.now());stop();const an=wAnims();an.forEach(a=>a.pause());paused={i:cur,rem};return}
- if(paused&&paused.i===cur){wAnims().forEach(a=>a.play());sched(paused.rem);paused=null;return playIcon()}
- if(cur>=N-1)go(0);sched(dwell(cur));playIcon()}
+const wAnims=()=>document.getAnimations().filter(a=>{const t=a.effect&&a.effect.target;return t&&t.closest&&t.closest("#W,#WM,.wars")});
+let PL=null,raf=0,last=0;
+const segDur=i=>RM.matches?0:Math.max(1600,WON?inF(i).length*STEP+700:0),HOLD=()=>RM.matches?2600:900;
+function loop(now){const dt=Math.min(64,now-last);last=now;PL.el+=dt;
+ if(PL.ph==="move"){const u=PL.dur?Math.min(1,PL.el/PL.dur):1;strip.scrollLeft=(PL.i-1+u)*TW;setPos(PL.i-1+u);if(u>=1){PL.ph="hold";PL.el=0;PL.dur=HOLD()}}
+ else if(PL.el>=PL.dur){if(PL.i>=N-1)return stop();startSeg(PL.i+1)}
+ raf=requestAnimationFrame(loop)}
+function startSeg(i){PL={i,ph:"move",el:0,dur:segDur(i)};show(i)}
+function run(){strip.classList.add("drag");last=performance.now();timer=1;raf=requestAnimationFrame(loop);playIcon()}
+function stop(){if(!timer&&!paused)return;cancelAnimationFrame(raf);timer=null;PL=null;paused=null;strip.classList.remove("drag");playIcon()}
+function play(){if(timer){cancelAnimationFrame(raf);timer=null;wAnims().forEach(a=>a.pause());paused={pl:PL,i:cur};playIcon();return}
+ if(paused&&paused.i===cur&&paused.pl){PL=paused.pl;paused=null;wAnims().forEach(a=>a.play());return run()}
+ paused=null;if(cur>=N-1)go(0,false);startSeg(cur+1);run()}
 $("play").onclick=play;strip.addEventListener("pointerdown",stop);strip.addEventListener("wheel",()=>{unlock();stop()},{passive:true});strip.addEventListener("touchstart",()=>{unlock();stop()},{passive:true});
 addEventListener("keydown",e=>{const fwd="ArrowRight",back="ArrowLeft";if(e.target.closest&&e.target.closest(".wars"))return;
  if(e.target===strip&&(e.key==="Home"||e.key==="End")){e.preventDefault();stop();go(e.key==="Home"?0:N-1)}
@@ -280,7 +283,7 @@ function setLang(l){L=l;const u=UI[l],fa=l==="fa";
  warsUI();if(cur>=0){texts();strip.scrollTo({left:pos(cur)*TW,behavior:"auto"})}
  playIcon();sizeLabs();try{localStorage.setItem("itt-lang",l)}catch(e){}}
 $("lang").onclick=()=>{const l=L==="fa"?"en":"fa";setLang(l);try{const p=new URL(location.href);p.searchParams.set("lang",l);history.replaceState(null,"",p)}catch(e){}};
-setLang(L);sizeLabs();show(0);requestAnimationFrame(()=>go(0,false));document.fonts&&document.fonts.ready.then(declutter);
+setLang(L);sizeLabs();show(0);setPos(0);requestAnimationFrame(()=>go(0,false));document.fonts&&document.fonts.ready.then(declutter);
 </script>
 </body>
 </html>
